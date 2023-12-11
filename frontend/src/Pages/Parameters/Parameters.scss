@@ -1,0 +1,55 @@
+@use "src/style.scss";
+
+.parameters {
+  max-height: var(--screen-size);
+  overflow-y: scroll;
+  .param__form {
+    overflow-y: scroll;
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .param_profile_picture {
+      width: 15rem;
+      height: 10rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.5rem;
+      border-radius: 5px;
+      img {
+        height: 100%;
+      }
+    }
+    .bouton {
+      width: 10rem;
+      align-self: center;
+      margin-top: 2rem;
+    }
+    &__field {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h4 {
+        margin-bottom: 0.5rem;
+      }
+      .p-inputtext {
+        width: 15rem;
+      }
+      .p-fileupload-buttonbar {
+        min-width: 15rem;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 6px;
+      }
+    }
+  }
+  &__logout {
+    text-decoration: underline;
+    color: red;
+    cursor: pointer;
+    float: right;
+    margin-right: 1rem;
+  }
+}

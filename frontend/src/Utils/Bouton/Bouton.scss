@@ -1,0 +1,67 @@
+$main-color: white;
+$second-color: #04764b;
+
+.bouton {
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 2px solid $second-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  border-radius: 10rem;
+  color: $main-color;
+  font-size: 1rem;
+  transition: all 0.3s;
+  position: relative;
+  z-index: 1;
+  font-weight: 700;
+  height: 3rem;
+  min-width: fit-content;
+  &:hover {
+    color: $second-color;
+    &:before {
+      width: 100% !important;
+    }
+  }
+  svg {
+    margin-right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  &.slide {
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $second-color;
+      border-radius: 10rem;
+      z-index: -2;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: $main-color;
+      transition: all 0.5s;
+      border-radius: 10rem;
+      z-index: -1;
+    }
+  }
+  &.normal {
+    background-color: transparent;
+    border: 2px solid $main-color;
+    transition: all 0.5s;
+    &:hover {
+      background-color: $main-color;
+      color: white;
+    }
+  }
+}

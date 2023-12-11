@@ -1,0 +1,37 @@
+@use "src/style.scss" as c;
+
+.importCSV {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 0.5rem;
+  ul {
+    padding-left: 0.5rem;
+    list-style: lower-greek;
+    li {
+      margin-left: 2rem;
+    }
+  }
+  .p-fileupload {
+    width: fit-content;
+    &-buttonbar {
+      padding: 0 !important;
+    }
+    &-choose {
+      margin: 0 !important;
+      background: var(--main-color);
+      border-color: var(--main-color);
+      transition: all 0.3s ease-in-out;
+      opacity: 0.9;
+      &:hover {
+        background: var(--main-color) !important;
+        border-color: var(--main-color) !important;
+        opacity: 1;
+      }
+    }
+    &-content {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@use "src/style.scss";
+
+.statistics {
+  height: var(--screen-size);
+  .p-calendar,
+  .p-selectbutton {
+    margin: 0.5rem 0;
+  }
+  .recharts-tooltip-item-list {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.7rem;
+    li {
+      margin: 0 0.25rem;
+    }
+  }
+}

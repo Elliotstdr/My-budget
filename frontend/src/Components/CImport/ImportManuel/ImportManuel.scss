@@ -1,0 +1,53 @@
+@use "src/style.scss";
+
+.importmanuel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  .p-calendar {
+    margin-bottom: 2rem;
+  }
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__input {
+      display: flex;
+      gap: 2%;
+      max-width: 95%;
+      .field {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        &.input {
+          width: 40%;
+        }
+        &.dropdown {
+          width: 36%;
+        }
+        &.value {
+          width: 20%;
+        }
+        .p-dropdown,
+        .p-inputtext {
+          height: 50px;
+        }
+      }
+    }
+    &__button {
+      cursor: pointer;
+      margin-top: 1rem;
+      background: none;
+      border: none;
+      svg {
+        font-size: 1.5rem;
+        color: var(--main-color);
+      }
+    }
+  }
+  &__list {
+    width: 95%;
+  }
+}

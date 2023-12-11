@@ -1,0 +1,31 @@
+@use "src/style.scss" as c;
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5rem 0;
+  background-color: var(--second-color);
+  height: 3.25rem;
+  a {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--icon-color);
+    text-decoration: none;
+    svg {
+      font-size: 1rem;
+    }
+  }
+  .nav-active {
+    font-weight: bold;
+    color: var(--main-color);
+    svg {
+      font-size: 1.1rem;
+    }
+  }
+}

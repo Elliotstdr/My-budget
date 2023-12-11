@@ -1,0 +1,23 @@
+.operationsimported {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem;
+  max-width: 100%;
+  font-size: 0.8rem !important;
+  &__name {
+    width: 5rem;
+  }
+  &__date {
+    width: 5rem;
+  }
+  &__value {
+    width: 2.5rem;
+  }
+  .p-dropdown {
+    width: 5rem;
+  }
+  .pi {
+    cursor: pointer;
+  }
+}

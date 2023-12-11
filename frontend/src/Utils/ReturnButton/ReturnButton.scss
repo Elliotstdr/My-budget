@@ -1,0 +1,12 @@
+.returnbutton {
+  display: flex;
+  align-self: baseline;
+  background: none;
+  border: none;
+  margin: 0.5rem;
+  cursor: pointer;
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
