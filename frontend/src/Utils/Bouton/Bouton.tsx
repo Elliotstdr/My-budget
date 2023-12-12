@@ -3,7 +3,7 @@ import "./Bouton.scss";
 
 interface Props {
   className?: string,
-  type?: string,
+  type: "slide" | "normal",
   btnAction?: React.MouseEventHandler<HTMLButtonElement>,
   children?: any,
   btnTexte?: string,
