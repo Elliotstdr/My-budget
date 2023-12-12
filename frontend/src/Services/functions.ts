@@ -28,6 +28,11 @@ export const errorToast = (message: string | FetchResponse, summary: string = "E
   });
 };
 
+/**
+ * Retourne deux date string au format YYYY-MM-1
+ * @param date | Date
+ * @returns object
+ */
 export const rangeTiretDate = (date: Date) => {
   if(!date) return null
   const year = date.getFullYear();
@@ -40,6 +45,11 @@ export const rangeTiretDate = (date: Date) => {
   }
 }
 
+/**
+ * Retourne une date string au format janvier 2022
+ * @param date 
+ * @returns string
+ */
 export const literalMonthAndYear = (date: Date) => {
   if(!date) return
   const month = date.toLocaleString('default', { month: 'long' })
@@ -48,22 +58,35 @@ export const literalMonthAndYear = (date: Date) => {
   return month + " " + year
 }
 
+/**
+ * Retourne une date string au format MM-YYYY
+ * @param date 
+ * @returns string
+ */
 export const formatMonthYear = (date: Date) => {
   const newDate = new Date(date);
-    // Extraire le mois et l'année (au format "MM-YYYY")
   const monthKey = `${(newDate.getMonth() + 1).toString().padStart(2, '0')}-${newDate.getFullYear()}`;
 
   return monthKey
 }
 
+/**
+ * Retourne une date string au format YYYY-MM
+ * @param date 
+ * @returns string
+ */
 export const formatYearMonth = (date: Date) => {
   const newDate = new Date(date);
-    // Extraire le mois et l'année (au format "MM-YYYY")
   const monthKey = `${newDate.getFullYear()}-${(newDate.getMonth() + 1).toString().padStart(2, '0')}`;
 
   return monthKey
 }
 
+/**
+ * Tri une liste dans l'ordre croissant de date
+ * @param data 
+ * @returns data
+ */
 export const orderByDate = (data: Operation[]) => {
   return data.sort((a, b) => {
     const aDate = formatMonthYear(a.datePeriod)
