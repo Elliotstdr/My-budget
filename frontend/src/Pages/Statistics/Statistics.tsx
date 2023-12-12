@@ -163,7 +163,7 @@ const Statistics = () => {
                 onMouseOver={handleLegendMouseEnter}
                 onMouseOut={handleLegendMouseLeave}
               />
-              {data && Object.keys(data[0])
+              {data && data?.length > 0 && Object.keys(data[0])
                 .filter((key) => key !== "date")
                 .map((key, index) => (
                   <Line

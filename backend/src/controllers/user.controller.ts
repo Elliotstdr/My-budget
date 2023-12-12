@@ -26,7 +26,7 @@ export const editUser = async (req: Request, res: Response) => {
 
   // Vérifie que le nouveau mail n'est pas déjà utilisé
   if(req.body.email !== user.email) {
-    const existingUser = await User.findById({ email: req.body.email })
+    const existingUser = await User.find({ email: req.body.email })
     if(existingUser) {
       return res.status(401).json({ message: "Un erreur est survenue, essayez un autre email" });
     }
