@@ -6,12 +6,23 @@
   .p-selectbutton {
     margin: 0.5rem 0;
   }
-  .recharts-tooltip-item-list {
+  // .recharts-tooltip-item-list {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   font-size: 0.7rem;
+  //   li {
+  //     margin: 0 0.25rem;
+  //   }
+  // }
+  &__buttons {
     display: flex;
-    flex-wrap: wrap;
-    font-size: 0.7rem;
-    li {
-      margin: 0 0.25rem;
-    }
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .custom__tooltip {
+    background-color: white;
+    padding: 0.25rem;
+    display: flex;
+    flex-direction: column;
   }
 }

@@ -38,5 +38,6 @@ interface NewOperation {
 
 interface CalculatedGroupOP {
   Total: number,
+  "Total-abs": number,
   date: string
 }
