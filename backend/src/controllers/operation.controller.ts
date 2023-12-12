@@ -4,6 +4,7 @@ import { findTokenUser } from "../services/auth.service";
 import { DUser, User } from "../models/user.model";
 import { TYPE_REF, USER_REF, badFileFormatERROR, noOperationERROR, noUserERROR, randomERROR } from "../services/const.service";
 import { checkCsvData, extractCSVData, findType, treatment } from "../services/csv.service";
+import { EditKeyword } from "../services/operation.service";
 // import exceljs from 'exceljs'
 
 export const findAllOperations = async (req: Request, res: Response) => {
@@ -74,6 +75,9 @@ export const createOperation = async (req: any, res: any) => {
   const operation = new Operation({
     ...req.body,
   });
+
+  await EditKeyword(req.body.type, req.body.label)
+
   try {
     await operation.save();
     await operation.populate(USER_REF);
@@ -90,6 +94,8 @@ export const editOperation = async (req: Request, res: Response) => {
   if (!operation) {
     return res.status(401).json(noOperationERROR);
   }
+
+  await EditKeyword(operation.type._id, req.body.label)
 
   try {
     const updatedOp: DOperation | null = await Operation.findByIdAndUpdate(operation, req.body, { new: true })

@@ -15,7 +15,7 @@ interface Values {
 
 interface NewType {
   label: string,
-  keyword: string[],
+  keywords: string[],
   user: string
 }
 
@@ -44,7 +44,7 @@ const CreateType = () => {
     const payload: NewType = {
       label: data.name,
       user: auth.userConnected._id,
-      keyword: []
+      keywords: []
     }
 
     const newType = await fetchPost("/type", payload)

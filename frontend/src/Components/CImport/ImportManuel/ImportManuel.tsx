@@ -23,6 +23,7 @@ const ImportManuel = () => {
   const [ddType, setDdType] = useState<Type | null>(null)
   const [date, setDate] = useState<Date | null | undefined>(null)
   const [operations, setOperations] = useState<Operation[]>([])
+  const [isProposedType, setIsProposedType] = useState(true)
   const defaultValues: Values = {
     name: "",
     value: "",
@@ -32,6 +33,7 @@ const ImportManuel = () => {
   const {
     register,
     reset,
+    setValue,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues });
@@ -93,6 +95,15 @@ const ImportManuel = () => {
               {...register("name", { required: true })}
               placeholder="Nom de l'opération"
               className="importmanuel__form__field-name"
+              onChange={(e) => {
+                if (!typesData.data) return
+                const suggestType = typesData.data.find((x) => x.keywords.includes(e.target.value))
+                if (suggestType && isProposedType) {
+                  setValue("type", suggestType)
+                  setDdType(suggestType)
+                  setIsProposedType(true)
+                }
+              }}
             />
             {errors.name && <small className="p-error">nom obligatoire</small>}
           </div>
@@ -115,6 +126,7 @@ const ImportManuel = () => {
               className="importmanuel__form__field-type"
               onChange={(e) => {
                 setDdType(e.value)
+                setIsProposedType(false)
               }}
               title={ddType?.label}
             ></Dropdown>

@@ -16,7 +16,7 @@ interface Operation {
 interface Type {
   _id: string,
   label: string,
-  keyword: string[],
+  keywords: string[],
   user: User
 }
 
