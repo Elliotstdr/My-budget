@@ -1,7 +1,6 @@
 import mongoose, { Schema, Model, Document } from 'mongoose';
 import uniqueValidator from "mongoose-unique-validator";
 import { TYPE_COLLECTION, TYPE_MODEL, USER_MODEL } from '../services/const.service';
-import { IUser } from '../type';
 import { DUser } from './user.model';
 
 type DType = Document & {
