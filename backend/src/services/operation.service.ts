@@ -1,5 +1,11 @@
 import { Type } from "../models/type.model"
 
+/**
+ * Add new name or edited name to the keyword list
+ * @param reqType 
+ * @param reqLabel 
+ * @returns boolean
+ */
 export const EditKeyword = async (reqType: string, reqLabel: string): Promise<boolean> => {
   if(!reqType || !reqLabel) return false
 
