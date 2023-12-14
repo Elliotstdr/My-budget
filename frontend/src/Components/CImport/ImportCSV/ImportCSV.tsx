@@ -82,7 +82,7 @@ const ImportCSV = () => {
 
   return (
     <>
-      <Header title="Import CSV"></Header>
+      <Header title="Import"></Header>
       <div className='importCSV page'>
         <ReturnButton
           action={() => { successImport ? setSuccessImport(false) : navigate("/import") }}
@@ -103,15 +103,15 @@ const ImportCSV = () => {
               />
 
               {checked ? (
-                <ul>Le contenu du fichier CSV doit respecter un certain format :
-                  <li>Le fichier doit être au format .csv</li>
+                <ul>Le contenu du fichier doit respecter un certain format :
+                  <li>Le fichier doit être au format .csv ou .xlsx</li>
                   <li>Mettre en ligne la date de l'opération au format jj/mm/aaaa</li>
                   <li>Mettre en colonne le type de l'opération</li>
                   <li>Mettre à l'intérieur du tableau les valeurs</li>
                 </ul>
               ) : (
-                <ul>Le contenu du fichier CSV doit respecter un certain format :
-                  <li>Le fichier doit être au format .csv</li>
+                <ul>Le contenu du fichier doit respecter un certain format :
+                  <li>Le fichier doit être au format .csv ou .xlsx</li>
                   <li>La case A1 doit contenir le mot "date", la case A2 le mot "nom" et la case A3 le mot "valeur"</li>
                   <li>La première colonne contient la date de l'opération au format jj/mm/aaaa</li>
                   <li>La deuxième colonne contient la description de l'opération</li>
@@ -120,7 +120,7 @@ const ImportCSV = () => {
               )}
             </div>
             <FileUpload
-              accept=".csv, .numbers, .xlsx"
+              accept=".csv, .xlsx"
               maxFileSize={1000000}
               className="upload_csv"
               customUpload={true}

@@ -15,7 +15,7 @@ const Import = () => {
       <Header title="Ajouter des opérations"></Header>
       <div className="import page" style={{ height: "var(--screen-size)", justifyContent: "center" }}>
         <Box
-          text="Import CSV"
+          text="Import fichier"
           icon={<CiImport></CiImport>}
           action={() => navigate("/import/csv")}
           width="8rem"

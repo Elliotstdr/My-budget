@@ -71,7 +71,7 @@ const Statistics = () => {
 
   // Initialisation des légendes pour pouvoir les activer / décastiver
   useEffect(() => {
-    if (data) {
+    if (data && !legends) {
       const item: any = { ...data[0] }
       delete item.date
 
