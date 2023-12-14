@@ -31,7 +31,7 @@ export const checkToken = async () => {
   } else if (payloadObject.exp * 1000 - new Date().getTime() < 5 * timer) {
     // Si le token expire dans moins de 5 minutes on le refresh
     const newToken = await fetchPost("/auth/refresh", {})
-    if (newToken.data) updateAuth({ token: newToken.data })
+    if (newToken.data) store.dispatch(updateAuth({ token: newToken.data }))
   }
 };
 
