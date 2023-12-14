@@ -1,5 +1,4 @@
 import { DOperation, Operation } from "../models/operation.model"
-import parser from 'csv-parser'
 
 type TreatedOperation = {
   date: string,
@@ -97,4 +96,46 @@ export const extractDoubleCSVData = (row: any) => {
     i += 1
   })
   return data
+}
+
+/**
+ * Refine and sort the data from csv
+ * @param data 
+ * @returns 
+ */
+export const treatmentXLSX = (data: any) => {
+  // Delete empty attributes
+  const newData: TreatedOperation[] = data.map((x: TreatedOperation) => 
+    Object.fromEntries(
+      Object.entries(x).filter(([key, value]) => value !== "" && key !== "")
+    )
+  )
+  // Keeps only objects with the 3 attributes, those whith a 3 part date and those whose "valeur" is a number
+  const filteredObject = newData.filter((x: TreatedOperation) => 
+    Object.values(x).length === 3 && x.date.split("/").length === 3 && Number(x.valeur)
+  )
+  return filteredObject
+}
+
+/**
+ * Si la date est de type date, la met au format jj/mm/yyyy
+ * @param data 
+ * @returns 
+ */
+export const treatXlsxDates = (data: any[]) => {
+  const newData: any[] = []
+  data.forEach((x) => {
+    const date = x.date
+    if(!date || typeof date === "string") {
+      newData.push(x)
+      return
+    }
+
+    const formattedDate = new Date(date).toLocaleDateString('fr-FR');
+    newData.push({
+      ...x,
+      date: formattedDate
+    })
+  })
+  return newData
 }

@@ -34,11 +34,12 @@ const ImportCSV = () => {
     formData.append('file', file);
 
     const url = checked
-      ? `/operation/treat/double/for_user/${auth.userConnected._id}`
-      : `/operation/treat/for_user/${auth.userConnected._id}`
+      ? `/file/treat/double/for_user/${auth.userConnected._id}`
+      : `/file/treat/for_user/${auth.userConnected._id}`
     const res = await fetchPost(url, formData)
     if (res.error) {
-      errorToast("Une erreur est survenue lors de l'import de votre csv. Peut-être qu'une des consignes n'a pas été respectée.")
+      errorToast(res)
+      // "Une erreur est survenue lors de l'import de votre csv. Peut-être qu'une des consignes n'a pas été respectée."
       return
     }
     if (res.data.length === 0) {
