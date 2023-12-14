@@ -14,6 +14,7 @@ import { UPDATE_AUTH } from '../Store/Reducers/authReducer';
 import ImportManuel from '../Components/CImport/ImportManuel/ImportManuel';
 import ImportCSV from '../Components/CImport/ImportCSV/ImportCSV';
 import CreateType from '../Components/CImport/CreateType/CreateType';
+import { checkActivity, checkToken, timer } from '../Services/refreshToken';
 
 function App() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -22,16 +23,35 @@ function App() {
     dispatch({ type: UPDATE_AUTH, value });
   };
   const toast = useRef(null);
+  const interval = useRef<any>(0);
 
   useEffect(() => {
-    updateAuth({
-      toast: toast,
-    });
+    if (auth.isConnected) {
+      interval.current = setInterval(() => {
+        checkToken();
+      }, timer); // Commence toutes les minutes l'écoute si connecté
+    } else {
+      clearInterval(interval.current);
+      interval.current = 0; // Stoppe l'écoute si déco
+    }
+    return () => {
+      clearInterval(interval.current);
+      interval.current = 0;
+    }; // Stoppe l'écoute si quitte la page
+
+    // eslint-disable-next-line
+  }, [auth.isConnected, auth.token]);
+
+  // Au chargement de la page : vérifie l'activité de l'utilisateur, le token et set le toast
+  useEffect(() => {
+    checkActivity();
+    if (auth.isConnected) checkToken()
+    updateAuth({ toast: toast });
     // eslint-disable-next-line
   }, []);
 
   return (
-    <div className='app' id='app'>
+    <div className='app' id='app' onClick={() => checkActivity()}>
       <BrowserRouter>
         <Toast ref={toast}></Toast>
         <Routes>

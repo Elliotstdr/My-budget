@@ -20,3 +20,4 @@ export const noTypeERROR = { message: "Type non trouvé" }
 export const noOperationERROR = { message: "Opération non trouvée" }
 export const missInfoERROR = { message: "Des informations sont manquantes" }
 export const badFileFormatERROR = { message: "Le format du fichier n'est pas bon" }
+export const loginERROR = { message: "Paire login/mot de passe incorrecte" }
