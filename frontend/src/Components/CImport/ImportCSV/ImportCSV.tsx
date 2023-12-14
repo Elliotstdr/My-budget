@@ -12,8 +12,13 @@ import { InputSwitch } from 'primereact/inputswitch';
 import { Nullable } from "primereact/ts-helpers";
 import double from '../../../assets/double.png'
 import simple from '../../../assets/simple.png'
+import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
+import { useNavigate } from "react-router-dom";
+import Header from "../../Header/Header";
+import NavBar from "../../NavBar/NavBar";
 
 const ImportCSV = () => {
+  const navigate = useNavigate()
   const typesData = useFetchGet<Type[]>("/type")
   const auth = useSelector((state: RootState) => state.auth);
   const [successImport, setSuccessImport] = useState(false)
@@ -75,71 +80,78 @@ const ImportCSV = () => {
   }
 
   return (
-    <div className='importCSV'>
-      {!successImport ?
-        <>
-          <div className='importCSV__information'>
+    <>
+      <Header title="Import CSV"></Header>
+      <div className='importCSV page'>
+        <ReturnButton
+          action={() => { successImport ? setSuccessImport(false) : navigate("/import") }}
+        ></ReturnButton>
+        {!successImport ?
+          <>
+            <div className='importCSV__information'>
 
-            <div className="importCSV__information__switch">
-              <InputSwitch checked={!!checked} onChange={(e) => setChecked(e.value)} />
-              <span>{checked ? "Tableau Croisé" : "Tableau Simple"}</span>
+              <div className="importCSV__information__switch">
+                <InputSwitch checked={!!checked} onChange={(e) => setChecked(e.value)} />
+                <span>{checked ? "Tableau Croisé" : "Tableau Simple"}</span>
+              </div>
+
+              <img
+                className="importCSV__information__image"
+                src={checked ? double : simple}
+                alt="exemple tableau"
+              />
+
+              {checked ? (
+                <ul>Le contenu du fichier CSV doit respecter un certain format :
+                  <li>Le fichier doit être au format .csv</li>
+                  <li>Mettre en ligne la date de l'opération au format jj/mm/aaaa</li>
+                  <li>Mettre en colonne le type de l'opération</li>
+                  <li>Mettre à l'intérieur du tableau les valeurs</li>
+                </ul>
+              ) : (
+                <ul>Le contenu du fichier CSV doit respecter un certain format :
+                  <li>Le fichier doit être au format .csv</li>
+                  <li>La case A1 doit contenir le mot "date", la case A2 le mot "nom" et la case A3 le mot "valeur"</li>
+                  <li>La première colonne contient la date de l'opération au format jj/mm/aaaa</li>
+                  <li>La deuxième colonne contient la description de l'opération</li>
+                  <li>La dernière colonne contient le montant</li>
+                </ul>
+              )}
             </div>
-
-            <img
-              className="importCSV__information__image"
-              src={checked ? double : simple}
-              alt="exemple tableau"
+            <FileUpload
+              accept=".csv, .numbers, .xlsx"
+              maxFileSize={1000000}
+              className="upload_csv"
+              customUpload={true}
+              uploadHandler={uploadHandler}
+              chooseLabel="Ajouter un fichier"
+              auto
             />
-
-            {checked ? (
-              <ul>Le contenu du fichier CSV doit respecter un certain format :
-                <li>Le fichier doit être au format .csv</li>
-                <li>Mettre en ligne la date de l'opération au format jj/mm/aaaa</li>
-                <li>Mettre en colonne le type de l'opération</li>
-                <li>Mettre à l'intérieur du tableau les valeurs</li>
-              </ul>
-            ) : (
-              <ul>Le contenu du fichier CSV doit respecter un certain format :
-                <li>Le fichier doit être au format .csv</li>
-                <li>La case A1 doit contenir le mot "date", la case A2 le mot "nom" et la case A3 le mot "valeur"</li>
-                <li>La première colonne contient la date de l'opération au format jj/mm/aaaa</li>
-                <li>La deuxième colonne contient la description de l'opération</li>
-                <li>La dernière colonne contient le montant</li>
-              </ul>
+          </>
+          : <div>
+            {importedData.map((x) =>
+              <OperationsImported
+                key={x.id}
+                operation={x}
+                setImportedData={setImportedData}
+                createItem={(item) => createItem(item)}
+                typesData={typesData?.data as Type[] | null ?? []}
+              ></OperationsImported>
+            )}
+            <Divider></Divider>
+            {validatedData.map((x) =>
+              <Operation
+                key={x._id}
+                operation={x}
+                setOperations={setValidatedData}
+                types={typesData.data ?? []}
+              ></Operation>
             )}
           </div>
-          <FileUpload
-            accept=".csv, .numbers, .xlsx"
-            maxFileSize={1000000}
-            className="upload_csv"
-            customUpload={true}
-            uploadHandler={uploadHandler}
-            chooseLabel="Ajouter un fichier"
-            auto
-          />
-        </>
-        : <div>
-          {importedData.map((x) =>
-            <OperationsImported
-              key={x.id}
-              operation={x}
-              setImportedData={setImportedData}
-              createItem={(item) => createItem(item)}
-              typesData={typesData?.data as Type[] | null ?? []}
-            ></OperationsImported>
-          )}
-          <Divider></Divider>
-          {validatedData.map((x) =>
-            <Operation
-              key={x._id}
-              operation={x}
-              setOperations={setValidatedData}
-              types={typesData.data ?? []}
-            ></Operation>
-          )}
-        </div>
-      }
-    </div>
+        }
+      </div>
+      <NavBar></NavBar>
+    </>
   );
 };
 

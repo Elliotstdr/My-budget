@@ -10,6 +10,10 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { errorToast, rangeTiretDate } from "../../../Services/functions";
 import Operation from "../../Operation/Operation";
+import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
+import { useNavigate } from "react-router-dom";
+import Header from "../../Header/Header";
+import NavBar from "../../NavBar/NavBar";
 
 interface Values {
   name: string,
@@ -18,6 +22,7 @@ interface Values {
 }
 
 const ImportManuel = () => {
+  const navigate = useNavigate()
   const auth = useSelector((state: RootState) => state.auth);
   const typesData = useFetchGet<Type[]>("/type")
   const [ddType, setDdType] = useState<Type | null>(null)
@@ -75,80 +80,86 @@ const ImportManuel = () => {
     fetchData()
   }, [date])
   return (
-    <div className='importmanuel'>
-      <Calendar
-        value={date}
-        onChange={(e) => {
-          const newDate = e.value as Date;
-          newDate.setHours(newDate.getHours() + 12);
-          setDate(newDate)
-        }}
-        view="month"
-        dateFormat="mm/yy"
-        placeholder="Choisissez une date"
-        showIcon
-      />
-      {date && <form className="importmanuel__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="importmanuel__form__input">
-          <div className="field input">
-            <InputText
-              {...register("name", { required: true })}
-              placeholder="Nom de l'opération"
-              className="importmanuel__form__field-name"
-              onChange={(e) => {
-                if (!typesData.data) return
-                const suggestType = typesData.data.find((x) => x.keywords.includes(e.target.value))
-                if (suggestType && isProposedType) {
-                  setValue("type", suggestType)
-                  setDdType(suggestType)
-                  setIsProposedType(true)
-                }
-              }}
-            />
-            {errors.name && <small className="p-error">nom obligatoire</small>}
+    <>
+      <Header title="Import manuel"></Header>
+      <div className='importmanuel page'>
+        <ReturnButton action={() => navigate("/import")}></ReturnButton>
+        <Calendar
+          value={date}
+          onChange={(e) => {
+            const newDate = e.value as Date;
+            newDate.setHours(newDate.getHours() + 12);
+            setDate(newDate)
+          }}
+          view="month"
+          dateFormat="mm/yy"
+          placeholder="Choisissez une date"
+          showIcon
+          autoFocus
+        />
+        {date && <form className="importmanuel__form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="importmanuel__form__input">
+            <div className="field input">
+              <InputText
+                {...register("name", { required: true })}
+                placeholder="Nom de l'opération"
+                className="importmanuel__form__field-name"
+                onChange={(e) => {
+                  if (!typesData.data) return
+                  const suggestType = typesData.data.find((x) => x.keywords.includes(e.target.value))
+                  if (suggestType && isProposedType) {
+                    setValue("type", suggestType)
+                    setDdType(suggestType)
+                    setIsProposedType(true)
+                  }
+                }}
+              />
+              {errors.name && <small className="p-error">nom obligatoire</small>}
+            </div>
+            <div className="field value">
+              <InputText
+                {...register("value", { required: true })}
+                placeholder="€"
+                className="importmanuel__form__field-value"
+                keyfilter="num"
+              />
+              {errors.value && <small className="p-error">valeur obligatoire</small>}
+            </div>
+            <div className="field dropdown">
+              <Dropdown
+                {...register("type", { required: true })}
+                value={ddType}
+                options={typesData.data ?? []}
+                optionLabel="label"
+                placeholder="Type"
+                className="importmanuel__form__field-type"
+                onChange={(e) => {
+                  setDdType(e.value)
+                  setIsProposedType(false)
+                }}
+                title={ddType?.label}
+              ></Dropdown>
+              {errors.type && <small className="p-error">type obligatoire</small>}
+            </div>
           </div>
-          <div className="field value">
-            <InputText
-              {...register("value", { required: true })}
-              placeholder="€"
-              className="importmanuel__form__field-value"
-              keyfilter="num"
-            />
-            {errors.value && <small className="p-error">valeur obligatoire</small>}
-          </div>
-          <div className="field dropdown">
-            <Dropdown
-              {...register("type", { required: true })}
-              value={ddType}
-              options={typesData.data ?? []}
-              optionLabel="label"
-              placeholder="Type"
-              className="importmanuel__form__field-type"
-              onChange={(e) => {
-                setDdType(e.value)
-                setIsProposedType(false)
-              }}
-              title={ddType?.label}
-            ></Dropdown>
-            {errors.type && <small className="p-error">type obligatoire</small>}
-          </div>
+          <button className="importmanuel__form__button">
+            <AiOutlinePlusCircle></AiOutlinePlusCircle>
+          </button>
+        </form>}
+        <Divider></Divider>
+        <div className="importmanuel__list">
+          {operations.map((x) =>
+            <Operation
+              key={x._id}
+              operation={x}
+              setOperations={setOperations}
+              types={typesData.data ?? []}
+            ></Operation>
+          )}
         </div>
-        <button className="importmanuel__form__button">
-          <AiOutlinePlusCircle></AiOutlinePlusCircle>
-        </button>
-      </form>}
-      <Divider></Divider>
-      <div className="importmanuel__list">
-        {operations.map((x) =>
-          <Operation
-            key={x._id}
-            operation={x}
-            setOperations={setOperations}
-            types={typesData.data ?? []}
-          ></Operation>
-        )}
       </div>
-    </div>
+      <NavBar></NavBar>
+    </>
   );
 };
 

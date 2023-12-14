@@ -11,6 +11,9 @@ import Parameters from '../Pages/Parameters/Parameters';
 import { Toast } from "primereact/toast";
 import { useEffect, useRef } from 'react';
 import { UPDATE_AUTH } from '../Store/Reducers/authReducer';
+import ImportManuel from '../Components/CImport/ImportManuel/ImportManuel';
+import ImportCSV from '../Components/CImport/ImportCSV/ImportCSV';
+import CreateType from '../Components/CImport/CreateType/CreateType';
 
 function App() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -36,6 +39,9 @@ function App() {
           {auth.isConnected && (
             <>
               <Route path="/import" element={<Import />}></Route>
+              <Route path="/import/manual" element={<ImportManuel />}></Route>
+              <Route path="/import/csv" element={<ImportCSV />}></Route>
+              <Route path="/import/type" element={<CreateType />}></Route>
               <Route path="/statistics" element={<Statistics />}></Route>
               <Route path="/tools" element={<Tools />}></Route>
               <Route path="/history" element={<History />}></Route>

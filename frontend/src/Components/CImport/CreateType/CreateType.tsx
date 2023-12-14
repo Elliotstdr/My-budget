@@ -8,6 +8,10 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { errorToast } from "../../../Services/functions";
 import Type from "../../Type/Type";
+import Header from "../../Header/Header";
+import NavBar from "../../NavBar/NavBar";
+import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
+import { useNavigate } from "react-router-dom";
 
 interface Values {
   name: string,
@@ -20,6 +24,7 @@ interface NewType {
 }
 
 const CreateType = () => {
+  const navigate = useNavigate()
   const auth = useSelector((state: RootState) => state.auth);
   const typesData = useFetchGet<Type[]>("/type")
   const [types, setTypes] = useState<Type[]>([])
@@ -57,32 +62,38 @@ const CreateType = () => {
     reset()
   }
   return (
-    <div className='createtype'>
-      <form className="createtype__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="createtype__form__input">
-          <InputText
-            {...register("name", { maxLength: 12 })}
-            placeholder="Nom du type"
-            className="createtype__form__field-name"
-          />
-          {errors.name && <small className="p-error">Le nom ne doit pas dépasser 12 caractères</small>}
+    <>
+      <Header title="Gestion des types"></Header>
+      <div className='createtype page'>
+        <ReturnButton action={() => navigate("/import")}></ReturnButton>
+        <form className="createtype__form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="createtype__form__input">
+            <InputText
+              {...register("name", { maxLength: 12 })}
+              placeholder="Nom du type"
+              className="createtype__form__field-name"
+              autoFocus
+            />
+            {errors.name && <small className="p-error">Le nom ne doit pas dépasser 12 caractères</small>}
+          </div>
+          <button className="createtype__form__button">
+            <AiOutlinePlusCircle></AiOutlinePlusCircle>
+          </button>
+        </form>
+        <Divider></Divider>
+        <div className="createtype__list">
+          {types.map((x) =>
+            <Type
+              key={x._id}
+              type={x}
+              setType={setTypes}
+              editable={x.user !== null}
+            ></Type>
+          )}
         </div>
-        <button className="createtype__form__button">
-          <AiOutlinePlusCircle></AiOutlinePlusCircle>
-        </button>
-      </form>
-      <Divider></Divider>
-      <div className="createtype__list">
-        {types.map((x) =>
-          <Type
-            key={x._id}
-            type={x}
-            setType={setTypes}
-            editable={x.user !== null}
-          ></Type>
-        )}
       </div>
-    </div>
+      <NavBar></NavBar>
+    </>
   );
 };
 
