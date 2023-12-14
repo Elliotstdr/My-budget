@@ -34,45 +34,6 @@ export const useFetchGet = <T extends object | object[]> (url: string ): UseFetc
   return { data, error, loaded };
 };
 
-/**
- * @template { Object | Object[] } T
- * @param { string } url
- * @return { FetchGetReturn<T> }
- */
-export const useFetchGetConditional = <T extends object | object[]> (
-  url: string, 
-  reduxData: T | null
-): UseFetchGetResponse<T> => {
-  const [data, setData] = useState<T|null>(null);
-  const [error, setError] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const token = store.getState().auth.token;
-
-  useEffect(() => {
-    if (!reduxData || (Array.isArray(reduxData) && reduxData.length === 0)) {
-      axios
-        .get(`${import.meta.env.VITE_BASE_URL_API}${url}`, {
-          headers: token
-            ? {
-                accept: "application/json",
-                Authorization: `Bearer ${token}`,
-              }
-            : {
-                accept: "application/json",
-              },
-        })
-        .then((response: AxiosResponse) => setData(response.data))
-        .catch((error: AxiosError) => setError(error.message))
-        .finally(() => setLoaded(true));
-    } else {
-      setData(reduxData);
-      setLoaded(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return { data, error, loaded };
-};
-
 export const fetchDelete = async (url: string): Promise<FetchResponse> => {
   let data = null;
   let error = null;
