@@ -74,7 +74,6 @@ export const groupByType = <T extends ExtendedOP> (data: T[]): T[][] => {
 
   // Itérer sur le tableau d'origine
   data.forEach((item) => {
-    // Convertir la chaîne de date en objet Date
     if(!item?.type?._id) return
     const typeId = item.type._id
     if (!result[typeId]) {

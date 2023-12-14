@@ -5,18 +5,20 @@ import {
   editOperation, 
   removeOperation, 
   createOperation, 
-  findByDate
+  findByDate,
+  findRedondantOperations
 } from "../controllers/operation.controller";
-import { auth } from "../middleware/auth";
+import { auth, authBodyID, authID, findTokenUser } from "../middleware/auth";
 import { checkOperationProperty } from "../middleware/property";
 
 const router = express.Router();
 
-router.get("/", auth, findAllOperations)
+router.get("/", auth, findTokenUser, findAllOperations)
 router.get("/:id", auth, checkOperationProperty, findOperation)
-router.post("/", auth, createOperation)
+router.post("/", auth, authBodyID, createOperation)
 router.put("/:id", auth, checkOperationProperty, editOperation)
-router.delete("/:id", checkOperationProperty, auth, removeOperation)
-router.post("/byDate", auth, findByDate)
+router.delete("/:id", auth, checkOperationProperty, removeOperation)
+router.post("/byDate", auth, findTokenUser, findByDate)
+router.post("/redondant/user/:id", auth, authID, findRedondantOperations)
 
 export { router as operationRoutes};

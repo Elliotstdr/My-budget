@@ -80,10 +80,11 @@ export const removeUser = async (req: Request, res: Response) => {
     .catch(() => res.status(400).json(randomERROR));
 };
 
-export const Statistics = async (req: Request, res: Response) => {
-  res.status(200).json("Statistics")
-};
+// TODO Delete if unused
+// export const Statistics = async (req: Request, res: Response) => {
+//   res.status(200).json("Statistics")
+// };
 
-export const Dashboard = async (req: Request, res: Response) => {
-  res.status(200).json("Dashboard")
-};
+// export const Dashboard = async (req: Request, res: Response) => {
+//   res.status(200).json("Dashboard")
+// };

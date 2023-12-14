@@ -1,19 +1,11 @@
 import { Operation, DOperation } from "../models/operation.model";
 import { Request, Response } from "express";
-import { findTokenUser } from "../services/auth.service";
-import { DUser } from "../models/user.model";
 import { TYPE_REF, USER_REF, noOperationERROR, randomERROR } from "../services/const.service";
 import { EditKeyword } from "../services/operation.service";
 
 export const findAllOperations = async (req: Request, res: Response) => {
-  const user: DUser | null = await findTokenUser(req.headers.authorization)
-
-  if(!user) {
-    return res.status(401).json(randomERROR);
-  }
-
   const operations: DOperation[] = await Operation
-    .find({ user })
+    .find({ user: req.body.user })
     .sort({datePeriod: -1})
     .populate(USER_REF)
     .populate(TYPE_REF);
@@ -34,16 +26,10 @@ export const findByDate = async (req: Request, res: Response) => {
   ) {
     return res.status(401).json({ message: "Aucune date renseignée" });
   }
-
-  const user: DUser | null = await findTokenUser(req.headers.authorization)
-
-  if(!user) {
-    return res.status(401).json(randomERROR);
-  }
-
+  
   const operations: DOperation[] = await Operation
     .find({ 
-      user,
+      user: req.body.user,
       datePeriod: {$gte: req.body.startDate, $lt: req.body.endDate}
     })
     .populate(USER_REF)
@@ -120,3 +106,32 @@ export const removeOperation = async (req: Request, res: Response) => {
     })
     .catch(() => res.status(400).json(randomERROR));
 };
+
+export const findRedondantOperations = async (req: Request, res: Response) => {
+  let operationsWithoutUser: DOperation[] = await Operation.find({ user: req.params.id }).populate(TYPE_REF);
+  if(!operationsWithoutUser) return res.status(200).json([])
+
+  operationsWithoutUser = operationsWithoutUser.filter((op) => op.type.user === null)
+
+  const group: Record<string, DOperation[]> = operationsWithoutUser.reduce((acc: any, obj: DOperation) => {
+    // créé une key à partir du label et de la value qui sont nos éléments de groupement
+    const key = `${obj.label}-${obj.value}`;
+    if (!acc[key]) {
+      acc[key] = [obj];
+    } else {
+      acc[key].push(obj);
+    }
+    return acc;
+  }, {})
+
+  const arrayGroup = Object.values(group).filter((x) => x.length >= 2)
+
+  const finalData = arrayGroup.map((x) => {
+    return {
+      label: x[0].label,
+      value: x[0].value,
+      type: x[0].type._id
+    }
+  })
+  res.status(200).json(finalData)
+}
