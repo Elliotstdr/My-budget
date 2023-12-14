@@ -8,6 +8,10 @@ import { errorToast } from "../../../Services/functions";
 import OperationsImported from "../../OperationsImported/OperationsImported";
 import { Divider } from "primereact/divider";
 import Operation from "../../Operation/Operation";
+import { InputSwitch } from 'primereact/inputswitch';
+import { Nullable } from "primereact/ts-helpers";
+import double from '../../../assets/double.png'
+import simple from '../../../assets/simple.png'
 
 const ImportCSV = () => {
   const typesData = useFetchGet<Type[]>("/type")
@@ -15,6 +19,7 @@ const ImportCSV = () => {
   const [successImport, setSuccessImport] = useState(false)
   const [importedData, setImportedData] = useState<ImportedOperation[]>([])
   const [validatedData, setValidatedData] = useState<Operation[]>([])
+  const [checked, setChecked] = useState<Nullable<boolean>>(false)
 
   const uploadHandler = async ({ files }: any) => {
     if (!auth.userConnected) return
@@ -23,7 +28,10 @@ const ImportCSV = () => {
     const formData = new FormData();
     formData.append('file', file);
 
-    const res = await fetchPost(`/operation/treat/for_user/${auth.userConnected._id}`, formData)
+    const url = checked
+      ? `/operation/treat/double/for_user/${auth.userConnected._id}`
+      : `/operation/treat/for_user/${auth.userConnected._id}`
+    const res = await fetchPost(url, formData)
     if (res.error) {
       errorToast("Une erreur est survenue lors de l'import de votre csv. Peut-être qu'une des consignes n'a pas été respectée.")
       return
@@ -71,13 +79,34 @@ const ImportCSV = () => {
       {!successImport ?
         <>
           <div className='importCSV__information'>
-            <ul>Le contenu du fichier CSV doit respecter un certain format :
-              <li>Le fichier doit être au format .csv</li>
-              <li>La case A1 doit contenir le mot "date", la case A2 le mot "nom" et la case A3 le mot "valeur"</li>
-              <li>La première colonne contient la date de l'opération au format jj/mm/aaaa</li>
-              <li>La deuxième colonne contient la description de l'opération</li>
-              <li>La dernière colonne contient le montant</li>
-            </ul>
+
+            <div className="importCSV__information__switch">
+              <InputSwitch checked={!!checked} onChange={(e) => setChecked(e.value)} />
+              <span>{checked ? "Tableau Croisé" : "Tableau Simple"}</span>
+            </div>
+
+            <img
+              className="importCSV__information__image"
+              src={checked ? double : simple}
+              alt="exemple tableau"
+            />
+
+            {checked ? (
+              <ul>Le contenu du fichier CSV doit respecter un certain format :
+                <li>Le fichier doit être au format .csv</li>
+                <li>Mettre en ligne la date de l'opération au format jj/mm/aaaa</li>
+                <li>Mettre en colonne le type de l'opération</li>
+                <li>Mettre à l'intérieur du tableau les valeurs</li>
+              </ul>
+            ) : (
+              <ul>Le contenu du fichier CSV doit respecter un certain format :
+                <li>Le fichier doit être au format .csv</li>
+                <li>La case A1 doit contenir le mot "date", la case A2 le mot "nom" et la case A3 le mot "valeur"</li>
+                <li>La première colonne contient la date de l'opération au format jj/mm/aaaa</li>
+                <li>La deuxième colonne contient la description de l'opération</li>
+                <li>La dernière colonne contient le montant</li>
+              </ul>
+            )}
           </div>
           <FileUpload
             accept=".csv, .numbers, .xlsx"

@@ -6,7 +6,8 @@ import {
   removeOperation, 
   createOperation, 
   TreatCSV,
-  findByDate
+  findByDate,
+  TreatDoubleCSV
 } from "../controllers/operation.controller";
 import { auth } from "../middleware/auth";
 import multer from 'multer';
@@ -22,6 +23,7 @@ router.post("/", auth, createOperation)
 router.put("/:id", auth, checkOperationProperty, editOperation)
 router.delete("/:id", checkOperationProperty, auth, removeOperation)
 router.post("/treat/for_user/:id", upload.single('file'), auth, TreatCSV)
+router.post("/treat/double/for_user/:id", upload.single('file'), auth, TreatDoubleCSV)
 router.post("/byDate", auth, findByDate)
 
 export { router as operationRoutes};

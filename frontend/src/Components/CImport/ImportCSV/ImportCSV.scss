@@ -6,11 +6,26 @@
   justify-content: center;
   flex-direction: column;
   margin: 0 0.5rem;
-  ul {
-    padding-left: 0.5rem;
-    list-style: lower-greek;
-    li {
-      margin-left: 2rem;
+  &__information {
+    display: flex;
+    flex-direction: column;
+    &__switch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    &__image {
+      width: 260px;
+      align-self: center;
+      margin-top: 1rem;
+    }
+    ul {
+      padding-left: 0.5rem;
+      list-style: lower-greek;
+      li {
+        margin-left: 2rem;
+      }
     }
   }
   .p-fileupload {

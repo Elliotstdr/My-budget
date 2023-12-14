@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 import { findTokenUser } from "../services/auth.service";
 import { DUser, User } from "../models/user.model";
 import { TYPE_REF, USER_REF, badFileFormatERROR, noOperationERROR, noUserERROR, randomERROR } from "../services/const.service";
-import { checkCsvData, extractCSVData, findType, treatment } from "../services/csv.service";
+import { checkCsvData, findType, treatment, extractDoubleCSVData, isSemicolonOperator } from "../services/csv.service";
 import { EditKeyword } from "../services/operation.service";
+import parser from 'csv-parser'
 // import exceljs from 'exceljs'
 
 export const findAllOperations = async (req: Request, res: Response) => {
@@ -125,61 +126,86 @@ export const removeOperation = async (req: Request, res: Response) => {
 
 export const TreatCSV = async (req: Request, res: Response) => {
   const user: any = await User.findById(req.params.id);
-
-  if (!user) {
-    return res.status(401).json(noUserERROR);
-  }
+  if (!user) { return res.status(401).json(noUserERROR) }
 
   const file = req.file;
-  if(!file) {
-    return res.status(401).json({ message: "Fichier non trouvé" });
-  }
+  if(!file) { return res.status(401).json({ message: "Fichier non trouvé" }) }
 
-  const extract = extractCSVData(file)
-  extract.parser.on('end', async () => {
-    if(checkCsvData(extract.data)) {
-      let treatedData = treatment(extract.data)
+  const rowList: any[] = []
+  const cp = parser({separator: ","})
+  cp.write(file.buffer.toString('utf8'));
+  cp.end();
+  cp.on('data', (row) => { rowList.push(row) });
+
+  cp.on('end', async () => {
+    if(checkCsvData(rowList)) {
+      let treatedData = treatment(rowList)
       treatedData = await findType(treatedData, user)
       return res.status(200).json(treatedData)
     }
 
-    const flatted = Object.keys(extract.data[0])
-
+    // Check if separator seems to be semicolon, if not exit
+    const flatted = Object.keys(rowList[0])
     if(!flatted || !flatted[0] || flatted[0].split(";").length <= 2) {
       return res.status(401).json(badFileFormatERROR);
     }
 
-    const extractSemicolon = extractCSVData(file, true)
-    extractSemicolon.parser.on('end', async () => {
-      if(!checkCsvData(extractSemicolon.data)) {
+    const rowListSemicolon: any[] = []
+    const cpSC = parser({separator: ";"})
+    cpSC.write(file.buffer.toString('utf8'));
+    cpSC.end();
+    cpSC.on('data', (row) => { rowListSemicolon.push(row) });
+
+    cpSC.on('end', async () => {
+      if(!checkCsvData(rowListSemicolon)) {
         return res.status(401).json(badFileFormatERROR);
       }
-      let treatedData = treatment(extractSemicolon.data)
+      let treatedData = treatment(rowListSemicolon)
       treatedData = await findType(treatedData, user)
       return res.status(200).json(treatedData)
     });
   });
 };
 
-// ? Pour tableaux croisés
-// const values = Object.values(row)
-//     const keys = Object.keys(row)
-//     const name = values[0]
 
-//     values.shift()
-//     keys.shift()
+export const TreatDoubleCSV = async (req: Request, res: Response) => {
+  const user: any = await User.findById(req.params.id);
+  if (!user) { return res.status(401).json(noUserERROR) }
 
-//     let i = 0
-//     values.forEach((x) => {
-//       csvData.push({
-//         nom: name,
-//         date: keys[i],
-//         value: x
-//       })
-//       i += 1
-//     })
+  const file = req.file;
+  if(!file) { return res.status(401).json({ message: "Fichier non trouvé" }) }
 
-//     console.log(csvData)
+  const rowList: any[] = []
+  const cp = parser({separator: ","})
+  cp.write(file.buffer.toString('utf8'));
+  cp.end();
+  cp.on('data', async (row) => { rowList.push(row) });
+
+  cp.on('end', async () => {
+    const extractedData: any[] = rowList.flatMap((x) => extractDoubleCSVData(x))
+    if(checkCsvData(extractedData) && !isSemicolonOperator(rowList)) {
+      let treatedData = treatment(extractedData)
+      treatedData = await findType(treatedData, user)
+      return res.status(200).json(treatedData)
+    }
+
+    const rowListSemicolon: any[] = []
+    const cpSC = parser({separator: ";"})
+    cpSC.write(file.buffer.toString('utf8'));
+    cpSC.end();
+    cpSC.on('data', async (row) => { rowListSemicolon.push(row) });
+
+    cpSC.on('end', async () => {
+      const extractedData: any[] = rowListSemicolon.flatMap((x) => extractDoubleCSVData(x))
+      if(!checkCsvData(extractedData)) {
+        return res.status(401).json(badFileFormatERROR);
+      }
+      let treatedData = treatment(extractedData)
+      treatedData = await findType(treatedData, user)
+      return res.status(200).json(treatedData)
+    });
+  });
+};
 
 // ? Pour fichiers xlsx
 // if(file.originalname.split(".")[1] === 'xlsx') {

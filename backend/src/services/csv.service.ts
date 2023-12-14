@@ -63,21 +63,38 @@ export const findType = async (data: TreatedOperation[], user: any) => {
 }
 
 /**
- * Extract the data from the csv to an Array of objects
- * @param file 
- * @param separator 
- * @returns Array of object
+ * Vérifie que la data extraite ne contient pas de semicolon
+ * @param data 
+ * @returns boolean
  */
-export const extractCSVData = (file: Express.Multer.File, separator: boolean = false) => {
-  // Utiliser csv-parser pour convertir le fichier CSV en JSON
-  const data: any[] = []
-  const csvParser = parser({separator: separator? ";" : ","})
-  csvParser.write(file.buffer.toString('utf8'));
-  csvParser.end();
+export const isSemicolonOperator = (data: any) => {
+  if(!data || !Array.isArray(data) || !data[0]) return false
+  const values: string = Object.values<string>(data[0])[0]
+  return values.split(";").length > 2
+}
 
-  csvParser.on('data', (row) => {
-    data.push(row);
-  });
+/**
+ * Transforme la row brut en objet
+ * @param row 
+ * @returns 
+ */
+export const extractDoubleCSVData = (row: any) => {
+  const data: any = []
+  const values = Object.values(row)
+  const keys = Object.keys(row)
+  const name = values[0]
 
-  return {data: data, parser: csvParser}
+  values.shift()
+  keys.shift()
+
+  let i = 0
+  values.forEach((x) => {
+    data.push({
+      nom: name,
+      date: keys[i],
+      valeur: x
+    })
+    i += 1
+  })
+  return data
 }
