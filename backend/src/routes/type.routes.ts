@@ -7,8 +7,8 @@ import {
   // addKeyword, 
   createType
 } from "../controllers/type.controller";
-import { auth, authBodyID, findTokenUser } from "../middleware/auth";
-import { checkTypeProperty } from "../middleware/property";
+import { auth, authBodyID, findTokenUser } from "../middleware/auth.middleware";
+import { checkTypeProperty } from "../middleware/property.middleware";
 
 const router = express.Router();
 

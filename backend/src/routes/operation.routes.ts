@@ -8,8 +8,8 @@ import {
   findByDate,
   findRedondantOperations
 } from "../controllers/operation.controller";
-import { auth, authBodyID, authID, findTokenUser } from "../middleware/auth";
-import { checkOperationProperty } from "../middleware/property";
+import { auth, authBodyID, authID, findTokenUser } from "../middleware/auth.middleware";
+import { checkOperationProperty } from "../middleware/property.middleware";
 
 const router = express.Router();
 

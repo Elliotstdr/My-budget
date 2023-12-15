@@ -1,8 +1,14 @@
 import jwt from "jsonwebtoken";
-import { missInfoERROR, randomERROR } from "../services/const.service";
+import { accessDeniedERROR, missInfoERROR } from "../services/const.service";
 import { Request, Response } from "express";
 import { DUser, User } from "../models/user.model";
 
+/**
+ * Vérifie que le token est valide
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const auth = (req: any, res: any, next: any) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -30,7 +36,7 @@ export const authID = (req: Request, res: Response, next: any) => {
   const userId = (decodedToken as jwt.JwtPayload).userId;
 
   if(userId === req.params.id.toString()) next()
-  else res.status(401).json({message: "Accès non autorisé"})
+  else res.status(401).json(accessDeniedERROR)
 }
 
 /**
@@ -46,7 +52,7 @@ export const authBodyID = (req: Request, res: Response, next: any) => {
   const userId = (decodedToken as jwt.JwtPayload).userId;
 
   if(userId === req.body.user.toString()) next()
-  else res.status(401).json({message: "Accès non autorisé"})
+  else res.status(401).json(accessDeniedERROR)
 }
 
 /**
@@ -67,5 +73,5 @@ export const findTokenUser = async (req: Request, res: Response, next: any) => {
     req.body.user = user
     next()
   }
-  else res.status(401).json({message: "Accès non autorisé"})
+  else res.status(401).json(accessDeniedERROR)
 }

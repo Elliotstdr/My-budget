@@ -7,7 +7,7 @@ import {
   // Dashboard, 
   editPassword 
 } from "../controllers/user.controller";
-import { auth, authID } from "../middleware/auth";
+import { auth, authID } from "../middleware/auth.middleware";
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DUser, User } from "../models/user.model";
-import { badFileFormatERROR, noUserERROR, randomERROR } from "../services/const.service";
+import { badFileFormatERROR, noFileERROR, noUserERROR } from "../services/const.service";
 import { checkCsvData, findType, treatment, extractDoubleCSVData, isSemicolonOperator, treatmentXLSX, treatXlsxDates } from "../services/file.service";
 import parser from 'csv-parser'
 import exceljs from 'exceljs'
@@ -10,7 +10,7 @@ export const TreatFile = async (req: Request, res: Response) => {
   if (!user) { return res.status(401).json(noUserERROR) }
 
   const file = req.file;
-  if(!file) { return res.status(401).json({ message: "Fichier non trouvé" }) }
+  if(!file) { return res.status(401).json(noFileERROR) }
 
   let data: any = null
 
@@ -22,7 +22,7 @@ export const TreatFile = async (req: Request, res: Response) => {
       data = await caseSimpleXLSX(file, user)
     }
   } catch {
-    return res.status(401).json(randomERROR)
+    return res.status(401).json(badFileFormatERROR)
   }
   
   if(data) {
@@ -37,15 +37,19 @@ export const TreatDoubleFile = async (req: Request, res: Response) => {
   if (!user) { return res.status(401).json(noUserERROR) }
 
   const file = req.file;
-  if(!file) { return res.status(401).json({ message: "Fichier non trouvé" }) }
+  if(!file) { return res.status(401).json(noFileERROR) }
 
   let data: any = null
 
-  if(file.originalname.split(".")[1] === 'csv') {
-    data = await caseDoubleCSV(file, user)
-  }
-  if(file.originalname.split(".")[1] === 'xlsx') {
-    data = await caseDoubleXLSX(file, user)
+  try {
+    if(file.originalname.split(".")[1] === 'csv') {
+      data = await caseDoubleCSV(file, user)
+    }
+    if(file.originalname.split(".")[1] === 'xlsx') {
+      data = await caseDoubleXLSX(file, user)
+    }
+  } catch {
+    return res.status(401).json(badFileFormatERROR)
   }
   
   if(data) {

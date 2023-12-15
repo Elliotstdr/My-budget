@@ -1,8 +1,8 @@
 import express from "express";
 import { TreatFile, TreatDoubleFile } from "../controllers/file.controller";
-import { auth, authID } from "../middleware/auth";
+import { auth, authID } from "../middleware/auth.middleware";
 import multer from 'multer';
-import { timeout } from "../middleware/timeout";
+import { timeout } from "../middleware/timeout.middleware";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
