@@ -1,8 +1,8 @@
-interface RootState {
+type RootState = {
   auth: AuthState,
 }
 
-interface AuthState {
+type AuthState = {
   isConnected: boolean,
   token: string | null,
   userConnected: User | null,

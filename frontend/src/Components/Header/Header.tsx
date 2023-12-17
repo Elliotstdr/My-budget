@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./Header.scss";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
-interface Props {
+type Props = {
   title: string,
 }
 

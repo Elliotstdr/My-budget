@@ -2,7 +2,7 @@ import React from "react";
 import "./Modal.scss";
 import { Dialog } from "primereact/dialog";
 
-interface Props {
+type Props = {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
   header?: string,

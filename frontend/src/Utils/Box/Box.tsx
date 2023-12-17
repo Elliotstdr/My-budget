@@ -1,6 +1,6 @@
 import "./Box.scss";
 
-interface Props {
+type Props = {
   icon?: any,
   text: string,
   width?: string,

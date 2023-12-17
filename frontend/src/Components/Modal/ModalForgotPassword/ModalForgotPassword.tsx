@@ -11,12 +11,12 @@ import { errorToast, successToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchPost } from "../../../Services/api";
 
-interface Props {
+type Props = {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-interface Values {
+type Values = {
   email: string
   secretKey: string,
   resetKey: string,

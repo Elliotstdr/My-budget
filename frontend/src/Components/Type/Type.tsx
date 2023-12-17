@@ -4,13 +4,13 @@ import { fetchDelete, fetchPut } from "../../Services/api";
 import { errorToast } from "../../Services/functions";
 import { useSelector } from "react-redux";
 
-interface Props {
+type Props = {
   type: Type
   setType: React.Dispatch<React.SetStateAction<Type[]>>,
   editable: boolean
 }
 
-interface PutPayload {
+type PutPayload = {
   user: string,
   label: string,
 }

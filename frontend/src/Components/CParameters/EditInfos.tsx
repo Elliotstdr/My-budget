@@ -8,7 +8,7 @@ import { errorToast, successToast } from "../../Services/functions";
 import { UPDATE_AUTH } from "../../Store/Reducers/authReducer";
 import { fetchPut } from "../../Services/api";
 
-interface Values {
+type Values = {
   email: string,
   username: string,
 }

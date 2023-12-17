@@ -5,13 +5,13 @@ import { errorToast } from "../../Services/functions";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 
-interface Props {
+type Props = {
   operation: Operation
   setOperations: React.Dispatch<React.SetStateAction<Operation[]>>
   types: Type[]
 }
 
-interface PutPayload {
+type PutPayload = {
   label: string,
   value: number
 }

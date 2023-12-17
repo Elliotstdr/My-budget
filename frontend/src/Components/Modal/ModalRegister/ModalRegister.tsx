@@ -11,13 +11,13 @@ import { errorToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchGet, fetchPost } from "../../../Services/api";
 
-interface Props {
+type Props = {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
   header: string
 }
 
-interface Values {
+type Values = {
   username: string,
   email: string,
   password: string,

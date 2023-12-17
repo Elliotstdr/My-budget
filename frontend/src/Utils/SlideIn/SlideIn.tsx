@@ -2,7 +2,7 @@ import React from "react";
 import "./SlideIn.scss";
 import { Sidebar } from "primereact/sidebar";
 
-interface Props {
+type Props = {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
   className?: string,

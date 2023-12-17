@@ -7,7 +7,7 @@ import { errorToast, successToast } from "../../Services/functions";
 import { fetchPost } from "../../Services/api";
 import { Password } from "primereact/password";
 
-interface Values {
+type Values = {
   password: string,
   oldPassword: string
 }

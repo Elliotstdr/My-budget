@@ -1,6 +1,6 @@
 import { formatMonthYear } from "./functions"
 
-interface ExtendedOP extends Operation {
+type ExtendedOP = Operation & {
   shortDate: string
 }
 

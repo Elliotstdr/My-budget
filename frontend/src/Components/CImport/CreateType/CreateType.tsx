@@ -13,11 +13,11 @@ import NavBar from "../../NavBar/NavBar";
 import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 
-interface Values {
+type Values = {
   name: string,
 }
 
-interface NewType {
+type NewType = {
   label: string,
   keywords: string[],
   user: string

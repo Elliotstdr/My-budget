@@ -1,7 +1,7 @@
 import "./ReturnButton.scss";
 import { IoIosArrowBack } from "react-icons/io";
 
-interface Props {
+type Props = {
   action?: React.MouseEventHandler<HTMLButtonElement>
 }
 
