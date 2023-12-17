@@ -2,6 +2,7 @@ interface User {
   _id: string,
   username: string,
   email: string,
+  allowPropositions: boolean
 }
 
 interface Operation {

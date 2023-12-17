@@ -4,6 +4,7 @@ const INITIAL_STATE: AuthState = {
   userConnected: null,
   newLogTime: null,
   toast: null,
+  allowPropositions: false
 };
 
 export const UPDATE_AUTH = "UPDATE_AUTH";

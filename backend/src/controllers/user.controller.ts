@@ -16,7 +16,7 @@ export const findUser = async (req: Request, res: Response) => {
 export const editUser = async (req: Request, res: Response) => {
   const user: Partial<DUser> | null = await User.findById(req.params.id).select('-password');
 
-  if(!req.body.email || !req.body.username) {
+  if(!req.body.email && !req.body.username && !req.body.allowPropositions) {
     return res.status(401).json(missInfoERROR);
   }
 
@@ -24,17 +24,21 @@ export const editUser = async (req: Request, res: Response) => {
     return res.status(401).json(noUserERROR);
   }
 
+  const newUser: Partial<DUser> = {}
+  if(req.body.allowPropositions) newUser.allowPropositions = req.body.allowPropositions
+  if(req.body.email) newUser.email = req.body.email
+  if(req.body.username) newUser.username = req.body.username
+
   // Vérifie que le nouveau mail n'est pas déjà utilisé
-  if(req.body.email !== user.email) {
+  if(newUser.email && newUser.email !== user.email) {
     const existingUser = await User.find({ email: req.body.email })
     if(existingUser) {
       return res.status(401).json({ message: "Un erreur est survenue, essayez un autre email" });
     }
   }
 
-  const newUser = {
-    username: req.body.username,
-    email: req.body.email
+  if(newUser.allowPropositions) {
+    newUser.allowPropositions = newUser.allowPropositions
   }
 
   User.findByIdAndUpdate(user, newUser, { new: true })

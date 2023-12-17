@@ -6,6 +6,7 @@ type DUser = Document & {
   username: string,
   email: string;
   password: string;
+  allowPropositions: boolean
 };
 
 const usersSchema = new Schema(
@@ -23,6 +24,10 @@ const usersSchema = new Schema(
       type: Schema.Types.String,
       required: true,
     },
+    allowPropositions: {
+      type: Schema.Types.Boolean,
+      default: true
+    }
   },
   {
     collection: USER_COLLECTION,

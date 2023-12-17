@@ -3,17 +3,21 @@ import "./ImportManuel.scss";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { useEffect, useState } from "react";
-import { fetchPost, useFetchGet } from "../../../Services/api";
+import { fetchPost, fetchPut, useFetchGet } from "../../../Services/api";
 import { Calendar } from 'primereact/calendar';
 import { Divider } from 'primereact/divider';
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { errorToast, rangeTiretDate } from "../../../Services/functions";
 import Operation from "../../Operation/Operation";
 import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
 import NavBar from "../../NavBar/NavBar";
+import SlideIn from "../../../Utils/SlideIn/SlideIn";
+import OperationsImported from "../../OperationsImported/OperationsImported";
+import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
+import { InputSwitch } from "primereact/inputswitch";
 
 interface Values {
   name: string,
@@ -24,11 +28,17 @@ interface Values {
 const ImportManuel = () => {
   const navigate = useNavigate()
   const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  const updateAuth = (value: Partial<AuthState>) => {
+    dispatch({ type: UPDATE_AUTH, value });
+  };
   const typesData = useFetchGet<Type[]>("/type")
   const [ddType, setDdType] = useState<Type | null>(null)
   const [date, setDate] = useState<Date | null | undefined>(null)
   const [operations, setOperations] = useState<Operation[]>([])
   const [isProposedType, setIsProposedType] = useState(true)
+  const [openPropositions, setOpenPropositions] = useState(false)
+  const [redondantOperations, setRedondantOperations] = useState<ImportedOperation[]>([])
   const defaultValues: Values = {
     name: "",
     value: "",
@@ -75,15 +85,80 @@ const ImportManuel = () => {
       if (data.error) return
 
       setOperations(data.data)
+
+      if (data.data?.length === 0 && auth.userConnected?.allowPropositions) findRedondantOperations()
     }
     // call the function
     fetchData()
+    // eslint-disable-next-line
   }, [date])
+
+  const findRedondantOperations = async () => {
+    if (!auth.userConnected?._id) return
+    const operations = await fetchPost(`/operation/redondant/user/${auth.userConnected._id}`, {})
+
+    if (!operations.data) return
+    setRedondantOperations(operations.data.map((x: any, key: number) => {
+      return {
+        ...x,
+        id: key
+      }
+    }))
+    setOpenPropositions(true)
+  }
+
+  const createItem = async (item: ImportedOperation) => {
+    if (!auth.userConnected || !item.type || !date) return
+
+    const itemDate = date
+    itemDate.setHours(itemDate.getHours() + 12)
+
+    const payload: NewOperation = {
+      label: item.nom,
+      value: Number(item.valeur),
+      type: item.type,
+      user: auth.userConnected._id,
+      datePeriod: itemDate
+    }
+
+    const newOperation = await fetchPost("/operation", payload)
+    if (newOperation.error) {
+      errorToast(newOperation)
+      return
+    }
+
+    setOperations((prev) => [...prev, newOperation.data])
+  }
+
+  useEffect(() => {
+    if (redondantOperations.length === 0) setOpenPropositions(false)
+  }, [redondantOperations])
+
+  const editAllowStatus = async () => {
+    if (!auth.userConnected) return
+
+    const payloadUser = {
+      ...auth.userConnected,
+      allowPropositions: !auth.userConnected.allowPropositions
+    }
+
+    const newUser = await fetchPut(`/user/${auth.userConnected._id}`, payloadUser)
+    if (newUser.data) updateAuth({ userConnected: payloadUser })
+  }
   return (
     <>
       <Header title="Import manuel"></Header>
       <div className='importmanuel page'>
-        <ReturnButton action={() => navigate("/import")}></ReturnButton>
+        <div className="importmanuel__top">
+          <ReturnButton action={() => navigate("/import")}></ReturnButton>
+          <div className="importmanuel__top__right">
+            <InputSwitch
+              checked={auth.userConnected!.allowPropositions}
+              onChange={() => editAllowStatus()}
+            />
+            <span>Propositions</span>
+          </div>
+        </div>
         <Calendar
           value={date}
           onChange={(e) => {
@@ -159,6 +234,20 @@ const ImportManuel = () => {
         </div>
       </div>
       <NavBar></NavBar>
+      {openPropositions && <SlideIn
+        visible={openPropositions}
+        setVisible={setOpenPropositions}
+        className="sidebar-propositions"
+      >
+        <h2>Propositions d'opérations</h2>
+        {redondantOperations.map((x) => <OperationsImported
+          key={x.id}
+          operation={x}
+          setImportedData={setRedondantOperations}
+          createItem={createItem}
+          typesData={typesData.data ?? []}
+        ></OperationsImported>)}
+      </SlideIn>}
     </>
   );
 };

@@ -128,8 +128,8 @@ export const findRedondantOperations = async (req: Request, res: Response) => {
 
   const finalData = arrayGroup.map((x) => {
     return {
-      label: x[0].label,
-      value: x[0].value,
+      nom: x[0].label,
+      valeur: x[0].value,
       type: x[0].type._id
     }
   })

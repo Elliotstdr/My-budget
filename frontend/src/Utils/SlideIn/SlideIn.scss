@@ -1,0 +1,23 @@
+@use "src/style.scss" as c;
+
+.p-sidebar {
+  &-header {
+    padding: 0.5rem 1rem !important;
+    background-color: var(--main-color);
+    .p-sidebar-close {
+      color: white !important;
+      &:hover {
+        color: var(--main-color) !important;
+      }
+    }
+  }
+  &-content {
+    padding: 0 0.5rem 1.25rem 0.5rem !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .p-sidebar {
+    width: 95% !important;
+  }
+}
