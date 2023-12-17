@@ -19,7 +19,7 @@ import OperationsImported from "../../OperationsImported/OperationsImported";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { InputSwitch } from "primereact/inputswitch";
 
-interface Values {
+type Values = {
   name: string,
   value: string,
   type: Type | null
@@ -98,7 +98,7 @@ const ImportManuel = () => {
     const operations = await fetchPost(`/operation/redondant/user/${auth.userConnected._id}`, {})
 
     if (!operations.data) return
-    setRedondantOperations(operations.data.map((x: any, key: number) => {
+    setRedondantOperations(operations.data.map((x: Partial<ImportedOperation>, key: number) => {
       return {
         ...x,
         id: key

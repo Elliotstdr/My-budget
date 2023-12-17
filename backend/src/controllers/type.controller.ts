@@ -29,7 +29,7 @@ export const findType = async (req: Request, res: Response) => {
   res.status(200).json(type)
 };
 
-export const createType = async (req: any, res: any) => {
+export const createType = async (req: Request, res: Response) => {
   if(!req.body.user) {
     return res.status(401).json(randomERROR);
   }

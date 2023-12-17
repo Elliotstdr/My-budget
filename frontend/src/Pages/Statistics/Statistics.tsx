@@ -15,6 +15,11 @@ import { orderByDate } from "../../Services/functions";
 import { SelectButton } from 'primereact/selectbutton';
 import Bouton from "../../Utils/Bouton/Bouton";
 
+type PieDataItem = {
+  name: string,
+  value: number
+}
+
 const Statistics = () => {
   const items = [
     { name: 'Lignes', value: 1 },
@@ -36,7 +41,7 @@ const Statistics = () => {
   const [data, setData] = useState<CalculatedGroupOP[] | undefined>(undefined)
   const [value, setValue] = useState<1 | 2 | 3>(1);
   const [legends, setLegends] = useState<any>(null);
-  const [pieData, setPieData] = useState<any[] | undefined>(undefined)
+  const [pieData, setPieData] = useState<PieDataItem[] | undefined>(undefined)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [absolute, setAbsolute] = useState(false)
 
@@ -124,10 +129,10 @@ const Statistics = () => {
       setPieData(undefined)
       return
     }
-    let tempPieData = []
+    let tempPieData: PieDataItem[] = []
     for (const [cle, valeur] of Object.entries(data[0])) {
       if (cle !== "date" && cle !== "Total") {
-        tempPieData.push({ name: cle, value: valeur })
+        tempPieData.push({ name: cle, value: valeur as number })
       }
     }
     tempPieData.sort((a, b) => b.value - a.value)
@@ -244,6 +249,7 @@ const Statistics = () => {
                   .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
                   .map((key, index) => (
                     <Bar
+                      key={key}
                       dataKey={key}
                       fill={colorArray[index]}
                       hide={legends && legends[key] === true}
@@ -283,6 +289,7 @@ const Statistics = () => {
                   .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
                   .map((key, index) => (
                     <Line
+                      key={key}
                       type="monotone"
                       dataKey={key}
                       stroke={colorArray[index]}

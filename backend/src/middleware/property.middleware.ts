@@ -1,9 +1,10 @@
+import { NextFunction, Request, Response } from "express";
 import { DOperation, Operation } from "../models/operation.model";
 import { DType, Type } from "../models/type.model";
 import { compareTokenUserID } from "../services/auth.service";
 import { noOperationERROR, noTypeERROR } from "../services/const.service";
 
-export const checkTypeProperty = async (req: any, res: any, next: any) => {
+export const checkTypeProperty = async (req: Request, res: Response, next: NextFunction) => {
   const type: DType | null = await Type.findOne({ _id: req.params.id })
 
   if(!type) {
@@ -17,7 +18,7 @@ export const checkTypeProperty = async (req: any, res: any, next: any) => {
   next()
 }
 
-export const checkOperationProperty = async (req: any, res: any, next: any) => {
+export const checkOperationProperty = async (req: Request, res: Response, next: NextFunction) => {
   const operation: DOperation | null = await Operation.findOne({ _id: req.params.id })
 
   if(!operation) {

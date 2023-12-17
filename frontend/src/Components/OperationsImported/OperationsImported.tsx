@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import "./OperationsImported.scss";
 import { Dropdown } from "primereact/dropdown";
 
-interface Props {
+type Props = {
   operation: ImportedOperation,
   setImportedData: React.Dispatch<React.SetStateAction<ImportedOperation[]>>,
-  createItem: (item: any) => void,
+  createItem: (item: ImportedOperation) => void,
   typesData: Type[]
 }
 

@@ -1,37 +1,41 @@
 import { DOperation, Operation } from "../models/operation.model"
-
-type TreatedOperation = {
-  date: string,
-  valeur: string | number,
-  nom: string,
-  type?: string
-}
+import { DUser } from "../models/user.model";
 
 /**
  * Check if data exists, as a first item and got "date", "nom" and "valeur" in its attributes
  * @param data 
  * @returns boolean
  */
-export const checkCsvData = (data: any) => {
+export const checkCsvData = (data: DynamicStringObject[]) => {
   return data && data[0] && data[0].date && data[0].nom && data[0].valeur
 }
 
 /**
  * Refine and sort the data from csv
  * @param data 
- * @returns 
+ * @returns TreatedOperation[]
  */
-export const treatment = (data: any) => {
+export const treatment = (data: DynamicStringObject[]) => {
   // Delete empty attributes
-  const newData: TreatedOperation[] = data.map((x: TreatedOperation) => 
+  const newData: DynamicStringObject[] = data.map((x: DynamicStringObject) => 
     Object.fromEntries(
       Object.entries(x).filter(([key, value]) => value !== "" && key !== "")
     )
   )
   // Keeps only objects with the 3 attributes, those whith a 3 part date and those whose "valeur" is a number
-  const filteredObject = newData.filter((x: TreatedOperation) => 
-    Object.values(x).length === 3 && x.date.split("/").length === 3 && Number((x.valeur as string).replace(",", "."))
-  )
+  const filteredObject: TreatedOperation[] = newData
+    .filter((x: DynamicStringObject) =>
+      x.date && x.nom && x.valeur && 
+      x.date.split("/").length === 3 && 
+      Number((x.valeur as string).replace(",", "."))
+    )
+    .map((x: Partial<TreatedOperation>) => {
+      return {
+        date: x.date as string,
+        nom: x.nom as string,
+        valeur: x.valeur as string
+      }
+    })
   // Convert "valeur" to number and replace comma by dot
   filteredObject.forEach((x: TreatedOperation) => x.valeur = Number((x.valeur as string).replace(",", ".")))
 
@@ -44,7 +48,7 @@ export const treatment = (data: any) => {
  * @param user 
  * @returns data with types if a correspondance exists
  */
-export const findType = async (data: TreatedOperation[], user: any) => {
+export const findType = async (data: TreatedOperation[], user: DUser) => {
   const operations: DOperation[] = await Operation.find({user: user})
 
   if(operations.length === 0) return data
@@ -66,7 +70,7 @@ export const findType = async (data: TreatedOperation[], user: any) => {
  * @param data 
  * @returns boolean
  */
-export const isSemicolonOperator = (data: any) => {
+export const isSemicolonOperator = (data: DynamicStringObject[]) => {
   if(!data || !Array.isArray(data) || !data[0]) return false
   const values: string = Object.values<string>(data[0])[0]
   return values.split(";").length > 2
@@ -75,10 +79,10 @@ export const isSemicolonOperator = (data: any) => {
 /**
  * Transforme la row brut en objet
  * @param row 
- * @returns 
+ * @returns TreatedOperation[]
  */
-export const extractDoubleCSVData = (row: any) => {
-  const data: any = []
+export const extractDoubleCSVData = (row: DynamicStringObject) => {
+  const data: TreatedOperation[] = []
   const values = Object.values(row)
   const keys = Object.keys(row)
   const name = values[0]
@@ -101,29 +105,39 @@ export const extractDoubleCSVData = (row: any) => {
 /**
  * Refine and sort the data from csv
  * @param data 
- * @returns 
+ * @returns TreatedOperation[]
  */
-export const treatmentXLSX = (data: any) => {
+export const treatmentXLSX = (data: DynamicStringObject[]) => {
   // Delete empty attributes
-  const newData: TreatedOperation[] = data.map((x: TreatedOperation) => 
+  const newData: DynamicStringObject[] = data.map((x: DynamicStringObject) => 
     Object.fromEntries(
       Object.entries(x).filter(([key, value]) => value !== "" && key !== "")
     )
   )
   // Keeps only objects with the 3 attributes, those whith a 3 part date and those whose "valeur" is a number
-  const filteredObject = newData.filter((x: TreatedOperation) => 
-    Object.values(x).length === 3 && x.date.split("/").length === 3 && Number(x.valeur)
-  )
+  const filteredObject = newData
+    .filter((x: DynamicStringObject) =>
+      x.date && x.nom && x.valeur && 
+      x.date.split("/").length === 3 && 
+      Number(x.valeur)
+    )
+    .map((x: Partial<TreatedOperation>) => {
+      return {
+        date: x.date as string,
+        nom: x.nom as string,
+        valeur: x.valeur as string | number
+      }
+    })
   return filteredObject
 }
 
 /**
  * Si la date est de type date, la met au format jj/mm/yyyy
  * @param data 
- * @returns 
+ * @returns DynamicStringObject[]
  */
-export const treatXlsxDates = (data: any[]) => {
-  const newData: any[] = []
+export const treatXlsxDates = (data: DynamicStringObject[]) => {
+  const newData: DynamicStringObject[] = []
   data.forEach((x) => {
     const date = x.date
     if(!date || typeof date === "string") {

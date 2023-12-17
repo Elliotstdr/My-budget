@@ -6,26 +6,28 @@ import parser from 'csv-parser'
 import exceljs from 'exceljs'
 
 export const TreatFile = async (req: Request, res: Response) => {
-  const user: any = await User.findById(req.params.id);
+  const user: DUser | null = await User.findById(req.params.id);
   if (!user) { return res.status(401).json(noUserERROR) }
 
   const file = req.file;
   if(!file) { return res.status(401).json(noFileERROR) }
 
-  let data: any = null
+  let data: TreatedOperation[] = []
 
   try {
     if(file.originalname.split(".")[1] === 'csv') {
-      data = await caseSimpleCSV(file, user)
+      const treatedData = await caseSimpleCSV(file, user)
+      if(treatedData) data = treatedData
     }
     if(file.originalname.split(".")[1] === 'xlsx') {
-      data = await caseSimpleXLSX(file, user)
+      const treatedData = await caseSimpleXLSX(file, user)
+      if(treatedData) data = treatedData
     }
   } catch {
     return res.status(401).json(badFileFormatERROR)
   }
   
-  if(data) {
+  if(data.length > 0) {
     res.status(200).json(data)
   } else {
     res.status(401).json(badFileFormatERROR)
@@ -33,35 +35,37 @@ export const TreatFile = async (req: Request, res: Response) => {
 };
 
 export const TreatDoubleFile = async (req: Request, res: Response) => {
-  const user: any = await User.findById(req.params.id);
+  const user: DUser | null = await User.findById(req.params.id);
   if (!user) { return res.status(401).json(noUserERROR) }
 
   const file = req.file;
   if(!file) { return res.status(401).json(noFileERROR) }
 
-  let data: any = null
+  let data: TreatedOperation[] = []
 
   try {
     if(file.originalname.split(".")[1] === 'csv') {
-      data = await caseDoubleCSV(file, user)
+      const treatedData = await caseDoubleCSV(file, user)
+      if(treatedData) data = treatedData
     }
     if(file.originalname.split(".")[1] === 'xlsx') {
-      data = await caseDoubleXLSX(file, user)
+      const treatedData = await caseDoubleXLSX(file, user)
+      if(treatedData) data = treatedData
     }
   } catch {
     return res.status(401).json(badFileFormatERROR)
   }
   
-  if(data) {
+  if(data.length > 0) {
     res.status(200).json(data)
   } else {
     res.status(401).json(badFileFormatERROR)
   }
 };
 
-const caseSimpleCSV = async (file: any, user: DUser) => {
-  return new Promise<any>((resolve) => {
-    const rowList: any[] = []
+const caseSimpleCSV = async (file: Express.Multer.File, user: DUser) => {
+  return new Promise<TreatedOperation[] | undefined>((resolve) => {
+    const rowList: DynamicStringObject[] = []
     const cp = parser({separator: ","})
     cp.write(file.buffer.toString('utf8'));
     cp.end();
@@ -79,7 +83,7 @@ const caseSimpleCSV = async (file: any, user: DUser) => {
         return
       }
 
-      const rowListSemicolon: any[] = []
+      const rowListSemicolon: DynamicStringObject[] = []
       const cpSC = parser({separator: ";"})
       cpSC.write(file.buffer.toString('utf8'));
       cpSC.end();
@@ -97,8 +101,8 @@ const caseSimpleCSV = async (file: any, user: DUser) => {
   })
 }
 
-const caseSimpleXLSX = async (file: any, user: DUser) => {
-  const data: any[] = []
+const caseSimpleXLSX = async (file: Express.Multer.File, user: DUser) => {
+  const data: DynamicStringObject[] = []
   const workbook = new exceljs.Workbook();
   await workbook.xlsx.load(file.buffer).then(async () => {
     const worksheet = workbook.worksheets[0];
@@ -106,7 +110,7 @@ const caseSimpleXLSX = async (file: any, user: DUser) => {
     const keys = (worksheet.getRow(1).values as string[]).filter((x) => x !== undefined)
     // Parcourez les lignes de la feuille de calcul
     for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
-      const rowData: Record<string, any> = {};
+      const rowData: DynamicStringObject = {};
   
       // Accédez aux cellules de chaque ligne
       worksheet.getRow(rowNumber).eachCell((cell, colNumber) => {
@@ -119,38 +123,38 @@ const caseSimpleXLSX = async (file: any, user: DUser) => {
   })
 
   if(checkCsvData(data)) {
-    let treatedData = treatXlsxDates(data)
-    treatedData = treatmentXLSX(treatedData)
+    const treatedDatesData = treatXlsxDates(data)
+    let treatedData = treatmentXLSX(treatedDatesData)
     treatedData = await findType(treatedData, user)
     return treatedData
   }
   return
 }
 
-const caseDoubleCSV = async(file: any, user: DUser) => {
-  return new Promise<any>((resolve) => {
-    const rowList: any[] = []
+const caseDoubleCSV = async(file: Express.Multer.File, user: DUser) => {
+  return new Promise<TreatedOperation[] | undefined>((resolve) => {
+    const rowList: DynamicStringObject[] = []
     const cp = parser({separator: ","})
     cp.write(file.buffer.toString('utf8'));
     cp.end();
     cp.on('data', async (row) => { rowList.push(row) });
 
     cp.on('end', async () => {
-      const extractedData: any[] = rowList.flatMap((x) => extractDoubleCSVData(x))
+      const extractedData = rowList.flatMap((x) => extractDoubleCSVData(x))
       if(checkCsvData(extractedData) && !isSemicolonOperator(rowList)) {
         let treatedData = treatment(extractedData)
         treatedData = await findType(treatedData, user)
         resolve(treatedData)
       }
 
-      const rowListSemicolon: any[] = []
+      const rowListSemicolon: DynamicStringObject[] = []
       const cpSC = parser({separator: ";"})
       cpSC.write(file.buffer.toString('utf8'));
       cpSC.end();
       cpSC.on('data', async (row) => { rowListSemicolon.push(row) });
 
       cpSC.on('end', async () => {
-        const extractedData: any[] = rowListSemicolon.flatMap((x) => extractDoubleCSVData(x))
+        const extractedData: TreatedOperation[] = rowListSemicolon.flatMap((x) => extractDoubleCSVData(x))
         if(!checkCsvData(extractedData)) return
         let treatedData = treatment(extractedData)
         treatedData = await findType(treatedData, user)
@@ -160,15 +164,15 @@ const caseDoubleCSV = async(file: any, user: DUser) => {
   })
 }
 
-const caseDoubleXLSX = async(file: any, user: DUser) => {
-  const data: any[] = []
+const caseDoubleXLSX = async(file: Express.Multer.File, user: DUser) => {
+  const data: TreatedOperation[] = []
   const workbook = new exceljs.Workbook();
   await workbook.xlsx.load(file.buffer).then(async () => {
     const worksheet = workbook.worksheets[0];
 
     const dates = (worksheet.getRow(1).values as string[]).filter((x) => x !== undefined)
     const names = []
-    const values: any[] = []
+    const values: DynamicStringObject[] = []
     // Parcourez les lignes de la feuille de calcul
     for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
       // Accédez aux cellules de chaque ligne

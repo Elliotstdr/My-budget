@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response) => {
 
   bcrypt
     .compare(req.body.password, foundedUser.password)
-    .then((valid: any) => {
+    .then((valid) => {
       if (!valid) return res.status(401).json(loginERROR);
       res.status(200).json({
         userId: foundedUser._id,

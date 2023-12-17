@@ -3,6 +3,10 @@ import { Request, Response } from "express";
 import { TYPE_REF, USER_REF, noOperationERROR, randomERROR } from "../services/const.service";
 import { EditKeyword } from "../services/operation.service";
 
+type GroupedOperations = {
+  [key: string]: DOperation[];
+};
+
 export const findAllOperations = async (req: Request, res: Response) => {
   const operations: DOperation[] = await Operation
     .find({ user: req.body.user })
@@ -54,7 +58,7 @@ export const findOperation = async (req: Request, res: Response) => {
   res.status(200).json(operation)
 };
 
-export const createOperation = async (req: any, res: any) => {
+export const createOperation = async (req: Request, res: Response) => {
   delete req.body._id;
   const operation = new Operation({
     ...req.body,
@@ -113,7 +117,7 @@ export const findRedondantOperations = async (req: Request, res: Response) => {
 
   operationsWithoutUser = operationsWithoutUser.filter((op) => op.type.user === null)
 
-  const group: Record<string, DOperation[]> = operationsWithoutUser.reduce((acc: any, obj: DOperation) => {
+  const group: GroupedOperations = operationsWithoutUser.reduce((acc: GroupedOperations, obj: DOperation) => {
     // créé une key à partir du label et de la value qui sont nos éléments de groupement
     const key = `${obj.label}-${obj.value}`;
     if (!acc[key]) {

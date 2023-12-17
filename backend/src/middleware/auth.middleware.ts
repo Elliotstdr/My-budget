@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { accessDeniedERROR, missInfoERROR } from "../services/const.service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { DUser, User } from "../models/user.model";
 
 /**
@@ -9,14 +9,11 @@ import { DUser, User } from "../models/user.model";
  * @param res 
  * @param next 
  */
-export const auth = (req: any, res: any, next: any) => {
+export const auth = (req: Request, res: Response, next: NextFunction) => {
+  if(!req.headers.authorization) return res.status(401).json(missInfoERROR);
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-    const userId = (decodedToken as jwt.JwtPayload).userId;
-    req.auth = {
-      userId: userId,
-    };
+    jwt.verify(token, "RANDOM_TOKEN_SECRET");
     next();
   } catch (error) {
     res.status(401).json({ error });
@@ -30,7 +27,7 @@ export const auth = (req: any, res: any, next: any) => {
  * @param next 
  * @returns 
  */
-export const authID = (req: Request, res: Response, next: any) => {
+export const authID = (req: Request, res: Response, next: NextFunction) => {
   if(!req.headers.authorization || !req.params.id) return res.status(401).json(missInfoERROR);
   const decodedToken = jwt.verify(req.headers.authorization?.split(" ")[1], "RANDOM_TOKEN_SECRET");
   const userId = (decodedToken as jwt.JwtPayload).userId;
@@ -46,7 +43,7 @@ export const authID = (req: Request, res: Response, next: any) => {
  * @param next 
  * @returns 
  */
-export const authBodyID = (req: Request, res: Response, next: any) => {
+export const authBodyID = (req: Request, res: Response, next: NextFunction) => {
   if(!req.headers.authorization || !req.body.user) return res.status(401).json(missInfoERROR);
   const decodedToken = jwt.verify(req.headers.authorization?.split(" ")[1], "RANDOM_TOKEN_SECRET");
   const userId = (decodedToken as jwt.JwtPayload).userId;
@@ -62,7 +59,7 @@ export const authBodyID = (req: Request, res: Response, next: any) => {
  * @param next 
  * @returns 
  */
-export const findTokenUser = async (req: Request, res: Response, next: any) => {
+export const findTokenUser = async (req: Request, res: Response, next: NextFunction) => {
   if(!req.headers.authorization) return res.status(401).json(missInfoERROR);
   const decodedToken = jwt.verify(req.headers.authorization?.split(" ")[1], "RANDOM_TOKEN_SECRET");
   const userId = (decodedToken as jwt.JwtPayload).userId;

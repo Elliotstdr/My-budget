@@ -1,11 +1,11 @@
-interface User {
+type User = {
   _id: string,
   username: string,
   email: string,
   allowPropositions: boolean
 }
 
-interface Operation {
+type Operation = {
   _id: string,
   label: string,
   value: number,
@@ -14,7 +14,7 @@ interface Operation {
   datePeriod: Date
 }
 
-interface Type {
+type Type = {
   _id: string,
   label: string,
   keywords: string[],
@@ -29,7 +29,7 @@ type ImportedOperation = {
   type?: string
 }
 
-interface NewOperation {
+type NewOperation = {
   label: string,
   value: number,
   type: string,
@@ -37,8 +37,9 @@ interface NewOperation {
   datePeriod: Date
 }
 
-interface CalculatedGroupOP {
+type CalculatedGroupOP = {
   Total: number,
   "Total-abs": number,
-  date: string
+  date: string,
+  [key: string]: number;
 }

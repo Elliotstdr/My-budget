@@ -57,8 +57,8 @@ const History = () => {
           showButtonBar
         />
         <div className="history__list">
-          {operations.length > 0 && groupByMonth(operations).map((groupOperation) =>
-            <>
+          {operations.length > 0 && groupByMonth(operations).map((groupOperation, key) =>
+            <div key={key}>
               <div className="divider" style={{ display: "flex", alignItems: "center" }}>
                 <span style={{ margin: "0 0.5rem" }}>
                   {literalMonthAndYear(new Date(groupOperation[0].datePeriod))}
@@ -73,7 +73,7 @@ const History = () => {
                   types={typesData.data ?? []}
                 ></Operation>
               )}
-            </>
+            </div>
           )}
         </div>
       </div>

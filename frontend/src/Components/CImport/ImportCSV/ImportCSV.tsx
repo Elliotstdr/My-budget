@@ -48,7 +48,7 @@ const ImportCSV = () => {
     }
 
     setSuccessImport(true)
-    setImportedData(res.data.map((x: any, key: number) => {
+    setImportedData(res.data.map((x: Partial<ImportedOperation>, key: number) => {
       return {
         ...x,
         id: key
