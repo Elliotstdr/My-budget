@@ -83,12 +83,3 @@ export const removeUser = async (req: Request, res: Response) => {
     .then(() => res.status(200).json({ message: "Objet supprimé !" }))
     .catch(() => res.status(400).json(randomERROR));
 };
-
-// TODO Delete if unused
-// export const Statistics = async (req: Request, res: Response) => {
-//   res.status(200).json("Statistics")
-// };
-
-// export const Dashboard = async (req: Request, res: Response) => {
-//   res.status(200).json("Dashboard")
-// };

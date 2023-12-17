@@ -98,31 +98,3 @@ export const removeType = async (req: Request, res: Response) => {
     })
     .catch(() => res.status(400).json(randomERROR));
 };
-
-// TODO Delete if unused
-// export const addKeyword = async (req: Request, res: Response) => {
-//   const newKeyword = req.body.keyword;
-//   if(!newKeyword) return
-
-//   const type: DType | null = await Type.findById(req.body.id);
-
-//   if (!type) {
-//     return res.status(401).json(noTypeERROR);
-//   }
-
-//   if(!compareTokenUserID(req.headers.authorization, type?.user?._id)) {
-//     return res.status(401).json({ message: "Vous n'avez pas l'autorisation de modifier ce type" });
-//   }
-
-//   const keywords = {
-//     keywords: type?.keywords ? [...type?.keywords, newKeyword] : [newKeyword]
-//   }
-
-//   try {
-//     const updatedType: DType | null = await Type.findByIdAndUpdate(type, keywords, { new: true })
-//     updatedType?.populate(USER_REF)
-//     res.status(200).json(updatedType)
-//   } catch (error) {
-//     res.status(400).json(randomERROR);
-//   }
-// };
