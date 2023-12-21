@@ -15,6 +15,8 @@ import ImportManuel from '../Components/CImport/ImportManuel/ImportManuel';
 import ImportCSV from '../Components/CImport/ImportCSV/ImportCSV';
 import CreateType from '../Components/CImport/CreateType/CreateType';
 import { checkActivity, checkToken, timer } from '../Services/refreshToken';
+import Salary from '../Components/CTools/Salary/Salary';
+import Loan from '../Components/CTools/Loan/Loan';
 
 function App() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -64,6 +66,8 @@ function App() {
               <Route path="/import/type" element={<CreateType />}></Route>
               <Route path="/statistics" element={<Statistics />}></Route>
               <Route path="/tools" element={<Tools />}></Route>
+              <Route path="/tools/salary" element={<Salary />}></Route>
+              <Route path="/tools/loan" element={<Loan />}></Route>
               <Route path="/history" element={<History />}></Route>
               <Route path="/parameters" element={<Parameters />}></Route>
             </>

@@ -1,9 +1,7 @@
+@use "src/style.scss";
+
 .tools {
-  &__zero {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 2rem;
-  }
+  height: var(--screen-size);
+  justify-content: center;
+  gap: 2rem;
 }

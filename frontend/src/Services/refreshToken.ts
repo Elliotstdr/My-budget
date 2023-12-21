@@ -62,5 +62,6 @@ export const logOut = () => {
     token: null,
     userConnected: null,
   }));
-  window.location.href = "/";
+  // window.location.href = "/";
+  window.location.replace("/")
 };

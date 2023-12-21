@@ -243,6 +243,7 @@ const Statistics = () => {
                   onClick={selectBar}
                   onMouseOver={handleLegendMouseEnter}
                   onMouseOut={handleLegendMouseLeave}
+                  wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
                 />
                 {data && Object.keys(data[0])
                   .filter((key) => key !== "date")
@@ -270,7 +271,7 @@ const Statistics = () => {
                 data={data}
                 margin={{
                   top: 5,
-                  right: 30,
+                  right: 60,
                   left: 20,
                   bottom: 5,
                 }}
@@ -283,6 +284,7 @@ const Statistics = () => {
                   onClick={selectBar}
                   onMouseOver={handleLegendMouseEnter}
                   onMouseOut={handleLegendMouseLeave}
+                  wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
                 />
                 {data && data?.length > 0 && Object.keys(data[0])
                   .filter((key) => key !== "date")

@@ -1,34 +1,28 @@
-import { useState } from "react";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
 import Box from "../../Utils/Box/Box";
 import "./Tools.scss";
 import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const Tools = () => {
-  const [toolPage, setToolPage] = useState<0 | 1 | 2>(0)
-  const homeStyle = {
-    height: "var(--screen-size)",
-    justifyContent: "center"
-  }
+  const navigate = useNavigate()
   return (
     <>
       <Header title="Outils"></Header>
-      <div className="tools page" style={toolPage === 0 ? homeStyle : {}}>
-        {toolPage === 0 && <div className="tools__zero">
-          <Box
-            text="Salaire brut/net"
-            icon={<RiMoneyEuroCircleLine></RiMoneyEuroCircleLine>}
-            action={() => setToolPage(1)}
-            width="8rem"
-          ></Box>
-          <Box
-            text="Capacité d'emprunt"
-            icon={<RiBankFill></RiBankFill>}
-            action={() => setToolPage(2)}
-            width="8rem"
-          ></Box>
-        </div>}
+      <div className="tools page">
+        <Box
+          text="Salaire brut/net"
+          icon={<RiMoneyEuroCircleLine></RiMoneyEuroCircleLine>}
+          action={() => navigate("/tools/salary")}
+          width="8rem"
+        ></Box>
+        <Box
+          text="Capacité d'emprunt"
+          icon={<RiBankFill></RiBankFill>}
+          action={() => navigate("/tools/loan")}
+          width="8rem"
+        ></Box>
       </div>
       <NavBar></NavBar>
     </>

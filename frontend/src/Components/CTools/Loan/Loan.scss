@@ -1,0 +1,43 @@
+@use "src/style.scss";
+
+.loan {
+  padding: 1rem 0;
+  max-height: var(--screen-size);
+  overflow-y: scroll;
+  &__top {
+    padding: 0 2rem;
+    .p-slider {
+      margin-bottom: 2rem;
+    }
+    .label {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .important {
+      font-weight: bold;
+    }
+    &__result {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 2rem;
+      .label {
+        justify-content: space-between;
+      }
+    }
+  }
+  .custom-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 6px;
+  }
+  .recharts-default-legend {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+  }
+}
