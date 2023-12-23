@@ -3,6 +3,7 @@ import "./Type.scss";
 import { fetchDelete, fetchPut } from "../../Services/api";
 import { errorToast } from "../../Services/functions";
 import { useSelector } from "react-redux";
+import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
 type Props = {
   type: Type
@@ -49,11 +50,20 @@ const Type = (props: Props) => {
     <>
       {props.editable ?
         <div className='type'>
+          {/* <IconContext.Provider
+      value={{ color: 'blue', size: '50px' }}
+    >
+      <div>
+        <FaBeer />
+      </div>
+    </IconContext.Provider> */}
           <div
-            className="pi pi-times"
+            className="icon cross"
             style={{ cursor: "pointer" }}
             onClick={() => deleteType()}
-          ></div>
+          >
+            <FaRegTimesCircle></FaRegTimesCircle>
+          </div>
           <input
             className="type__label"
             value={newLabel}
@@ -70,7 +80,7 @@ const Type = (props: Props) => {
         </div>
         : (
           <div className='type'>
-            <div className="pi pi-check"></div>
+            <div className="icon check"><FaRegCheckCircle></FaRegCheckCircle></div>
             <div className="type__label">{newLabel}</div>
           </div>
         )

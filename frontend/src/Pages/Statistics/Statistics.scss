@@ -6,18 +6,17 @@
   .p-selectbutton {
     margin: 0.5rem 0;
   }
-  // .recharts-tooltip-item-list {
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   font-size: 0.7rem;
-  //   li {
-  //     margin: 0 0.25rem;
-  //   }
-  // }
+  .p-selectbutton {
+    transform: scale(0.9);
+  }
   &__buttons {
     display: flex;
     gap: 1rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
+    .bouton {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
   }
   .custom__tooltip {
     background-color: white;

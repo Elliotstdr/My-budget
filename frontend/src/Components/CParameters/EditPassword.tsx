@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { errorToast, successToast } from "../../Services/functions";
 import { fetchPost } from "../../Services/api";
 import { Password } from "primereact/password";
+import { MdLockOutline } from "react-icons/md";
 
 type Values = {
   password: string,
@@ -56,14 +57,17 @@ const EditPassword = () => {
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <Password
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Ancien mot de passe"}
-              className="param__form__field-oldPassword"
-              feedback={false}
-              toggleMask
-            />
+            <div className="box">
+              <MdLockOutline></MdLockOutline>
+              <Password
+                autoComplete="new-password"
+                {...field}
+                placeholder={"Ancien mot de passe"}
+                className="param__form__field-oldPassword"
+                feedback={false}
+                toggleMask
+              />
+            </div>
           )}
         />
         {errors.oldPassword && <small className="p-error">L'ancien mot de passe est obligatoire</small>}
@@ -75,16 +79,19 @@ const EditPassword = () => {
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <Password
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Mot de passe"}
-              className="param__form__field-password"
-              onChange={(e) => {
-                field.onChange(e.target.value);
-              }}
-              toggleMask
-            />
+            <div className="box">
+              <MdLockOutline></MdLockOutline>
+              <Password
+                autoComplete="new-password"
+                {...field}
+                placeholder={"Mot de passe"}
+                className="param__form__field-password"
+                onChange={(e) => {
+                  field.onChange(e.target.value);
+                }}
+                toggleMask
+              />
+            </div>
           )}
         />
       </div>

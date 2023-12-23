@@ -22,13 +22,13 @@ type PieDataItem = {
 
 const Statistics = () => {
   const items = [
-    { name: 'Lignes', value: 1 },
-    { name: 'Barres', value: 2 },
+    { name: 'Barres', value: 1 },
+    { name: 'Lignes', value: 2 },
     { name: 'Camembert', value: 3 }
   ];
 
   const colorArray = [
-    "#1F618D", "#148F77", "#D4AC0D", // Blue Sapphire, Mountain Meadow, Ochre
+    "#148F77", "#1F618D", "#D4AC0D", // Mountain Meadow, Blue Sapphire, Ochre
     "#AF601A", "#633974", "#BA4A00", // Rust, Dark Purple, Burnt Sienna
     "#3498DB", "#17A589", "#D35400", // Sky Blue, Shamrock, Pumpkin
     "#CB4335", "#7D6608", "#6C3483", // Mahogany, Olive Drab, Royal Purple
@@ -197,7 +197,7 @@ const Statistics = () => {
           optionLabel="name"
           options={pieData ? items : items.filter((x) => x.value !== 3)}
         />
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={300} style={{ margin: "0.5rem 0" }}>
           {value === 3 ?
             <PieChart width={500} height={500}>
               <Pie
@@ -224,48 +224,7 @@ const Statistics = () => {
               <Tooltip />
             </PieChart>
             : value === 2 ?
-              <BarChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip content={CustomTooltip} />
-                <Legend
-                  onClick={selectBar}
-                  onMouseOver={handleLegendMouseEnter}
-                  onMouseOut={handleLegendMouseLeave}
-                  wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
-                />
-                {data && Object.keys(data[0])
-                  .filter((key) => key !== "date")
-                  .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
-                  .map((key, index) => (
-                    <Bar
-                      key={key}
-                      dataKey={key}
-                      fill={colorArray[index]}
-                      hide={legends && legends[key] === true}
-                      fillOpacity={Number(
-                        !legends || legends.hover === key || !legends.hover ? 1 : 0.2
-                      )}
-                      strokeOpacity={Number(
-                        !legends || legends.hover === key || !legends.hover ? 1 : 0.2
-                      )}
-                      onMouseOver={() => setHoveredItem(key)}
-                      name={key.split("-abs")[0]}
-                    />
-                  ))}
-              </BarChart>
-              : <LineChart
+              <LineChart
                 width={500}
                 height={300}
                 data={data}
@@ -286,16 +245,58 @@ const Statistics = () => {
                   onMouseOut={handleLegendMouseLeave}
                   wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
                 />
-                {data && data?.length > 0 && Object.keys(data[0])
+                {data && data?.length > 0 &&
+                  Object.keys(data.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0])
+                    .filter((key) => key !== "date")
+                    .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
+                    .map((key, index) => (
+                      <Line
+                        key={key}
+                        type="monotone"
+                        dataKey={key}
+                        stroke={colorArray[index]}
+                        activeDot={{ r: 8, onMouseOver: () => setHoveredItem(key) }}
+                        hide={legends && legends[key] === true}
+                        fillOpacity={Number(
+                          !legends || legends.hover === key || !legends.hover ? 1 : 0.2
+                        )}
+                        strokeOpacity={Number(
+                          !legends || legends.hover === key || !legends.hover ? 1 : 0.2
+                        )}
+                        onMouseOver={() => setHoveredItem(key)}
+                        name={key.split("-abs")[0]}
+                      />
+                    ))}
+              </LineChart>
+              : <BarChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip content={CustomTooltip} />
+                <Legend
+                  onClick={selectBar}
+                  onMouseOver={handleLegendMouseEnter}
+                  onMouseOut={handleLegendMouseLeave}
+                  wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
+                />
+                {data && Object.keys(data.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0])
                   .filter((key) => key !== "date")
                   .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
                   .map((key, index) => (
-                    <Line
+                    <Bar
                       key={key}
-                      type="monotone"
                       dataKey={key}
-                      stroke={colorArray[index]}
-                      activeDot={{ r: 8, onMouseOver: () => setHoveredItem(key) }}
+                      fill={colorArray[index]}
                       hide={legends && legends[key] === true}
                       fillOpacity={Number(
                         !legends || legends.hover === key || !legends.hover ? 1 : 0.2
@@ -307,12 +308,11 @@ const Statistics = () => {
                       name={key.split("-abs")[0]}
                     />
                   ))}
-              </LineChart>
+              </BarChart>
           }
         </ResponsiveContainer>
         <div className="statistics__buttons">
           <Bouton
-            type="normal"
             btnTexte="Activer tout"
             btnAction={() => {
               const item = { ...legends }
@@ -322,9 +322,9 @@ const Statistics = () => {
             }}
           ></Bouton>
           <Bouton
-            type="normal"
             btnTexte={absolute ? "Valeur relative" : "Valeur absolue"}
             btnAction={() => setAbsolute(!absolute)}
+          // color="pink"
           ></Bouton>
         </div>
       </div>

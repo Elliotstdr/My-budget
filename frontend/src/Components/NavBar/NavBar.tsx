@@ -1,32 +1,32 @@
 import "./NavBar.scss";
-import { IoHomeOutline } from "react-icons/io5";
-import { CiImport } from "react-icons/ci";
-import { GoGraph } from "react-icons/go";
-import { VscTools } from "react-icons/vsc";
-import { MdHistory } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { FaUpload } from "react-icons/fa";
+import { FaChartLine } from "react-icons/fa6";
+import { FaTools } from "react-icons/fa";
+import { FaHistory } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <nav className="navbar">
       <NavLink className={(nav) => (nav.isActive ? "nav-active" : "")} to="/">
-        <IoHomeOutline />
+        <FaHome />
         <span>Accueil</span>
       </NavLink>
       <NavLink className={(nav) => (nav.isActive ? "nav-active" : "")} to="/import">
-        <CiImport />
+        <FaUpload />
         <span>Importer</span>
       </NavLink>
       <NavLink className={(nav) => (nav.isActive ? "nav-active" : "")} to="/statistics">
-        <GoGraph />
+        <FaChartLine />
         <span>Statistiques</span>
       </NavLink>
       <NavLink className={(nav) => (nav.isActive ? "nav-active" : "")} to="/tools">
-        <VscTools />
+        <FaTools />
         <span>Outils</span>
       </NavLink>
       <NavLink className={(nav) => (nav.isActive ? "nav-active" : "")} to="/history">
-        <MdHistory />
+        <FaHistory />
         <span>Historique</span>
       </NavLink>
     </nav>

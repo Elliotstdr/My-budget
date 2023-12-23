@@ -47,8 +47,8 @@ const Salary = () => {
   return (
     <>
       <Header title="Mon salaire"></Header>
-      <ReturnButton action={() => navigate("/tools")}></ReturnButton>
       <div className="salary">
+        <ReturnButton action={() => navigate("/tools")}></ReturnButton>
         <div>
           <div style={{ marginBottom: "0.75rem" }}>{`Salaire Brut Mensuel : ${salaireBrut}`}</div>
           <Slider

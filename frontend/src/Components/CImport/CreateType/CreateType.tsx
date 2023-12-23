@@ -67,6 +67,7 @@ const CreateType = () => {
       <div className='createtype page'>
         <ReturnButton action={() => navigate("/import")}></ReturnButton>
         <form className="createtype__form" onSubmit={handleSubmit(onSubmit)}>
+          <span>Creéz un nouveau type d'opération</span>
           <div className="createtype__form__input">
             <InputText
               {...register("name", { maxLength: 12 })}
@@ -75,10 +76,10 @@ const CreateType = () => {
               autoFocus
             />
             {errors.name && <small className="p-error">Le nom ne doit pas dépasser 12 caractères</small>}
+            <button className="createtype__form__button">
+              <AiOutlinePlusCircle></AiOutlinePlusCircle>
+            </button>
           </div>
-          <button className="createtype__form__button">
-            <AiOutlinePlusCircle></AiOutlinePlusCircle>
-          </button>
         </form>
         <Divider></Divider>
         <div className="createtype__list">

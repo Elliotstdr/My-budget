@@ -1,9 +1,31 @@
 @use "src/style.scss";
 
 .import {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
+
+  align-items: flex-start;
+  padding: 0 1.5rem;
+  &__top {
+    display: flex;
+    align-items: center;
+    color: var(--main-color);
+    gap: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    img {
+      width: 54px;
+    }
+  }
+  .boxes {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .title {
+    color: var(--main-color);
+  }
+  .boite span {
+    font-size: 1.1rem;
+  }
 }

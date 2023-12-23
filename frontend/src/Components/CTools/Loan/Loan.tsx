@@ -98,8 +98,8 @@ const Loan = () => {
   return (
     <>
       <Header title="Mon emprunt"></Header>
-      <ReturnButton action={() => navigate("/tools")}></ReturnButton>
       <div className='loan'>
+        <ReturnButton action={() => navigate("/tools")}></ReturnButton>
         <div className="loan__top">
           <div className="loan__capital label">
             <span>J'emprunte :</span>
@@ -167,7 +167,7 @@ const Loan = () => {
               dataKey="cost"
               yAxisId={2}
               fillOpacity={0.4}
-              fill="var(--main-color)"
+              fill="var(--third-color)"
               name="coût total"
             />
             <Line

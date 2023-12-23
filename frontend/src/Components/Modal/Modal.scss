@@ -5,19 +5,20 @@
 
   //?Header
   .p-dialog-header {
-    background: var(--main-color) !important;
-    color: white !important;
+    background: white !important;
+    color: var(--main-color) !important;
+    padding-bottom: 0rem !important;
     &-icon {
-      color: white !important;
-      &:hover {
-        color: black !important;
-      }
+      display: none !important;
     }
   }
   .p-dialog-title {
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 1.1rem !important;
+    font-size: 28px !important;
+    font-weight: bold !important;
+  }
+
+  .p-dialog-content {
+    padding: 0 1.5rem 2rem 1.5rem !important;
   }
 
   p {

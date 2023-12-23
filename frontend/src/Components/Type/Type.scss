@@ -7,5 +7,18 @@
     border: none;
     border-radius: 6px;
     padding: 0.5rem;
+    background-color: #3b3e4014;
+  }
+  .icon {
+    display: flex;
+    svg {
+      font-size: 1.3rem;
+    }
+    &.check {
+      color: #339c0e;
+    }
+    &.cross {
+      color: #e03232;
+    }
   }
 }

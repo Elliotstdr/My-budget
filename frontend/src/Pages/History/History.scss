@@ -1,8 +1,10 @@
 @use "src/style.scss";
 
 .history {
+  color: var(--main-color);
   &__list {
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
+    padding: 0 0.5rem;
   }
 }

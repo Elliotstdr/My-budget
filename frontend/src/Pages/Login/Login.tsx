@@ -3,7 +3,7 @@ import Bouton from "../../Utils/Bouton/Bouton";
 import "./Login.scss";
 import ModalLogin from "../../Components/Modal/ModalLogin/ModalLogin";
 import ModalRegister from "../../Components/Modal/ModalRegister/ModalRegister";
-import image from "../../assets/accueilHC.jpg";
+import image from "../../assets/tirelire-high.png";
 import ModalForgotPassword from "../../Components/Modal/ModalForgotPassword/ModalForgotPassword";
 
 const Login = () => {
@@ -14,6 +14,10 @@ const Login = () => {
   return (
     <div className="login">
       <img src={image} alt="background home" />
+      <span className="login__title">Mes comptes</span>
+      <span className="login__description">
+        Mon application personnelle pour gérer mes comptes en toute simplicité
+      </span>
       <div className="login__box">
         <Bouton
           btnTexte={"Se connecter"}
@@ -22,9 +26,10 @@ const Login = () => {
         <Bouton
           btnTexte={"Créer un compte"}
           btnAction={() => setVisibleModalRegister(true)}
+          color="pink"
         ></Bouton>
       </div>
-
+      <span className="login__sign">By Elliot Saint-André</span>
       {visibleModalLogin && (
         <ModalLogin
           visible={visibleModalLogin}

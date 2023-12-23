@@ -2,6 +2,19 @@
 
 .tools {
   height: var(--screen-size);
-  justify-content: center;
   gap: 2rem;
+  &__top {
+    display: flex;
+    align-items: center;
+    color: var(--main-color);
+    gap: 1rem;
+    padding: 0 1rem;
+    font-weight: bold;
+    img {
+      width: 54px;
+    }
+  }
+  .boite span {
+    font-size: 1.1rem;
+  }
 }

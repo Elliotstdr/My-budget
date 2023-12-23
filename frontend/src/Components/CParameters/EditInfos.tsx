@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast } from "../../Services/functions";
 import { UPDATE_AUTH } from "../../Store/Reducers/authReducer";
 import { fetchPut } from "../../Services/api";
+import { MdMailOutline, MdPersonOutline } from "react-icons/md";
 
 type Values = {
   email: string,
@@ -59,21 +60,27 @@ const EditInfos = () => {
     <form className="param__form editinfos" onSubmit={handleSubmit(editInfos)}>
       <div className="param__form__field">
         <h4>Nom</h4>
-        <InputText
-          {...register("username", { required: true })}
-          placeholder="Fanny"
-          className="param__form__field-username"
-        />
+        <div className="box">
+          <MdPersonOutline></MdPersonOutline>
+          <InputText
+            {...register("username", { required: true })}
+            placeholder="Fanny"
+            className="param__form__field-username"
+          />
+        </div>
         {errors.username && <small className="p-error">Le nom est obligatoire</small>}
       </div>
       <div className="param__form__field">
         <h4>Adresse email</h4>
-        <InputText
-          type="email"
-          {...register("email", { required: true })}
-          placeholder="Adresse email"
-          className="param__form__field-email"
-        />
+        <div className="box">
+          <MdMailOutline></MdMailOutline>
+          <InputText
+            type="email"
+            {...register("email", { required: true })}
+            placeholder="Adresse email"
+            className="param__form__field-email"
+          />
+        </div>
         {errors.email && <small className="p-error">L'email est obligatoire</small>}
       </div>
       <Bouton

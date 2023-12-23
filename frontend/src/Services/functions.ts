@@ -37,11 +37,17 @@ export const rangeTiretDate = (date: Date) => {
   if(!date) return null
   const year = date.getFullYear();
   const month = date.getMonth() + 1
-  const nextMonth = date.getMonth() + 2
+  let nextYear = date.getFullYear();
+  let nextMonth = date.getMonth() + 2
+
+  if(month === 12) {
+    nextMonth = 1
+    nextYear += 1
+  }
 
   return {
     startDate: year + "-" + month + "-" + 1, 
-    endDate: year + "-" + nextMonth + "-" + 1
+    endDate: nextYear + "-" + nextMonth + "-" + 1
   }
 }
 

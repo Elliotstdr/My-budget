@@ -10,6 +10,7 @@ import Bouton from "../../../Utils/Bouton/Bouton";
 import { errorToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchGet, fetchPost } from "../../../Services/api";
+import { MdMailOutline, MdLockOutline } from "react-icons/md";
 
 type Props = {
   visible: boolean,
@@ -83,12 +84,15 @@ const ModalLogin = (props: Props) => {
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="login__form__field">
           <h4>Adresse email</h4>
-          <InputText
-            type="email"
-            {...register("email", { required: true })}
-            placeholder="Adresse email"
-            className="login__form__field-email"
-          ></InputText>
+          <div className="box">
+            <MdMailOutline></MdMailOutline>
+            <InputText
+              type="email"
+              {...register("email", { required: true })}
+              placeholder={"Adresse email"}
+              className="login__form__field-email"
+            ></InputText>
+          </div>
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
         <div className="login__form__field">
@@ -100,12 +104,15 @@ const ModalLogin = (props: Props) => {
               required: "Le mot de passe est obligatoire",
             }}
             render={({ field }) => (
-              <Password
-                {...field}
-                placeholder="Mot de passe"
-                className="login__form__field-password"
-                feedback={false}
-              />
+              <div className="box">
+                <MdLockOutline></MdLockOutline>
+                <Password
+                  {...field}
+                  placeholder="Mot de passe"
+                  className="login__form__field-password"
+                  feedback={false}
+                />
+              </div>
             )}
           />
           {errors.password && <small className="p-error">{errors.password.message}</small>}
@@ -122,6 +129,7 @@ const ModalLogin = (props: Props) => {
         <div className="login__form__button">
           <Bouton disable={isloging}>{isloging ? "Waiting..." : "Se connecter"}</Bouton>
         </div>
+        <div className="login__form__cancel" onClick={() => props.setVisible(false)}>Annuler</div>
       </form>
     </Modal>
   );

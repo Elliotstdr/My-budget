@@ -10,6 +10,7 @@ import Bouton from "../../../Utils/Bouton/Bouton";
 import { errorToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchGet, fetchPost } from "../../../Services/api";
+import { MdMailOutline, MdLockOutline, MdPersonOutline } from "react-icons/md";
 
 type Props = {
   visible: boolean,
@@ -99,21 +100,27 @@ const ModalLogin = (props: Props) => {
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="login__form__field">
           <h4>Nom</h4>
-          <InputText
-            {...register("username", { required: true })}
-            placeholder="Nom"
-            className="login__form__field-username"
-          />
+          <div className="box">
+            <MdPersonOutline></MdPersonOutline>
+            <InputText
+              {...register("username", { required: true })}
+              placeholder="Nom"
+              className="login__form__field-username"
+            />
+          </div>
           {errors.username && <small className="p-error">Le nom est obligatoire</small>}
         </div>
         <div className="login__form__field">
           <h4>Adresse email</h4>
-          <InputText
-            type="email"
-            {...register("email", { required: true })}
-            placeholder="Adresse email"
-            className="login__form__field-email"
-          />
+          <div className="box">
+            <MdMailOutline></MdMailOutline>
+            <InputText
+              type="email"
+              {...register("email", { required: true })}
+              placeholder="Adresse email"
+              className="login__form__field-email"
+            />
+          </div>
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
         <div className="login__form__field">
@@ -129,18 +136,21 @@ const ModalLogin = (props: Props) => {
               },
             }}
             render={({ field }) => (
-              <Password
-                {...field}
-                placeholder="Mot de passe"
-                className="login__form__field-password"
-                onChange={(e) => {
-                  field.onChange(e.target.value);
-                  setIsEqualPassword(
-                    getValues("confirmpassword").length > 0 &&
-                    e.target.value === getValues("confirmpassword")
-                  );
-                }}
-              />
+              <div className="box">
+                <MdLockOutline></MdLockOutline>
+                <Password
+                  {...field}
+                  placeholder="Mot de passe"
+                  className="login__form__field-password"
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setIsEqualPassword(
+                      getValues("confirmpassword").length > 0 &&
+                      e.target.value === getValues("confirmpassword")
+                    );
+                  }}
+                />
+              </div>
             )}
           />
           {errors.password && <small className="p-error">{errors.password.message}</small>}
@@ -157,23 +167,26 @@ const ModalLogin = (props: Props) => {
               },
             }}
             render={({ field }) => (
-              <Password
-                {...field}
-                placeholder={"Mot de passe"}
-                className={
-                  isEqualPassword
-                    ? "login__form__field-confirmpassword equal"
-                    : "login__form__field-confirmpassword nonequal"
-                }
-                feedback={false}
-                onChange={(e) => {
-                  field.onChange(e.target.value);
-                  setIsEqualPassword(
-                    getValues("password").length > 0 &&
-                    e.target.value === getValues("password")
-                  );
-                }}
-              />
+              <div className="box">
+                <MdLockOutline></MdLockOutline>
+                <Password
+                  {...field}
+                  placeholder={"Mot de passe"}
+                  className={
+                    isEqualPassword
+                      ? "login__form__field-confirmpassword equal"
+                      : "login__form__field-confirmpassword nonequal"
+                  }
+                  feedback={false}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setIsEqualPassword(
+                      getValues("password").length > 0 &&
+                      e.target.value === getValues("password")
+                    );
+                  }}
+                />
+              </div>
             )}
           />
           {errors.confirmpassword && <small className="p-error">{errors.confirmpassword.message}</small>}
@@ -181,6 +194,7 @@ const ModalLogin = (props: Props) => {
         <div className="login__form__button">
           <Bouton disable={isloging}>{isloging ? "Waiting..." : "Créer un compte"}</Bouton>
         </div>
+        <div className="login__form__cancel" onClick={() => props.setVisible(false)}>Annuler</div>
       </form>
     </Modal>
   );

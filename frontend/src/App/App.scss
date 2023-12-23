@@ -2,16 +2,3 @@
   width: 100vw;
   height: 100vh;
 }
-
-.p-dropdown-trigger {
-  display: none !important;
-}
-
-.page {
-  max-height: var(--screen-size);
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}

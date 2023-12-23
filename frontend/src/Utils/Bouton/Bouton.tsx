@@ -3,18 +3,18 @@ import "./Bouton.scss";
 
 type Props = {
   className?: string,
-  type: "slide" | "normal",
   btnAction?: React.MouseEventHandler<HTMLButtonElement>,
   children?: any,
   btnTexte?: string,
   disable: boolean,
-  style?: object
+  style?: object,
+  color: string
 }
 
 const Bouton = (props: Props) => {
   return (
     <button
-      className={`bouton ${props.className} ${props.type}`}
+      className={`bouton ${props.className} ${props.color}`}
       onClick={props.btnAction}
       style={props.style ?? {}}
       disabled={props.disable}
@@ -26,9 +26,9 @@ const Bouton = (props: Props) => {
 };
 
 Bouton.defaultProps = {
-  type: "slide",
   className: "",
-  disable: false
+  disable: false,
+  color: "blue"
 };
 
 export default Bouton;

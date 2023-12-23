@@ -4,6 +4,8 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  color: var(--main-color);
+  padding: 0 0.5rem;
   &__information {
     display: flex;
     flex-direction: column;
@@ -33,13 +35,12 @@
     }
     &-choose {
       margin: 0 !important;
-      background: var(--main-color);
-      border-color: var(--main-color);
+      background: var(--second-color);
+      border-color: var(--second-color);
       transition: all 0.3s ease-in-out;
-      opacity: 0.9;
       &:hover {
-        background: var(--main-color) !important;
-        border-color: var(--main-color) !important;
+        background: var(--second-color) !important;
+        border-color: var(--second-color) !important;
         opacity: 1;
       }
     }
