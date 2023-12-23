@@ -4,12 +4,12 @@
   height: calc(100vh - 3.25rem);
   max-height: none !important;
   overflow: hidden;
-  justify-content: space-between;
   padding-bottom: 0.5rem;
+  position: relative;
   .blue--zone {
     width: 100%;
     border-radius: 0 0 10% 10%;
-    height: 8rem;
+    min-height: 8rem;
     background-color: var(--main-color);
     display: flex;
     align-items: center;
@@ -72,6 +72,7 @@
     padding: 0 1.5rem;
     width: 100%;
     color: var(--main-color);
+    margin-top: 8rem;
     &__boxes {
       color: white;
       display: flex;
