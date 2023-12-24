@@ -11,14 +11,10 @@
   &__box {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     padding: 3rem;
-    border-radius: 1rem;
-    z-index: 100;
     width: 100%;
     .bouton {
-      width: 12rem;
       margin: 0.5rem 0;
       width: 100%;
       max-width: 20rem;

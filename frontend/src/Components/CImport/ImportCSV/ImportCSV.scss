@@ -1,7 +1,4 @@
 .importCSV {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   color: var(--main-color);
   padding: 0 0.5rem;
   &__information {
@@ -35,11 +32,9 @@
       margin: 0 !important;
       background: var(--second-color);
       border-color: var(--second-color);
-      transition: all 0.3s ease-in-out;
       &:hover {
         background: var(--second-color) !important;
         border-color: var(--second-color) !important;
-        opacity: 1;
       }
     }
     &-content {
