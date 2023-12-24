@@ -2,9 +2,12 @@
 
 .app {
   width: 100vw;
-  height: var(--screen-size);
-  overflow: scroll;
   &.false {
     height: 100vh;
+    overflow: hidden;
+  }
+  &.true {
+    padding-bottom: 3.5rem;
+    overflow: scroll;
   }
 }
