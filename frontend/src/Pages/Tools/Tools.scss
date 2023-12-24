@@ -1,7 +1,4 @@
-@use "src/style.scss";
-
 .tools {
-  height: var(--screen-size);
   gap: 1rem;
   &__top {
     display: flex;

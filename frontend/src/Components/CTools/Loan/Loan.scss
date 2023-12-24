@@ -1,8 +1,6 @@
-@use "src/style.scss";
-
 .loan {
   padding-bottom: 1rem;
-  max-height: var(--screen-size);
+  // max-height: var(--screen-size);
   overflow-y: scroll;
   color: var(--main-color);
   &__top {

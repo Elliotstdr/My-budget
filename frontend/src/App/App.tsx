@@ -53,7 +53,7 @@ function App() {
   }, []);
 
   return (
-    <div className='app' id='app' onClick={() => checkActivity()}>
+    <div className={`app ${auth.isConnected}`} id='app' onClick={() => checkActivity()}>
       <BrowserRouter>
         <Toast ref={toast}></Toast>
         <Routes>
