@@ -7,7 +7,7 @@ import { store } from "../Store/store";
  * @param { string } url
  * @return { FetchGetReturn<T> }
  */
-export const useFetchGet = <T extends object | object[]> (url: string ): UseFetchGetResponse<T> => {
+export const useFetchGet = <T> (url: string ): UseFetchGetResponse<T> => {
   const [data, setData] = useState<T|null>(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);

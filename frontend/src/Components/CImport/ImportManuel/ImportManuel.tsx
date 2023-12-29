@@ -147,7 +147,7 @@ const ImportManuel = () => {
   }
   return (
     <>
-      <Header title="Import manuel"></Header>
+      <Header title="Saisie manuel"></Header>
       <div className='importmanuel page'>
         <div className="importmanuel__top">
           <ReturnButton action={() => navigate("/import")}></ReturnButton>

@@ -85,6 +85,7 @@ const Operation = (props: Props) => {
           if (props.operation.value.toString() === newLabel) return
           putOperation()
         }}
+        keyfilter="num"
       ></InputText>
       <Dropdown
         value={ddType}
