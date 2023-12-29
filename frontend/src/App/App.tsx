@@ -46,11 +46,16 @@ function App() {
 
   // Au chargement de la page : vérifie l'activité de l'utilisateur, le token et set le toast
   useEffect(() => {
+    if (!auth.isConnected && window.location.pathname !== "/") window.location.replace("/")
     checkActivity();
     if (auth.isConnected) checkToken()
     updateAuth({ toast: toast });
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (!auth.isConnected && window.location.pathname !== "/") window.location.replace("/")
+  }, [auth.isConnected])
 
   return (
     <div className={`app ${auth.isConnected}`} id='app' onClick={() => checkActivity()}>
