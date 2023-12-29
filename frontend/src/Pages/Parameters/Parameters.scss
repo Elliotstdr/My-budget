@@ -50,3 +50,14 @@
     cursor: pointer;
   }
 }
+
+@media (min-width: 500px) {
+  .parameters {
+    .param__form {
+      gap: 0.5rem;
+      &__field {
+        width: unset;
+      }
+    }
+  }
+}

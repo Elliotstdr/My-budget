@@ -7,6 +7,7 @@ import { TbHandClick } from "react-icons/tb";
 import Bouton from "../../Utils/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
 import image from "../../assets/tirelire-blue.png";
+import { Divider } from "primereact/divider";
 
 const Import = () => {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ const Import = () => {
       <div className="import page">
         <div className="import__top">
           <img src={image} alt="background home" />
-          <span className="text">Ajoute des opérations pour suivre l’évolution des tes dépenses</span>
+          <span className="text">Ajoute des opérations pour suivre l’évolution de tes dépenses</span>
         </div>
         <span className="title">Choisis ton mode d’import</span>
         <div className="boxes">
@@ -36,6 +37,7 @@ const Import = () => {
             height="9rem"
           ></Box>
         </div>
+        <Divider></Divider>
         <span className="title">Gestion des opérations</span>
         <Bouton
           btnTexte="Gérer les types d'opérations"

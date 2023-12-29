@@ -14,6 +14,7 @@ import { calculateData } from "../../Services/statistics";
 import { orderByDate } from "../../Services/functions";
 import { SelectButton } from 'primereact/selectbutton';
 import Bouton from "../../Utils/Bouton/Bouton";
+import { useNavigate } from "react-router-dom";
 
 type PieDataItem = {
   name: string,
@@ -37,6 +38,7 @@ const Statistics = () => {
   ]
 
   const operationsData = useFetchGet<Operation[]>("/operation")
+  const navigate = useNavigate()
   const [date, setDate] = useState<Date | Date[] | null>(null)
   const [data, setData] = useState<CalculatedGroupOP[] | undefined>(undefined)
   const [value, setValue] = useState<1 | 2 | 3>(1);
@@ -191,142 +193,149 @@ const Statistics = () => {
           selectionMode="range"
           showButtonBar
         />
-        <SelectButton
-          value={value}
-          onChange={(e) => setValue(e.value)}
-          optionLabel="name"
-          options={pieData ? items : items.filter((x) => x.value !== 3)}
-        />
-        <ResponsiveContainer width="100%" height={300} style={{ margin: "0.5rem 0" }}>
-          {value === 3 ?
-            <PieChart width={500} height={500}>
-              <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={pieData}
-                cx="50%"
-                cy="50%"
-                outerRadius={120}
-                fill="#8884d8"
-                label={(e) => {
-                  return e.name
-                }}
-              >
-                <LabelList
-                  dataKey="value"
-                  style={{ fontSize: "10px" }}
-                  textAnchor="bottom"
-                />
-                {pieData?.map((entry, index) => (
-                  <Cell key={entry.value} fill={colorArray[index]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-            : value === 2 ?
-              <LineChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 60,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis padding={{ bottom: 10, top: 10 }} />
-                <Tooltip content={CustomTooltip} /> {/* // position={{ x: 0, y: 225 }} */}
-                <Legend
-                  onClick={selectBar}
-                  onMouseOver={handleLegendMouseEnter}
-                  onMouseOut={handleLegendMouseLeave}
-                  wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
-                />
-                {data && data?.length > 0 &&
-                  Object.keys(data.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0])
-                    .filter((key) => key !== "date")
-                    .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
-                    .map((key, index) => (
-                      <Line
-                        key={key}
-                        type="monotone"
-                        dataKey={key}
-                        stroke={colorArray[index]}
-                        activeDot={{ r: 8, onMouseOver: () => setHoveredItem(key) }}
-                        hide={legends && legends[key] === true}
-                        fillOpacity={Number(
-                          !legends || legends.hover === key || !legends.hover ? 1 : 0.2
-                        )}
-                        strokeOpacity={Number(
-                          !legends || legends.hover === key || !legends.hover ? 1 : 0.2
-                        )}
-                        onMouseOver={() => setHoveredItem(key)}
-                        name={key.split("-abs")[0]}
-                      />
-                    ))}
-              </LineChart>
-              : <BarChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip content={CustomTooltip} />
-                <Legend
-                  onClick={selectBar}
-                  onMouseOver={handleLegendMouseEnter}
-                  onMouseOut={handleLegendMouseLeave}
-                  wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
-                />
-                {data && Object.keys(data.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0])
-                  .filter((key) => key !== "date")
-                  .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
-                  .map((key, index) => (
-                    <Bar
-                      key={key}
-                      dataKey={key}
-                      fill={colorArray[index]}
-                      hide={legends && legends[key] === true}
-                      fillOpacity={Number(
-                        !legends || legends.hover === key || !legends.hover ? 1 : 0.2
-                      )}
-                      strokeOpacity={Number(
-                        !legends || legends.hover === key || !legends.hover ? 1 : 0.2
-                      )}
-                      onMouseOver={() => setHoveredItem(key)}
-                      name={key.split("-abs")[0]}
+        {data && data?.length > 0 ?
+          <>
+            <SelectButton
+              value={value}
+              onChange={(e) => setValue(e.value)}
+              optionLabel="name"
+              options={pieData ? items : items.filter((x) => x.value !== 3)}
+            />
+            <ResponsiveContainer width="100%" height={300} style={{ margin: "0.5rem 0" }}>
+              {value === 3 ?
+                <PieChart width={500} height={500}>
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={pieData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={120}
+                    fill="#8884d8"
+                    label={(e) => {
+                      return e.name
+                    }}
+                  >
+                    <LabelList
+                      dataKey="value"
+                      style={{ fontSize: "10px" }}
+                      textAnchor="bottom"
                     />
-                  ))}
-              </BarChart>
-          }
-        </ResponsiveContainer>
-        <div className="statistics__buttons">
-          <Bouton
-            btnTexte="Activer tout"
-            btnAction={() => {
-              const item = { ...legends }
-              Object.keys(item).forEach(key => { item[key] = false });
-              item.hover = null
-              setLegends(item)
-            }}
-          ></Bouton>
-          <Bouton
-            btnTexte={absolute ? "Valeur relative" : "Valeur absolue"}
-            btnAction={() => setAbsolute(!absolute)}
-          // color="pink"
-          ></Bouton>
-        </div>
+                    {pieData?.map((entry, index) => (
+                      <Cell key={entry.value} fill={colorArray[index]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+                : value === 2 ?
+                  <LineChart
+                    width={500}
+                    height={300}
+                    data={data}
+                    margin={{
+                      top: 5,
+                      right: 60,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis padding={{ bottom: 10, top: 10 }} />
+                    <Tooltip content={CustomTooltip} /> {/* // position={{ x: 0, y: 225 }} */}
+                    <Legend
+                      onClick={selectBar}
+                      onMouseOver={handleLegendMouseEnter}
+                      onMouseOut={handleLegendMouseLeave}
+                      wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
+                    />
+                    {Object.keys(data.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0])
+                      .filter((key) => key !== "date")
+                      .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
+                      .map((key, index) => (
+                        <Line
+                          key={key}
+                          type="monotone"
+                          dataKey={key}
+                          stroke={colorArray[index]}
+                          activeDot={{ r: 8, onMouseOver: () => setHoveredItem(key) }}
+                          hide={legends && legends[key] === true}
+                          fillOpacity={Number(
+                            !legends || legends.hover === key || !legends.hover ? 1 : 0.2
+                          )}
+                          strokeOpacity={Number(
+                            !legends || legends.hover === key || !legends.hover ? 1 : 0.2
+                          )}
+                          onMouseOver={() => setHoveredItem(key)}
+                          name={key.split("-abs")[0]}
+                        />
+                      ))}
+                  </LineChart>
+                  : <BarChart
+                    width={500}
+                    height={300}
+                    data={data}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip content={CustomTooltip} />
+                    <Legend
+                      onClick={selectBar}
+                      onMouseOver={handleLegendMouseEnter}
+                      onMouseOut={handleLegendMouseLeave}
+                      wrapperStyle={{ width: "unset", left: "unset", margin: "0 1rem" }}
+                    />
+                    {Object.keys(data.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0])
+                      .filter((key) => key !== "date")
+                      .filter((key) => absolute ? key.includes("-abs") : !key.includes("-abs"))
+                      .map((key, index) => (
+                        <Bar
+                          key={key}
+                          dataKey={key}
+                          fill={colorArray[index]}
+                          hide={legends && legends[key] === true}
+                          fillOpacity={Number(
+                            !legends || legends.hover === key || !legends.hover ? 1 : 0.2
+                          )}
+                          strokeOpacity={Number(
+                            !legends || legends.hover === key || !legends.hover ? 1 : 0.2
+                          )}
+                          onMouseOver={() => setHoveredItem(key)}
+                          name={key.split("-abs")[0]}
+                        />
+                      ))}
+                  </BarChart>
+              }
+            </ResponsiveContainer>
+            <div className="statistics__buttons">
+              <Bouton
+                btnTexte="Activer tout"
+                btnAction={() => {
+                  const item = { ...legends }
+                  Object.keys(item).forEach(key => { item[key] = false });
+                  item.hover = null
+                  setLegends(item)
+                }}
+              ></Bouton>
+              <Bouton
+                btnTexte={absolute ? "Valeur relative" : "Valeur absolue"}
+                btnAction={() => setAbsolute(!absolute)}
+              // color="pink"
+              ></Bouton>
+            </div>
+          </>
+          : <span className="empty">
+            N'ayant pas encore de dépenses renseignées, je n'ai pas de statistiques à afficher ! <br />
+            Je t'invite à rentrer tes prémières dépenses <i onClick={() => navigate("/import")}>ici</i> !
+          </span>
+        }
       </div>
       <NavBar></NavBar>
     </>

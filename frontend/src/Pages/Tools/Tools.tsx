@@ -5,6 +5,9 @@ import "./Tools.scss";
 import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import image from "../../assets/tirelire-blue.png";
+import Loan from "../../Components/CTools/Loan/Loan";
+import Salary from "../../Components/CTools/Salary/Salary";
+import { Divider } from "primereact/divider";
 
 const Tools = () => {
   const navigate = useNavigate()
@@ -30,6 +33,9 @@ const Tools = () => {
           width="9rem"
           height="9rem"
         ></Box>
+        <Salary isComponent></Salary>
+        <Divider></Divider>
+        <Loan isComponent></Loan>
       </div>
       <NavBar></NavBar>
     </>

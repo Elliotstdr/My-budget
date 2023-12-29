@@ -24,7 +24,11 @@ type dataElement = {
   cost: number
 }
 
-const Loan = () => {
+interface Props {
+  isComponent?: boolean
+}
+
+const Loan = (props: Props) => {
   const navigate = useNavigate()
   const [capital, setCapital] = useState(100000)
   const [time, setTime] = useState(15)
@@ -97,9 +101,9 @@ const Loan = () => {
 
   return (
     <>
-      <Header title="Mon emprunt"></Header>
+      {!props.isComponent && <Header title="Mon emprunt"></Header>}
       <div className='loan'>
-        <ReturnButton action={() => navigate("/tools")}></ReturnButton>
+        {!props.isComponent && <ReturnButton action={() => navigate("/tools")}></ReturnButton>}
         <div className="loan__top">
           <div className="loan__capital label">
             <span>J'emprunte :</span>
@@ -181,7 +185,7 @@ const Loan = () => {
           </ComposedChart>
         </ResponsiveContainer>
       </div>
-      <NavBar></NavBar>
+      {!props.isComponent && <NavBar></NavBar>}
     </>
   );
 };

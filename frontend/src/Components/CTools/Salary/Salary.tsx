@@ -8,7 +8,11 @@ import { Slider } from "primereact/slider";
 import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 
-const Salary = () => {
+interface Props {
+  isComponent?: boolean
+}
+
+const Salary = (props: Props) => {
   const navigate = useNavigate()
   const [salaireBrut, setSalaireBrut] = useState<number>(100);
   const [estCadre, setEstCadre] = useState<boolean>(false);
@@ -46,9 +50,9 @@ const Salary = () => {
 
   return (
     <>
-      <Header title="Mon salaire"></Header>
+      {!props.isComponent && <Header title="Mon salaire"></Header>}
       <div className="salary">
-        <ReturnButton action={() => navigate("/tools")}></ReturnButton>
+        {!props.isComponent && <ReturnButton action={() => navigate("/tools")}></ReturnButton>}
         <div>
           <div style={{ marginBottom: "0.75rem" }}>{`Salaire Brut Mensuel : ${salaireBrut}`}</div>
           <Slider
@@ -77,7 +81,7 @@ const Salary = () => {
           </div>
         )}
       </div>
-      <NavBar></NavBar>
+      {!props.isComponent && <NavBar></NavBar>}
     </>
   );
 };

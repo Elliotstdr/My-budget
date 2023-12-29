@@ -5,4 +5,27 @@
     margin-top: 0.5rem;
     padding: 0 0.5rem;
   }
+  .empty {
+    color: var(--main-color);
+    padding: 0 1rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    i {
+      text-decoration: underline;
+      cursor: pointer;
+      color: var(--third-color);
+    }
+  }
+}
+
+@media (min-width: 500px) {
+  .history {
+    &__list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1rem;
+    }
+  }
 }

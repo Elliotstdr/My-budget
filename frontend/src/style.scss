@@ -32,3 +32,9 @@ body {
   background: var(--second-color) !important;
   border-color: var(--second-color) !important;
 }
+
+@media (min-width: 500px) {
+  body {
+    font-size: 1.1rem !important;
+  }
+}

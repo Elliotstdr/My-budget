@@ -8,8 +8,10 @@ import Operation from "../../Components/Operation/Operation";
 import { literalMonthAndYear } from "../../Services/functions";
 import { Divider } from "primereact/divider";
 import { groupByMonth } from "../../Services/statistics";
+import { useNavigate } from "react-router-dom";
 
 const History = () => {
+  const navigate = useNavigate()
   const operationsData = useFetchGet<Operation[]>("/operation")
   const typesData = useFetchGet<Type[]>("/type")
   const [date, setDate] = useState<Date | null | undefined>(null)
@@ -56,26 +58,32 @@ const History = () => {
           showIcon
           showButtonBar
         />
-        <div className="history__list">
-          {operations.length > 0 && groupByMonth(operations).map((groupOperation, key) =>
-            <div key={key}>
-              <div className="divider" style={{ display: "flex", alignItems: "center" }}>
-                <span style={{ margin: "0 0.5rem" }}>
-                  {literalMonthAndYear(new Date(groupOperation[0].datePeriod))}
-                </span>
-                <Divider style={{ width: "50%" }}></Divider>
+        {operations?.length > 0 ?
+          <div className="history__list">
+            {groupByMonth(operations).map((groupOperation, key) =>
+              <div key={key}>
+                <div className="divider" style={{ display: "flex", alignItems: "center" }}>
+                  <span style={{ margin: "0 0.5rem" }}>
+                    {literalMonthAndYear(new Date(groupOperation[0].datePeriod))}
+                  </span>
+                  <Divider style={{ width: "50%" }}></Divider>
+                </div>
+                {typesData.data && groupOperation.map((x) =>
+                  <Operation
+                    key={x._id}
+                    operation={x}
+                    setOperations={setOperations}
+                    types={typesData.data ?? []}
+                  ></Operation>
+                )}
               </div>
-              {typesData.data && groupOperation.map((x) =>
-                <Operation
-                  key={x._id}
-                  operation={x}
-                  setOperations={setOperations}
-                  types={typesData.data ?? []}
-                ></Operation>
-              )}
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+          : <span className="empty">
+            Ton historique est vide... pour le moment ! <br />
+            L'ajout des dépenses c'est par <i onClick={() => navigate("/import")}>ici</i> !
+          </span>
+        }
       </div>
       <NavBar></NavBar>
     </>

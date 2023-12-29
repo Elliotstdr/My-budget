@@ -16,6 +16,7 @@
     }
   }
   .boxes {
+    align-self: center;
     display: flex;
     gap: 1rem;
     margin-bottom: 0.5rem;
@@ -25,5 +26,25 @@
   }
   .boite span {
     font-size: 1.1rem;
+  }
+  .p-divider {
+    display: none;
+  }
+}
+
+@media (min-width: 500px) {
+  .import {
+    align-items: center;
+    margin-top: 2rem;
+    .boite {
+      width: 12rem !important;
+      height: 12rem !important;
+    }
+    .p-divider {
+      display: block;
+    }
+    &__top img {
+      display: none;
+    }
   }
 }

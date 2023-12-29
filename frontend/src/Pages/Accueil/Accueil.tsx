@@ -100,24 +100,26 @@ const Accueil = () => {
           <span className="sub">Cout global du mois</span>
         </div>
         <div className="accueil__body">
-          <div className="title">Accès rapide</div>
-          <div className="accueil__body__boxes">
-            <Box
-              text="Salaire brut/net"
-              icon={<RiMoneyEuroCircleLine></RiMoneyEuroCircleLine>}
-              action={() => navigate("/tools/salary")}
-              width="8rem"
-            ></Box>
-            <Box
-              text="Capacité d'emprunt"
-              icon={<RiBankFill></RiBankFill>}
-              action={() => navigate("/tools/loan")}
-              width="8rem"
-            ></Box>
+          <div className="first">
+            <div className="title">Accès rapide</div>
+            <div className="accueil__body__boxes">
+              <Box
+                text="Salaire brut/net"
+                icon={<RiMoneyEuroCircleLine></RiMoneyEuroCircleLine>}
+                action={() => navigate("/tools/salary")}
+                width="8rem"
+              ></Box>
+              <Box
+                text="Capacité d'emprunt"
+                icon={<RiBankFill></RiBankFill>}
+                action={() => navigate("/tools/loan")}
+                width="8rem"
+              ></Box>
+            </div>
           </div>
-          {pieData ?
-            <>
-              <div className="title">Plus grosses dépenses du mois</div>
+          <div className="second">
+            <div className="title">Plus grosses dépenses du mois</div>
+            {pieData ?
               <div className="accueil__body__pie">
                 <PieChart width={300} height={300}>
                   <Pie
@@ -143,12 +145,12 @@ const Accueil = () => {
                   {`Tu as dépensé ${maxExpensePercentage}% de ton budget dans le poste de dépense "${pieData[0].name}"`}
                 </div>}
               </div>
-            </>
-            : <div className="accueil__body__noexpense">
-              Tu n'as pas encore saisi de dépenses ce mois ci !
-              <span onClick={() => navigate("/import")}>C'est parti ?</span>
-            </div>
-          }
+              : <div className="accueil__body__noexpense">
+                Tu n'as pas encore saisi de dépenses ce mois ci !
+                <span onClick={() => navigate("/import")}>C'est parti ?</span>
+              </div>
+            }
+          </div>
         </div>
       </div>
       <NavBar></NavBar>

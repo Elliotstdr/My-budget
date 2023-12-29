@@ -21,4 +21,25 @@
     display: flex;
     flex-direction: column;
   }
+  .empty {
+    color: var(--main-color);
+    padding: 0 1rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    i {
+      text-decoration: underline;
+      cursor: pointer;
+      color: var(--third-color);
+    }
+  }
+}
+
+@media (min-width: 500px) {
+  .statistics {
+    gap: 1rem;
+    .recharts-responsive-container {
+      margin: 2rem 0 !important;
+    }
+  }
 }

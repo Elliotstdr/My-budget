@@ -14,4 +14,44 @@
   .boite span {
     font-size: 1.1rem;
   }
+  .loan,
+  .salary,
+  .p-divider {
+    display: none;
+  }
+}
+
+@media (min-width: 500px) {
+  .tools {
+    margin-top: 2rem;
+    &__top,
+    .boite {
+      display: none;
+    }
+    .loan {
+      width: 100%;
+      display: block;
+      &__top__result {
+        max-width: 30rem;
+      }
+    }
+    .salary {
+      width: 100%;
+      display: flex;
+      margin: 0 auto;
+      align-items: center;
+      .bouton {
+        max-width: 30rem;
+      }
+    }
+    .salary > div {
+      width: 60%;
+    }
+    .p-divider {
+      display: flex;
+    }
+    .p-slider {
+      max-width: 40rem;
+    }
+  }
 }
