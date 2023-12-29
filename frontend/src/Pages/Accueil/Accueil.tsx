@@ -95,8 +95,9 @@ const Accueil = () => {
                   >
                     <LabelList
                       dataKey="name"
-                      style={{ fontSize: "16px" }}
+                      style={{ fontSize: "20px" }}
                       textAnchor="bottom"
+                      fill="#fff"
                     />
                     {dashboard.data &&
                       <>
