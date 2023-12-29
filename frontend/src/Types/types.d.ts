@@ -39,7 +39,24 @@ type NewOperation = {
 
 type CalculatedGroupOP = {
   Total: number,
-  "Total-abs": number,
   date: string,
   [key: string]: number;
+}
+
+type ExpenseTypeSum = {
+  name: string,
+  value: number
+}
+
+type SynthesisData = {
+  date: string,
+  expense: number,
+  revenue: number,
+  bilan: number,
+  solde: number
+}
+
+type PieDataItem = {
+  name: string,
+  value: number
 }

@@ -97,7 +97,6 @@ export const addValues = (data: ExtendedOP[][]) => {
     operationArray.forEach((x) => sum += x.value)
     output.push({
       Total: sum,
-      "Total-abs": Math.abs(sum),
       date: operationArray[0].shortDate
     })
   })
@@ -116,9 +115,51 @@ export const addValuesForTypes = (data: ExtendedOP[][]) => {
     operationArray.forEach((x) => sum += x.value)
     output.push({
       [operationArray[0].type.label]: sum,
-      [`${operationArray[0].type.label}-abs`]: Math.abs(sum),
       date: operationArray[0].shortDate
     })
   })
   return output
+}
+
+/**
+ * Retourne la donnée avec les valeurs absolue
+ * @param data 
+ * @returns 
+ */
+export const toAbsolute = (data: any[]) => {
+  const tempData = data.map((x) => { return { ...x } })
+  tempData.forEach((x) => {
+    for (const key in x) {
+      if (key !== 'date') x[key] = Math.abs(x[key])
+    }
+  })
+
+  return tempData
+}
+
+export const getSynthesisData = (data: CalculatedGroupOP[]) => {
+  const synth: SynthesisData[] = []
+  let solde = 0
+  data.forEach((x) => {
+    let expense = 0
+    let revenue = 0
+    for (const key in x) {
+      if (key === 'date' || key === 'Total') continue
+      if (x[key] > 0) revenue += x[key]
+      if (x[key] < 0) expense += x[key]
+    }
+
+    const bilan = revenue + expense
+    solde += bilan
+
+    synth.push({
+      date: x['date'],
+      expense: Math.abs(expense),
+      revenue: Math.abs(revenue),
+      bilan,
+      solde
+    })
+  })
+
+  return synth
 }

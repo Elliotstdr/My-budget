@@ -6,6 +6,9 @@
   .p-selectbutton {
     transform: scale(0.9);
   }
+  .p-divider {
+    margin: 2rem 0 !important;
+  }
   &__buttons {
     display: flex;
     gap: 1rem;
@@ -21,6 +24,9 @@
     display: flex;
     flex-direction: column;
   }
+  .recharts-tooltip-wrapper {
+    color: black;
+  }
   .empty {
     color: var(--main-color);
     padding: 0 1rem;
@@ -31,6 +37,15 @@
       text-decoration: underline;
       cursor: pointer;
       color: var(--third-color);
+    }
+  }
+  .titre {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--second-color);
+    &.first {
+      margin-top: 2rem;
     }
   }
 }
