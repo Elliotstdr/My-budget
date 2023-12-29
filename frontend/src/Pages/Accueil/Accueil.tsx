@@ -1,80 +1,45 @@
 import NavBar from "../../Components/NavBar/NavBar";
 import "./Accueil.scss";
 import image from "../../assets/tirelire-blue.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaUserCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Box from "../../Utils/Box/Box";
 import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
 import { rangeTiretDate } from "../../Services/functions";
 import { fetchPost } from "../../Services/api";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   PieChart, Pie, Cell, LabelList
 } from 'recharts';
-import { calculateData } from "../../Services/statistics";
-
-type PieDataItem = {
-  name: string,
-  value: number
-}
+import { UPDATE_DASHBOARD } from "../../Store/Reducers/dashboardReducer";
 
 const Accueil = () => {
   const navigate = useNavigate()
   const auth = useSelector((state: RootState) => state.auth);
-  const [expense, setExpense] = useState(0)
-  const [maxExpensePercentage, setMaxExpensePercentage] = useState(0)
-  const [pieData, setPieData] = useState<PieDataItem[] | undefined>(undefined)
+  const dashboard = useSelector((state: RootState) => state.dashboard);
+  const dispatch = useDispatch();
+  const updateDashboard = (value: Partial<DashboardState>) => {
+    dispatch({ type: UPDATE_DASHBOARD, value });
+  };
 
   useEffect(() => {
     const getCurrentExpense = async () => {
       const payload = rangeTiretDate(new Date)
       if (!payload) return
 
-      const res = await fetchPost(`/operation/byDate`, payload);
+      const res = await fetchPost(`/operation/dashboard`, payload);
       if (res.error) return
 
-      let newExpense = 0
-
-      // On enlève toutes les opérations positives, on ne veut que les dépenses
-      const data: Operation[] = res.data.filter((x: Operation) => x.value < 0)
-      if (data.length === 0) return
-
-      // La somme de toutes les dépenses est set
-      data.forEach((x: Operation) => newExpense += x.value)
-      setExpense(Math.abs(newExpense))
-
-      // Récupère un array de PieItem, sans le total et les valeur abs, trié par value
-      const calculatedData = calculateData(data)
-      let tempPieData: PieDataItem[] = []
-      for (const [cle, valeur] of Object.entries(calculatedData[0])) {
-        if (cle !== "date" && cle !== "Total") {
-          tempPieData.push({ name: cle, value: valeur as number })
-        }
-      }
-
-      tempPieData = tempPieData.filter((x) => !x.name.includes("-abs"))
-      tempPieData.forEach((x) => x.value = Math.abs(x.value))
-      tempPieData.sort((a, b) => b.value - a.value)
-
-      // s'il n'y a pas au moins 2 postes de dépenses on return
-      if (tempPieData.length < 2) return
-
-      // On récupère la somme de toutes les autres dépenses
-      const maxExpense = tempPieData[0]
-
-      // Additione toutes les autres dépenses
-      let otherValue = 0
-      tempPieData.shift()
-      tempPieData.forEach((x) => otherValue += x.value)
-
-      const maxExpensePercentage = Math.round((maxExpense.value / (otherValue + maxExpense.value)) * 100)
-
-      setPieData([maxExpense, { name: "Autre", value: otherValue }])
-      setMaxExpensePercentage(maxExpensePercentage)
+      updateDashboard({
+        newExpense: res.data.newExpense,
+        data: res.data.data,
+        maxExpensePercentage: res.data.maxExpensePercentage
+      })
     }
 
     getCurrentExpense()
+    // eslint-disable-next-line
   }, [])
 
   return (
@@ -96,8 +61,8 @@ const Accueil = () => {
           </div>
         </div>
         <div className="white--zone">
-          <span className="main">{`${expense}€`}</span>
-          <span className="sub">Cout global du mois</span>
+          <span className="main">{`${dashboard.newExpense}€`}</span>
+          <span className="sub">dépensés ce mois ci !</span>
         </div>
         <div className="accueil__body">
           <div className="first">
@@ -119,13 +84,13 @@ const Accueil = () => {
           </div>
           <div className="second">
             <div className="title">Plus grosses dépenses du mois</div>
-            {pieData ?
+            {dashboard.data ?
               <div className="accueil__body__pie">
                 <PieChart width={300} height={300}>
                   <Pie
                     dataKey="value"
                     isAnimationActive={false}
-                    data={pieData}
+                    data={dashboard.data}
                     fill="#8884d8"
                   >
                     <LabelList
@@ -133,16 +98,16 @@ const Accueil = () => {
                       style={{ fontSize: "16px" }}
                       textAnchor="bottom"
                     />
-                    {pieData &&
+                    {dashboard.data &&
                       <>
-                        <Cell key={pieData[0].value} fill="#3e6fd4" />
-                        <Cell key={pieData[1].value} fill="#db8bb5" />
+                        <Cell key={dashboard.data[0].value} fill="#3e6fd4" />
+                        <Cell key={dashboard.data[1].value} fill="#db8bb5" />
                       </>
                     }
                   </Pie>
                 </PieChart>
-                {pieData && <div style={{ maxWidth: "40%" }}>
-                  {`Tu as dépensé ${maxExpensePercentage}% de ton budget dans le poste de dépense "${pieData[0].name}"`}
+                {dashboard.data && <div style={{ maxWidth: "40%" }}>
+                  {`Tu as dépensé ${dashboard.maxExpensePercentage}% de ton budget dans le poste de dépense "${dashboard.data[0].name}"`}
                 </div>}
               </div>
               : <div className="accueil__body__noexpense">

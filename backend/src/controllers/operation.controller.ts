@@ -1,7 +1,7 @@
 import { Operation, DOperation } from "../models/operation.model";
 import { Request, Response } from "express";
 import { TYPE_REF, USER_REF, noOperationERROR, randomERROR } from "../services/const.service";
-import { EditKeyword } from "../services/operation.service";
+import { EditKeyword, expenseByType, findRangeDateOperations } from "../services/operation.service";
 
 type GroupedOperations = {
   [key: string]: DOperation[];
@@ -22,22 +22,7 @@ export const findAllOperations = async (req: Request, res: Response) => {
 };
 
 export const findByDate = async (req: Request, res: Response) => {
-  if(
-    !req.body.startDate || 
-    !req.body.endDate ||
-    req.body.startDate.split('-').length !== 3 ||
-    req.body.endDate.split('-').length !== 3
-  ) {
-    return res.status(401).json({ message: "Aucune date renseignée" });
-  }
-  
-  const operations: DOperation[] = await Operation
-    .find({ 
-      user: req.body.user,
-      datePeriod: {$gte: req.body.startDate, $lt: req.body.endDate}
-    })
-    .populate(USER_REF)
-    .populate(TYPE_REF);
+  const operations = await findRangeDateOperations(req.body)
 
   if(!operations) {
     return res.status(401).json(noOperationERROR);
@@ -138,4 +123,36 @@ export const findRedondantOperations = async (req: Request, res: Response) => {
     }
   })
   res.status(200).json(finalData)
+}
+
+export const dashboard = async (req: Request, res: Response) => {
+  let operations = await findRangeDateOperations(req.body)
+  if(!operations) return res.status(401).json(noOperationERROR)
+
+  let newExpense = 0
+
+  // On enlève toutes les opérations positives, on ne veut que les dépenses
+  operations = operations.filter((x: DOperation) => x.value < 0)
+  if (operations.length === 0) return res.status(401).json(noOperationERROR)
+
+  // La somme de toutes les dépenses est set
+  operations.forEach((x: DOperation) => newExpense += x.value)
+
+  const groupedOperations = expenseByType(operations)
+  if (!groupedOperations || groupedOperations.length < 2) return res.status(401).json(noOperationERROR)
+
+  // On récupère la plus grosse dépense
+  const maxExpense = groupedOperations[0]
+  // Additione toutes les autres dépenses
+  let otherValue = 0
+  groupedOperations.shift()
+  groupedOperations.forEach((x) => otherValue += x.value)
+
+  const maxExpensePercentage = Math.round((maxExpense.value / (otherValue + maxExpense.value)) * 100)
+  
+  res.status(200).json({
+    newExpense: Math.abs(newExpense),
+    maxExpensePercentage: maxExpensePercentage,
+    data: [maxExpense, { name: "Autre", value: otherValue }]
+  })
 }

@@ -1,5 +1,6 @@
 type RootState = {
   auth: AuthState,
+  dashboard: DashboardState
 }
 
 type AuthState = {
@@ -10,3 +11,9 @@ type AuthState = {
   toast: MutableRefObject<null> | null,
   allowPropositions: boolean
 }
+
+type DashboardState = {
+  newExpense: number,
+  maxExpensePercentage: number,
+  data: ExpenseTypeSum[] | null
+};

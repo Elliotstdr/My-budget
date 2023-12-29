@@ -6,7 +6,8 @@ import {
   removeOperation, 
   createOperation, 
   findByDate,
-  findRedondantOperations
+  findRedondantOperations,
+  dashboard
 } from "../controllers/operation.controller";
 import { auth, authBodyID, authID, findTokenUser } from "../middleware/auth.middleware";
 import { checkOperationProperty } from "../middleware/property.middleware";
@@ -20,5 +21,6 @@ router.put("/:id", auth, checkOperationProperty, editOperation)
 router.delete("/:id", auth, checkOperationProperty, removeOperation)
 router.post("/byDate", auth, findTokenUser, findByDate)
 router.post("/redondant/user/:id", auth, authID, findRedondantOperations)
+router.post("/dashboard", auth, findTokenUser, dashboard)
 
 export { router as operationRoutes};

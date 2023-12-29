@@ -8,3 +8,8 @@ type TreatedOperation = {
 type DynamicStringObject = {
   [key: string]: any;
 };
+
+type ExpenseTypeSum = {
+  name: string,
+  value: number
+}
