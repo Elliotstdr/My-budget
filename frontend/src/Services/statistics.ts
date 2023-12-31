@@ -137,6 +137,11 @@ export const toAbsolute = (data: any[]) => {
   return tempData
 }
 
+/**
+ * Retourne une synthèse des données
+ * @param data 
+ * @returns SynthesisData[]
+ */
 export const getSynthesisData = (data: CalculatedGroupOP[]) => {
   const synth: SynthesisData[] = []
   let solde = 0

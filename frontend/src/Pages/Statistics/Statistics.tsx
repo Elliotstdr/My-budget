@@ -27,7 +27,7 @@ const Statistics = () => {
   const [synthesisData, setSynthesisData] = useState<SynthesisData[] | undefined>(undefined)
   const [finalData, setFinalData] = useState<CalculatedGroupOP[] | undefined>(undefined)
   const [value, setValue] = useState<1 | 2 | 3>(1);
-  const [legends, setLegends] = useState<Legends>({ hover: null });
+  const [legends, setLegends] = useState<Legends | null>(null);
   const [pieData, setPieData] = useState<PieDataItem[] | undefined>(undefined)
   const [absolute, setAbsolute] = useState(true)
 
@@ -152,7 +152,7 @@ const Statistics = () => {
                   const item = { ...legends }
                   Object.keys(item).forEach(key => { item[key] = false });
                   item.hover = null
-                  setLegends(item)
+                  setLegends(item as Legends)
                 }}
               ></Bouton>
               <Bouton

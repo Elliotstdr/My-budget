@@ -8,8 +8,8 @@ interface Props {
   finalData: CalculatedGroupOP[]
   pieData: PieDataItem[] | undefined
   value: number
-  legends: Legends
-  setLegends: React.Dispatch<React.SetStateAction<Legends>>
+  legends: Legends | null
+  setLegends: React.Dispatch<React.SetStateAction<Legends | null>>
 }
 
 const DetailedStats = (props: Props) => {
@@ -41,6 +41,7 @@ const DetailedStats = (props: Props) => {
         }
       });
 
+      console.log(initialLegends)
       props.setLegends(initialLegends)
     }
     // eslint-disable-next-line
@@ -143,7 +144,7 @@ const DetailedStats = (props: Props) => {
                   dataKey={key}
                   stroke={colorArray[index]}
                   activeDot={{ r: 8, onMouseOver: () => setHoveredItem(key) }}
-                  hide={props.legends && props.legends[key] === true}
+                  hide={props.legends && props.legends[key] ? true : false}
                   fillOpacity={Number(
                     !props.legends || props.legends.hover === key || !props.legends.hover ? 1 : 0.2
                   )}
@@ -183,7 +184,7 @@ const DetailedStats = (props: Props) => {
                   key={key}
                   dataKey={key}
                   fill={colorArray[index]}
-                  hide={props.legends && props.legends[key] === true}
+                  hide={props.legends && props.legends[key] ? true : false}
                   fillOpacity={Number(
                     !props.legends || props.legends.hover === key || !props.legends.hover ? 1 : 0.2
                   )}
