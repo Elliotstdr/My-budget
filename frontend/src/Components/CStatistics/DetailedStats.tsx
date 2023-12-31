@@ -41,7 +41,6 @@ const DetailedStats = (props: Props) => {
         }
       });
 
-      console.log(initialLegends)
       props.setLegends(initialLegends)
     }
     // eslint-disable-next-line
