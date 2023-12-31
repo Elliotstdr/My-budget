@@ -1,7 +1,6 @@
 import { useState } from "react";
-// import { successToast } from "../../../Services/functions";
 import "./ImportCSV.scss";
-import { FileUpload } from 'primereact/fileupload';
+import { FileUpload, FileUploadFilesEvent } from 'primereact/fileupload';
 import { fetchPost, useFetchGet } from "../../../Services/api";
 import { useSelector } from "react-redux";
 import { errorToast } from "../../../Services/functions";
@@ -26,7 +25,7 @@ const ImportCSV = () => {
   const [validatedData, setValidatedData] = useState<Operation[]>([])
   const [checked, setChecked] = useState<Nullable<boolean>>(false)
 
-  const uploadHandler = async ({ files }: any) => {
+  const uploadHandler = async ({ files }: FileUploadFilesEvent) => {
     if (!auth.userConnected) return
     const file = files[0];
 

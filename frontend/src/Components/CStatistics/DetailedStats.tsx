@@ -8,8 +8,8 @@ interface Props {
   finalData: CalculatedGroupOP[]
   pieData: PieDataItem[] | undefined
   value: number
-  legends: any
-  setLegends: React.Dispatch<React.SetStateAction<any>>
+  legends: Legends
+  setLegends: React.Dispatch<React.SetStateAction<Legends>>
 }
 
 const DetailedStats = (props: Props) => {
@@ -28,19 +28,20 @@ const DetailedStats = (props: Props) => {
   useEffect(() => {
     if (props.finalData && !props.legends) {
       const tempData = props.finalData.map((x) => { return { ...x } })
-      const item: any = tempData.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0]
-      delete item.date
+      const item = tempData.sort((a, b) => Object.keys(b).length - Object.keys(a).length)[0]
+
+      const initialLegends: Legends = { hover: null }
 
       Object.keys(item).forEach(key => {
+        if (key === 'date') return
         if (key === "Total") {
-          item[key] = false;
+          initialLegends[key] = false;
         } else {
-          item[key] = true;
+          initialLegends[key] = true;
         }
       });
 
-      item.hover = null
-      props.setLegends(item)
+      props.setLegends(initialLegends)
     }
     // eslint-disable-next-line
   }, [props.finalData])

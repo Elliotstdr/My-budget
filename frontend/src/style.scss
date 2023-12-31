@@ -27,7 +27,7 @@ body {
 }
 
 .p-button.p-highlight,
-.p-inputswitch-slider,
+.p-inputswitch-checked .p-inputswitch-slider,
 .p-datepicker-trigger {
   background: var(--second-color) !important;
   border-color: var(--second-color) !important;

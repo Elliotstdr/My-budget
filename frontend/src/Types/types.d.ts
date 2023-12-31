@@ -40,7 +40,7 @@ type NewOperation = {
 type CalculatedGroupOP = {
   Total: number,
   date: string,
-  [key: string]: number;
+  [key: string]: number
 }
 
 type ExpenseTypeSum = {
@@ -60,3 +60,8 @@ type PieDataItem = {
   name: string,
   value: number
 }
+
+type Legends = {
+  hover: string | null;
+  [key: string]: key extends 'hover' ? string | null : boolean;
+};
