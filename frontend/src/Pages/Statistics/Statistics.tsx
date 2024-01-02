@@ -162,7 +162,7 @@ const Statistics = () => {
               ></Bouton>
             </div>
           </>
-          : <span className="empty">
+          : operationsData.loaded && finalData?.length === 0 && <span className="empty">
             N'ayant pas encore de dépenses renseignées, je n'ai pas de statistiques à afficher ! <br />
             Je t'invite à rentrer tes prémières dépenses <i onClick={() => navigate("/import")}>ici</i> !
           </span>
