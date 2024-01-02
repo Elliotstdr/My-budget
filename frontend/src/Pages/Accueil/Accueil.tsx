@@ -29,7 +29,14 @@ const Accueil = () => {
       if (!payload) return
 
       const res = await fetchPost(`/operation/dashboard`, payload);
-      if (res.error) return
+      if (res.error) {
+        updateDashboard({
+          newExpense: 0,
+          data: null,
+          maxExpensePercentage: 0
+        })
+        return
+      }
 
       updateDashboard({
         newExpense: res.data.newExpense,
