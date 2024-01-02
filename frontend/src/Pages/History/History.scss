@@ -4,6 +4,26 @@
     width: 100%;
     margin-top: 0.5rem;
     padding: 0 0.5rem;
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      color: black;
+      background-color: #f0efef;
+      border-radius: 3px;
+      margin: 0.5rem 0;
+      .icon {
+        border-radius: 50%;
+        color: white;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.5rem;
+      }
+    }
   }
   .empty {
     color: var(--main-color);
@@ -21,11 +41,15 @@
 
 @media (min-width: 500px) {
   .history {
+    font-size: 1rem !important;
     &__list {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 1rem;
+      &__item {
+        padding: 0.5rem 1rem;
+      }
     }
   }
 }
