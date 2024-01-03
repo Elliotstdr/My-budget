@@ -42,9 +42,9 @@ const History = () => {
 
   const getIcon = (typeLabel: string) => {
     switch (typeLabel) {
-      case "Frais Fixe":
+      case "Frais fixe":
         return <div style={{ backgroundColor: "#148F77" }} className="icon"><IoExtensionPuzzle></IoExtensionPuzzle></div>
-      case "Exceptionnelles":
+      case "Exceptionnel":
         return <div style={{ backgroundColor: "#1F618D" }} className="icon"><FaExclamation></FaExclamation></div>
       case "Loyer":
         return <div style={{ backgroundColor: "#D35400" }} className="icon"><FaHouseUser></FaHouseUser></div>
