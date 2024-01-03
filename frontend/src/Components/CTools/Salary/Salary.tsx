@@ -14,10 +14,11 @@ interface Props {
 
 const Salary = (props: Props) => {
   const navigate = useNavigate()
-  const [salaireBrut, setSalaireBrut] = useState<number>(100);
+  const [salaireBrut, setSalaireBrut] = useState<number>(2000);
   const [estCadre, setEstCadre] = useState<boolean>(false);
   const [salaireNetAvantImpot, setSalaireNetAvantImpot] = useState<number>(0);
   const [salaireNetApresImpot, setSalaireNetApresImpot] = useState<number>(0);
+  const [tauxImpot, setTauxImpot] = useState(0)
 
   const calculerSalaireNet = () => {
     const tauxCotisations = estCadre ? 0.235 : 0.22
@@ -43,7 +44,9 @@ const Salary = (props: Props) => {
     }
 
     const salaireNetApresImpot = salaireNetAvantImpot - impot / 12;
+    const tauxImpotTemp = ((impot / 12) / salaireNetAvantImpot) * 100
 
+    setTauxImpot(tauxImpotTemp)
     setSalaireNetAvantImpot(salaireNetAvantImpot);
     setSalaireNetApresImpot(salaireNetApresImpot);
   };
@@ -60,7 +63,7 @@ const Salary = (props: Props) => {
             onChange={(e) => setSalaireBrut(e.value as number)}
             min={100}
             max={7000}
-            step={5}
+            step={10}
           />
         </div>
         <label>
@@ -78,6 +81,7 @@ const Salary = (props: Props) => {
             <h3>Résultats :</h3>
             <p>Salaire Net Avant Impôt : {salaireNetAvantImpot.toFixed(2)}</p>
             <p>Salaire Net Après Impôt : {salaireNetApresImpot.toFixed(2)}</p>
+            <p>Taux d'imposition estimé : {tauxImpot.toFixed(1)}%</p>
           </div>
         )}
       </div>
