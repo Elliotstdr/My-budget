@@ -3,7 +3,7 @@ import Header from "../../Header/Header";
 import NavBar from "../../NavBar/NavBar";
 import "./Loan.scss";
 import { Slider } from 'primereact/slider';
-import { calculateLoan } from "../../../Services/tools";
+import { calculateLoan, loanStartData } from "../../../Services/tools";
 import {
   Bar,
   CartesianGrid,
@@ -42,39 +42,7 @@ const Loan = (props: Props) => {
     setMonthCost(loan[0])
     setFullCost(loan[1])
 
-    const loan5 = calculateLoan(capital, 5, interest)
-    const loan10 = calculateLoan(capital, 10, interest)
-    const loan15 = calculateLoan(capital, 15, interest)
-    const loan20 = calculateLoan(capital, 20, interest)
-    const loan25 = calculateLoan(capital, 25, interest)
-
-    const startData = [
-      {
-        temps: 5,
-        value: loan5[0],
-        cost: loan5[1]
-      },
-      {
-        temps: 10,
-        value: loan10[0],
-        cost: loan10[1]
-      },
-      {
-        temps: 15,
-        value: loan15[0],
-        cost: loan15[1]
-      },
-      {
-        temps: 20,
-        value: loan20[0],
-        cost: loan20[1]
-      },
-      {
-        temps: 25,
-        value: loan25[0],
-        cost: loan25[1]
-      }
-    ]
+    const startData = loanStartData(capital, interest)
 
     if (!startData.some((x) => x.temps === time)) {
       startData.push({

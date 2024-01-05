@@ -8,4 +8,13 @@
     margin-left: -1rem;
     margin-bottom: 0;
   }
+  .custom-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 6px;
+    max-width: 10rem;
+  }
 }
