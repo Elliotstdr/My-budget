@@ -108,8 +108,8 @@ const Accueil = () => {
                     />
                     {dashboard.data &&
                       <>
-                        <Cell key={dashboard.data[0].value} fill="#3e6fd4" />
-                        <Cell key={dashboard.data[1].value} fill="#db8bb5" />
+                        <Cell key={dashboard.data[0].value} fill="var(--third-color)" />
+                        <Cell key={dashboard.data[1].value} fill="var(--second-color)" />
                       </>
                     }
                   </Pie>

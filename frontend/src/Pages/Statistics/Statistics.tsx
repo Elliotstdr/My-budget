@@ -22,7 +22,7 @@ const Statistics = () => {
 
   const operationsData = useFetchGet<Operation[]>("/operation")
   const navigate = useNavigate()
-  const [date, setDate] = useState<Date | Date[] | null>(null)
+  const [date, setDate] = useState<Date[] | null>(null)
   const [data, setData] = useState<CalculatedGroupOP[] | undefined>(undefined)
   const [synthesisData, setSynthesisData] = useState<SynthesisData[] | undefined>(undefined)
   const [finalData, setFinalData] = useState<CalculatedGroupOP[] | undefined>(undefined)
@@ -96,6 +96,7 @@ const Statistics = () => {
     <>
       <Header title="Statistiques"></Header>
       <div className="statistics page">
+        {date && !date[1] && <small className="p-error">Veuillez renseigner une date de fin</small>}
         <Calendar
           value={date}
           onChange={(e) => {

@@ -1,12 +1,12 @@
-import "../../Pages/Parameters/Parameters.scss";
+import "../../../Pages/Parameters/Parameters.scss";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../../../Utils/Bouton/Bouton";
 import { useDispatch, useSelector } from "react-redux";
-import { errorToast, successToast } from "../../Services/functions";
-import { UPDATE_AUTH } from "../../Store/Reducers/authReducer";
-import { fetchPut } from "../../Services/api";
+import { errorToast, successToast } from "../../../Services/functions";
+import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
+import { fetchPut } from "../../../Services/api";
 import { MdMailOutline, MdPersonOutline } from "react-icons/md";
 
 type Values = {

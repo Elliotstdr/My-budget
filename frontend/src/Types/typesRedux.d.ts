@@ -8,8 +8,7 @@ type AuthState = {
   token: string | null,
   userConnected: User | null,
   newLogTime: number | null,
-  toast: MutableRefObject<null> | null,
-  allowPropositions: boolean
+  toast: MutableRefObject<null> | null
 }
 
 type DashboardState = {

@@ -50,13 +50,6 @@ const Type = (props: Props) => {
     <>
       {props.editable ?
         <div className='type'>
-          {/* <IconContext.Provider
-      value={{ color: 'blue', size: '50px' }}
-    >
-      <div>
-        <FaBeer />
-      </div>
-    </IconContext.Provider> */}
           <div
             className="icon cross"
             style={{ cursor: "pointer" }}

@@ -1,10 +1,10 @@
-import "../../Pages/Parameters/Parameters.scss";
+import "../../../Pages/Parameters/Parameters.scss";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../../../Utils/Bouton/Bouton";
 import { useSelector } from "react-redux";
-import { errorToast, successToast } from "../../Services/functions";
-import { fetchPost } from "../../Services/api";
+import { errorToast, successToast } from "../../../Services/functions";
+import { fetchPost } from "../../../Services/api";
 import { Password } from "primereact/password";
 import { MdLockOutline } from "react-icons/md";
 

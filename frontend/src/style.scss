@@ -33,6 +33,10 @@ body {
   border-color: var(--second-color) !important;
 }
 
+.p-button:focus {
+  box-shadow: none !important;
+}
+
 @media (min-width: 500px) {
   body {
     font-size: 1.1rem !important;
