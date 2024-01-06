@@ -5,10 +5,6 @@ import { Request, Response } from "express";
 import { loginERROR, randomERROR } from "../services/const.service";
 
 export const signUp = async (req: Request, res: Response) => {
-  const foundedUser = await User.findOne({ email: req.body.email })
-
-  if(foundedUser) return res.status(401).json({ message: "Email non disponible" })
-
   await bcrypt
     .hash(req.body.password, 10)
     .then((hash: string) => {
