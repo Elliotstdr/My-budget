@@ -94,10 +94,5 @@ export const formatYearMonth = (date: Date) => {
  * @returns data
  */
 export const orderByDate = (data: Operation[]) => {
-  return data.sort((a, b) => {
-    const aDate = formatMonthYear(a.datePeriod)
-    const bDate = formatMonthYear(b.datePeriod)
-
-    return aDate.localeCompare(bDate)
-  })
+  return data.sort((a, b) => new Date(a.datePeriod).getTime() - new Date(b.datePeriod).getTime())
 }

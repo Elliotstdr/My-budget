@@ -2,7 +2,10 @@ type User = {
   _id: string,
   username: string,
   email: string,
-  allowPropositions: boolean
+  allowPropositions: boolean,
+  goal?: string,
+  goalPeriod?: Date[],
+  allowGoal: boolean
 }
 
 type Operation = {
@@ -18,6 +21,15 @@ type Type = {
   _id: string,
   label: string,
   keywords: string[],
+  user: User
+}
+
+type Debt = {
+  _id: string
+  target: string
+  title: string,
+  value: number,
+  dueDate?: Date | null,
   user: User
 }
 

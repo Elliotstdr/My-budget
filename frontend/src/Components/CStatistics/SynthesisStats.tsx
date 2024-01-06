@@ -1,6 +1,7 @@
+import { useSelector } from 'react-redux';
 import {
   Line, Bar,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Rectangle
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Rectangle, ReferenceLine, Label
 } from 'recharts';
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const SynthesisStats = (props: Props) => {
+  const auth = useSelector((state: RootState) => state.auth);
   // Tooltip custom
   const CustomTooltip = ({ payload }: any) => {
     return payload.map((x: any) =>
@@ -19,6 +21,25 @@ const SynthesisStats = (props: Props) => {
       </div>
     )
   }
+
+  const getMonthGoal = () => {
+    if (!auth.userConnected?.goal || !auth.userConnected?.goalPeriod) return 1
+    const goal = auth.userConnected.goal
+    const dates = auth.userConnected.goalPeriod
+
+    if (!dates || dates.length !== 2) return 1
+
+    const start = new Date(dates[0])
+    const end = new Date(dates[1])
+
+    let months = 1;
+    months = (end.getFullYear() - start.getFullYear()) * 12;
+    months -= start.getMonth();
+    months += end.getMonth();
+
+    return months <= 1 ? Number(goal) : Number(goal) / (months + 1);
+  }
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <ComposedChart
@@ -61,8 +82,38 @@ const SynthesisStats = (props: Props) => {
           fill="#148F77"
           name="Solde"
         />
+        {auth.userConnected?.allowGoal && auth.userConnected.goal &&
+          (auth.userConnected.goalPeriod ?
+            <ReferenceLine
+              y={getMonthGoal()}
+              strokeWidth={2}
+              stroke="var(--main-color)"
+            >
+              <Label
+                value={`Objectif mensuel (${getMonthGoal().toFixed(0)}€)`}
+                position={"insideBottomLeft"}
+                width={16}
+                fill='var(--main-color)'
+                fontSize={"0.7rem"}
+                fontWeight={500}
+              ></Label>
+            </ReferenceLine>
+            : <ReferenceLine
+              y={auth.userConnected.goal}
+              strokeWidth={2}
+              stroke="var(--main-color)"
+            >
+              <Label
+                value={`Objectif (${Number(auth.userConnected.goal).toFixed(0)}€)`}
+                position={"insideBottomLeft"}
+                width={16}
+                fill='var(--main-color)'
+                fontSize={"0.7rem"}
+                fontWeight={500}
+              ></Label>
+            </ReferenceLine>)}
       </ComposedChart>
-    </ResponsiveContainer>
+    </ResponsiveContainer >
   );
 };
 

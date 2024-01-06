@@ -1,0 +1,81 @@
+.debt {
+  color: var(--main-color);
+  &__showForm {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+    svg {
+      transition: all 0.3s ease-in-out;
+    }
+    &.false {
+      svg {
+        transform: rotate(0);
+      }
+    }
+    &.true {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    transition: max-height 0.5s ease-in-out;
+    overflow: hidden;
+    &.visible {
+      max-height: 100rem;
+    }
+    &.hidden {
+      max-height: 0rem;
+    }
+    &__field {
+      display: flex;
+      flex-direction: column;
+      label {
+        margin: 0.5rem 0 0.25rem 0.25rem;
+        font-weight: bold;
+        .star {
+          color: #e03232;
+          font-size: 0.8rem;
+        }
+      }
+      .p-inputtext {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+    .bouton {
+      max-width: 10rem;
+      padding: 0.5rem 1.5rem;
+      align-self: center;
+    }
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    span {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+    .target {
+      width: 15%;
+    }
+    .title {
+      width: 30%;
+    }
+    .value {
+      width: 10%;
+    }
+    .date {
+      width: 20%;
+    }
+  }
+}

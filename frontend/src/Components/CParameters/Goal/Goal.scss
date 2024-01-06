@@ -1,0 +1,13 @@
+.goal {
+  color: var(--main-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  &__field {
+    &.switch {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}

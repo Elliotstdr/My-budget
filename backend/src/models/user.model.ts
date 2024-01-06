@@ -6,7 +6,10 @@ type DUser = Document & {
   username: string,
   email: string;
   password: string;
-  allowPropositions: boolean
+  allowPropositions: boolean,
+  goal?: number,
+  goalPeriod?: Date[],
+  allowGoal: boolean
 };
 
 const usersSchema = new Schema(
@@ -27,6 +30,16 @@ const usersSchema = new Schema(
     allowPropositions: {
       type: Schema.Types.Boolean,
       default: true
+    },
+    goal: {
+      type: Schema.Types.Number
+    },
+    goalPeriod: {
+      type: [Schema.Types.Date]
+    },
+    allowGoal: {
+      type: Schema.Types.Boolean,
+      default: false
     }
   },
   {
