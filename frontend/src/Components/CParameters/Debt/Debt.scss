@@ -54,28 +54,9 @@
       align-self: center;
     }
   }
-  &__item {
+  &__container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 1rem;
-    width: 100%;
-    span {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      overflow: hidden;
-    }
-    .target {
-      width: 15%;
-    }
-    .title {
-      width: 30%;
-    }
-    .value {
-      width: 10%;
-    }
-    .date {
-      width: 20%;
-    }
   }
 }

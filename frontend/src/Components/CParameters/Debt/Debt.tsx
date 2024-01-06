@@ -7,9 +7,10 @@ import Bouton from "../../../Utils/Bouton/Bouton";
 import { useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa6";
 import { Divider } from "primereact/divider";
-import { fetchDelete, fetchPost, useFetchGet } from "../../../Services/api";
-import { errorToast, formatMonthYear } from "../../../Services/functions";
+import { fetchPost, useFetchGet } from "../../../Services/api";
+import { errorToast } from "../../../Services/functions";
 import { useSelector } from "react-redux";
+import DebtCard from "./DebtCard/DebtCard";
 
 type Values = {
   target: string
@@ -62,15 +63,6 @@ const Debt = () => {
 
     setDebts((prev) => [...prev, newDebt.data])
     reset()
-  }
-
-  const deleteDebt = async (id: string) => {
-    const res = await fetchDelete(`/debt/${id}`)
-    if (res.error) {
-      errorToast(res)
-      return
-    }
-    setDebts((prev) => prev.filter((x) => x._id !== id))
   }
 
   return (
@@ -136,19 +128,15 @@ const Debt = () => {
         ></Bouton>
       </form>
       <Divider></Divider>
-      {debts.map((x) =>
-        <div className="debt__item">
-          <div
-            className="pi pi-times"
-            style={{ cursor: "pointer" }}
-            onClick={() => deleteDebt(x._id)}
-          ></div>
-          <span className="target">{x.target}</span>
-          <span className="title" title={x.title}>{x.title}</span>
-          <span className="value">{x.value}</span>
-          {x.dueDate && <span className="date">{formatMonthYear(x.dueDate)}</span>}
-        </div>
-      )}
+      <div className="debt__container">
+        {debts.map((x) =>
+          <DebtCard
+            key={x._id}
+            debt={x}
+            setDebts={setDebts}
+          ></DebtCard>
+        )}
+      </div>
     </div>
   );
 };
