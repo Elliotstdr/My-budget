@@ -71,6 +71,7 @@ const Loan = (props: Props) => {
     <>
       {!props.isComponent && <Header title="Mon emprunt"></Header>}
       <div className='loan'>
+        {props.isComponent && <h1 className="loan__title">Capacité d'emprunt</h1>}
         {!props.isComponent && <ReturnButton action={() => navigate("/tools")}></ReturnButton>}
         <div className="loan__top">
           <div className="loan__capital label">

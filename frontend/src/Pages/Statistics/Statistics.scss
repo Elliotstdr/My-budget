@@ -50,11 +50,15 @@
   }
 }
 
-@media (min-width: 500px) {
+@media (min-width: 900px) {
   .statistics {
     gap: 1rem;
-    .recharts-responsive-container {
-      margin: 2rem 0 !important;
+    .titre {
+      font-size: 1.2rem;
+      margin-top: 1rem !important;
+    }
+    .p-selectbutton {
+      transform: scale(1);
     }
   }
 }

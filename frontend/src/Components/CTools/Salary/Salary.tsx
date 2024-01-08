@@ -94,7 +94,7 @@ const Salary = (props: Props) => {
                 Décile : {`${payload[0].payload.percile.toFixed(0)}%`}
               </span>
               <span style={{ color: "var(--second-color)" }}>
-                Salaire : {`${payload[0].payload.value.toFixed(2)}€`}
+                Salaire : {`${payload[0].payload.value.toFixed(0)}€`}
               </span>
             </>
           }
@@ -109,6 +109,7 @@ const Salary = (props: Props) => {
     <>
       {!props.isComponent && <Header title="Mon salaire"></Header>}
       <div className="salary">
+        {props.isComponent && <h1 className="salary__title">Salaire brut / net</h1>}
         {!props.isComponent && <ReturnButton action={() => navigate("/tools")}></ReturnButton>}
         <div>
           <div style={{ marginBottom: "0.75rem" }}>{`Salaire Brut Mensuel : ${salaireBrut}`}</div>
