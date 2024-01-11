@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { fetchPost, fetchPut, useFetchGet } from "../../../Services/api";
 import { Calendar } from 'primereact/calendar';
 import { Divider } from 'primereact/divider';
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { errorToast, rangeTiretDate } from "../../../Services/functions";
 import Operation from "../../Operation/Operation";
@@ -18,6 +18,8 @@ import SlideIn from "../../../Utils/SlideIn/SlideIn";
 import OperationsImported from "../../OperationsImported/OperationsImported";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { InputSwitch } from "primereact/inputswitch";
+import Bouton from "../../../Utils/Bouton/Bouton";
+import { useScreenSize } from "../../../Services/useScreenSize";
 
 type Values = {
   name: string,
@@ -39,6 +41,7 @@ const ImportManuel = () => {
   const [isProposedType, setIsProposedType] = useState(true)
   const [openPropositions, setOpenPropositions] = useState(false)
   const [redondantOperations, setRedondantOperations] = useState<ImportedOperation[]>([])
+  const windowSize = useScreenSize()
   const defaultValues: Values = {
     name: "",
     value: "",
@@ -49,16 +52,18 @@ const ImportManuel = () => {
     register,
     reset,
     setValue,
+    getValues,
     formState: { errors },
-    handleSubmit,
   } = useForm({ defaultValues });
 
-  const onSubmit = async (data: Values) => {
+  const onSubmit = async (type: 'positive' | 'negative') => {
     if (!ddType?._id || !auth.userConnected?._id || !date) return
+
+    const data = getValues()
 
     const payload: NewOperation = {
       label: data.name,
-      value: Number(data.value),
+      value: type === 'positive' ? Number(data.value) : Number(-data.value),
       type: ddType._id,
       user: auth.userConnected._id,
       datePeriod: date
@@ -169,10 +174,11 @@ const ImportManuel = () => {
           view="month"
           dateFormat="mm/yy"
           placeholder="Choisissez une date"
-          showIcon
+          showIcon={windowSize.width < 900}
           autoFocus
+          inline={windowSize.width >= 900}
         />
-        {date && <form className="importmanuel__form" onSubmit={handleSubmit(onSubmit)}>
+        {date && <form className="importmanuel__form">
           <div className="importmanuel__form__input">
             <div className="field input">
               <InputText
@@ -196,7 +202,7 @@ const ImportManuel = () => {
                 {...register("value", { required: true })}
                 placeholder="€"
                 className="importmanuel__form__field-value"
-                keyfilter="num"
+                keyfilter="pnum"
               />
               {errors.value && <small className="p-error">valeur obligatoire</small>}
             </div>
@@ -217,9 +223,23 @@ const ImportManuel = () => {
               {errors.type && <small className="p-error">type obligatoire</small>}
             </div>
           </div>
-          <button className="importmanuel__form__button">
+          <div className="importmanuel__form__buttons">
+            <Bouton className="revenus" btnTexte="Revenus" btnAction={(e) => {
+              e.preventDefault()
+              onSubmit('positive')
+            }}>
+              <AiOutlinePlusCircle></AiOutlinePlusCircle>
+            </Bouton>
+            <Bouton className="depenses" btnTexte="Dépenses" btnAction={(e) => {
+              e.preventDefault()
+              onSubmit('negative')
+            }}>
+              <AiOutlineMinusCircle></AiOutlineMinusCircle>
+            </Bouton>
+          </div>
+          {/* <button className="importmanuel__form__button">
             <AiOutlinePlusCircle></AiOutlinePlusCircle>
-          </button>
+          </button> */}
         </form>}
         <Divider></Divider>
         <div className="importmanuel__list">

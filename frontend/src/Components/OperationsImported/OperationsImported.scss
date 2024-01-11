@@ -21,3 +21,27 @@
     cursor: pointer;
   }
 }
+
+@media (min-width: 900px) {
+  .importCSV {
+    .operationsimported {
+      font-size: 1.1rem !important;
+      &__name,
+      &__date,
+      .p-dropdown {
+        width: 8rem;
+      }
+      &__value {
+        width: 4rem;
+      }
+    }
+    .operation {
+      input {
+        width: 8rem;
+      }
+      .p-dropdown {
+        width: 10rem;
+      }
+    }
+  }
+}

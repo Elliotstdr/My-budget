@@ -8,6 +8,7 @@ import Bouton from "../../Utils/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
 import image from "../../assets/tirelire-blue.png";
 import { Divider } from "primereact/divider";
+import ImportDesktop from "./ImportDesktop";
 
 const Import = () => {
   const navigate = useNavigate()
@@ -46,6 +47,7 @@ const Import = () => {
           style={{ fontSize: "1.1rem" }}
         ></Bouton>
       </div>
+      <ImportDesktop></ImportDesktop>
       <NavBar></NavBar>
     </>
   );

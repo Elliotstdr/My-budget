@@ -31,6 +31,35 @@
         }
       }
     }
+    &__buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      .bouton {
+        font-size: 0.9rem;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        svg {
+          margin-right: 0.25rem;
+        }
+      }
+      .revenus {
+        background-color: #339c0ecc;
+        border-color: #339c0e1a;
+        &:hover {
+          border-color: #339c0ecc;
+          color: #339c0ecc;
+        }
+      }
+      .depenses {
+        background-color: #e03232cc;
+        border-color: #e032321a;
+        &:hover {
+          border-color: #e03232cc;
+          color: #e03232cc;
+        }
+      }
+    }
     &__button {
       cursor: pointer;
       margin-top: 1rem;
@@ -64,4 +93,17 @@
 
 .sidebar-propositions .operationsimported__date {
   display: none;
+}
+
+@media (min-width: 900px) {
+  .importmanuel {
+    padding: 3rem !important;
+    .p-calendar {
+      margin-bottom: 2rem;
+      width: 400px;
+    }
+    &__top {
+      max-width: 1000px;
+    }
+  }
 }
