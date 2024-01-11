@@ -17,6 +17,7 @@ import {
 } from "recharts";
 import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
+import { useScreenSize } from "../../../Services/useScreenSize";
 
 type dataElement = {
   temps: number,
@@ -36,6 +37,7 @@ const Loan = (props: Props) => {
   const [monthCost, setMonthCost] = useState(0)
   const [fullCost, setFullCost] = useState(0)
   const [data, setData] = useState<dataElement[] | undefined>(undefined)
+  const windowSize = useScreenSize()
 
   useEffect(() => {
     const loan = calculateLoan(capital, time, interest)
@@ -118,10 +120,10 @@ const Loan = (props: Props) => {
             </div>
           </div>
         </div>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={windowSize.width > 900 ? 400 : 300}>
           <ComposedChart
             width={500}
-            height={300}
+            height={windowSize.width > 900 ? 400 : 300}
             data={data}
             margin={{
               top: 5,

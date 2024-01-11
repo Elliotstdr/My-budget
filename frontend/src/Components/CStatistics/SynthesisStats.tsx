@@ -3,6 +3,7 @@ import {
   Line, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Rectangle, ReferenceLine, Label
 } from 'recharts';
+import { useScreenSize } from '../../Services/useScreenSize';
 
 interface Props {
   synthesisData: SynthesisData[]
@@ -10,6 +11,8 @@ interface Props {
 
 const SynthesisStats = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
+  const windowSize = useScreenSize()
+
   // Tooltip custom
   const CustomTooltip = ({ payload }: any) => {
     return payload.map((x: any) =>
@@ -41,10 +44,10 @@ const SynthesisStats = (props: Props) => {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={windowSize.width > 900 ? 500 : 300}>
       <ComposedChart
         width={500}
-        height={300}
+        height={windowSize.width > 900 ? 500 : 300}
         data={props.synthesisData}
         margin={{ right: 30, left: 20 }}
       >

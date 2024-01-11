@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { decilesStartData } from "../../../Services/tools";
+import { useScreenSize } from "../../../Services/useScreenSize";
 
 interface Props {
   isComponent?: boolean
@@ -28,6 +29,7 @@ const Salary = (props: Props) => {
   const [salaireNetAvantImpot, setSalaireNetAvantImpot] = useState<number>(0);
   const [salaireNetApresImpot, setSalaireNetApresImpot] = useState<number>(0);
   const [tauxImpot, setTauxImpot] = useState(0)
+  const windowSize = useScreenSize()
 
   const [infosVisible, setInfosVisible] = useState(false)
   const [myDecile, setMyDecile] = useState<Decile>({
@@ -145,10 +147,10 @@ const Salary = (props: Props) => {
             Comparaison nationale :
             <span onClick={() => setInfosVisible(!infosVisible)}><HiOutlineInformationCircle /></span>
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={windowSize.width > 900 ? 400 : 300}>
             <BarChart
               width={500}
-              height={300}
+              height={windowSize.width > 900 ? 400 : 300}
               data={[...deciles, myDecile].filter((x) => x.value !== 0).sort((a, b) => a.value - b.value)}
               margin={{
                 top: 5,
