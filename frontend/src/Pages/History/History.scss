@@ -74,6 +74,7 @@
     }
     &__calendar {
       padding: 0 2rem;
+      flex-grow: 1;
       .p-calendar {
         width: 100%;
         max-width: 600px;
