@@ -8,12 +8,14 @@ import { literalMonthAndYear } from "../../Services/functions";
 import { Divider } from "primereact/divider";
 import { groupByMonth } from "../../Services/statistics";
 import { useNavigate } from "react-router-dom";
-
+import Import3 from "../../assets/Import3.jpg"
 import { IoExtensionPuzzle } from "react-icons/io5";
 import { FaExclamation, FaHouseUser, FaRegMoneyBillAlt } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
 import { FaScaleBalanced, FaGear } from "react-icons/fa6";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
+import { useScreenSize } from "../../Services/useScreenSize";
+import Bouton from "../../Utils/Bouton/Bouton";
 
 const History = () => {
   const navigate = useNavigate()
@@ -21,6 +23,7 @@ const History = () => {
   const typesData = useFetchGet<Type[]>("/type")
   const [date, setDate] = useState<Date | null | undefined>(null)
   const [operations, setOperations] = useState<Operation[]>([])
+  const windowSize = useScreenSize()
 
   useEffect(() => {
     operationsData.loaded && operationsData.data && setOperations(operationsData.data)
@@ -64,25 +67,42 @@ const History = () => {
     <>
       <Header title="Historique"></Header>
       <div className="history page">
-        <Calendar
-          value={date}
-          onChange={(e) => {
-            if (!e.value && operationsData.data) {
-              setDate(null)
-              setOperations(operationsData.data)
-              return
-            }
-            const newDate = e.value as Date;
-            newDate.setHours(newDate.getHours() + 12);
-            setDate(newDate)
-            filterByDate(newDate)
-          }}
-          view="month"
-          dateFormat="mm/yy"
-          placeholder="Choisissez une date"
-          showIcon
-          showButtonBar
-        />
+        <div className="history__calendar">
+          <Calendar
+            value={date}
+            onChange={(e) => {
+              if (!e.value && operationsData.data) {
+                setDate(null)
+                setOperations(operationsData.data)
+                return
+              }
+              const newDate = e.value as Date;
+              newDate.setHours(newDate.getHours() + 12);
+              setDate(newDate)
+              filterByDate(newDate)
+            }}
+            view="month"
+            dateFormat="mm/yy"
+            placeholder="Choisissez une date"
+            showIcon={windowSize.width < 900}
+            showButtonBar
+            inline={windowSize.width >= 900}
+          />
+          <div
+            className="history__calendar__desktop"
+            style={{ backgroundImage: `url(${Import3})`, display: "none" }}
+          >
+            <div className="history__calendar__desktop__child">
+              <span className="title">Importer de nouvelles opérations !</span>
+              <Bouton
+                btnTexte="Mes opérations"
+                btnAction={() => navigate("/import")}
+                color="pink"
+                style={{ fontSize: "1.1rem" }}
+              ></Bouton>
+            </div>
+          </div>
+        </div>
         {operations?.length > 0 ?
           <div className="history__list">
             {groupByMonth(operations).map((groupOperation, key) =>
