@@ -60,3 +60,20 @@
     gap: 1rem;
   }
 }
+
+@media (min-width: 700px) {
+  .debt {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 2rem;
+    &__showForm.false svg {
+      transform: rotate(90deg);
+    }
+    &__form {
+      &.hidden {
+        max-height: 100rem;
+      }
+    }
+  }
+}

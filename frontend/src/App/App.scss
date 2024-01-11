@@ -11,3 +11,11 @@
     overflow: scroll;
   }
 }
+
+@media (min-width: 900px) {
+  .app {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 0 !important;
+  }
+}

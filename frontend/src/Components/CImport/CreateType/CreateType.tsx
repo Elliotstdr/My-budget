@@ -63,7 +63,7 @@ const CreateType = () => {
   }
   return (
     <>
-      <Header title="Gestion des types"></Header>
+      <Header title="Mes types"></Header>
       <div className='createtype page'>
         <ReturnButton action={() => navigate("/import")}></ReturnButton>
         <form className="createtype__form" onSubmit={handleSubmit(onSubmit)}>

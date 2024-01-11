@@ -36,3 +36,15 @@
     width: 100%;
   }
 }
+
+@media (min-width: 900px) {
+  .createtype {
+    padding: 3rem !important;
+    &__form {
+      width: unset;
+    }
+    &__list {
+      width: unset;
+    }
+  }
+}
