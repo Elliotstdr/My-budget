@@ -1,9 +1,6 @@
 import "./NavBar.scss";
-import { FaHome } from "react-icons/fa";
-import { FaUpload } from "react-icons/fa";
+import { FaHome, FaUserCog, FaUpload, FaTools, FaHistory } from "react-icons/fa";
 import { FaChartLine } from "react-icons/fa6";
-import { FaTools } from "react-icons/fa";
-import { FaHistory } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
@@ -28,6 +25,9 @@ const NavBar = () => {
       <NavLink className={(nav) => (nav.isActive ? "nav-active" : "")} to="/history">
         <FaHistory />
         <span>Historique</span>
+      </NavLink>
+      <NavLink className={(nav) => (nav.isActive ? "nav-active param" : "param")} to="/parameters">
+        <FaUserCog />
       </NavLink>
     </nav>
   );

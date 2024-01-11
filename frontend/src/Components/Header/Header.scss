@@ -27,7 +27,23 @@
 }
 
 @media (min-width: 900px) {
-  .header h1 img {
-    display: block;
+  .header {
+    position: absolute;
+    top: 1.5rem;
+    left: 4rem;
+    padding: 2rem 1.5rem !important;
+    z-index: 1001;
+    border-radius: 16px;
+    color: white !important;
+    margin: 0;
+    font-size: 1.7rem !important;
+    span {
+      display: none;
+    }
+    h1 img {
+      display: block;
+      width: 68px !important;
+      margin-right: 0.25rem;
+    }
   }
 }
