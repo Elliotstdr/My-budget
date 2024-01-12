@@ -53,7 +53,7 @@ const AccueilDesktop = () => {
 
   return (
     <>
-      <Header title="Accueil"></Header>
+      <Header title="Accueil" className="header-accueil"></Header>
       <div className="accueil__desktop page">
         <div
           className="accueil__desktop__bandeau"

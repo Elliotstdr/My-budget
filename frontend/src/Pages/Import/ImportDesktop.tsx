@@ -14,7 +14,7 @@ const ImportDesktop = () => {
       <div className="import__desktop__top">
         <div className="import__desktop__top__left" style={{ backgroundImage: `url(${Import1})` }}>
           <div className="white-zone">
-            <div>Impoter</div>
+            <div>Importer</div>
             <span>Ajoute des opérations pour suivre l’évolution des tes dépenses</span>
           </div>
         </div>

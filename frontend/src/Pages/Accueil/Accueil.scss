@@ -1,6 +1,9 @@
 .accueil__desktop {
   display: none;
 }
+.header-accueil {
+  display: none !important;
+}
 .white--zone {
   width: 340px;
   height: 130px;
@@ -115,6 +118,9 @@
 }
 
 @media (min-width: 900px) {
+  .header-accueil {
+    display: flex !important;
+  }
   .accueil__desktop {
     display: flex;
     padding: 0;

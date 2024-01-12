@@ -5,13 +5,14 @@ import image from "../../assets/tirelire-blue.png";
 
 type Props = {
   title: string,
+  className?: string
 }
 
 const Header = (props: Props) => {
   const navigate = useNavigate()
 
   return (
-    <div className='header'>
+    <div className={`header ${props.className || ""}`}>
       <h1>
         <img src={image} alt="background home" />
         {props.title}
