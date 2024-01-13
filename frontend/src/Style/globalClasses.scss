@@ -1,0 +1,61 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 0.5rem !important;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  h4 {
+    margin: 1rem 0 0.5rem 0.25rem;
+    font-weight: normal;
+  }
+  .box {
+    position: relative;
+    & > svg {
+      height: 1.5rem;
+      width: 1.5rem;
+      padding: 4px;
+      position: absolute;
+      top: 50%;
+      left: 2px;
+      transform: translateY(-50%);
+      color: #a7adb1;
+    }
+    input {
+      width: 100%;
+      background-color: #3b3e4014;
+      border: none;
+      padding-left: 1.75rem;
+    }
+    .p-password {
+      width: 100%;
+    }
+  }
+}
+
+.white-block {
+  border-radius: 1rem;
+  position: absolute;
+  color: var(--main-color);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-weight: bold;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  span {
+    color: var(--second-color);
+  }
+}
+
+@media (min-width: 900px) {
+  .page {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}

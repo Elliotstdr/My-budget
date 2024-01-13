@@ -7,17 +7,8 @@
 .white--zone {
   width: 340px;
   height: 130px;
-  border-radius: 0.5rem;
   box-shadow: 0px 3px 4px 0px #00000040;
-  position: absolute;
   top: 6rem;
-  color: var(--second-color);
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  font-weight: bold;
-  background-color: white;
-  justify-content: center;
   .main {
     font-size: 1.875rem;
   }
@@ -118,6 +109,9 @@
 }
 
 @media (min-width: 900px) {
+  .accueil {
+    display: none;
+  }
   .header-accueil {
     display: flex !important;
   }
@@ -144,10 +138,8 @@
         }
         .block {
           margin-top: -1.25rem;
-          background-color: white;
-          border-radius: 1rem;
           padding: 1rem 8rem;
-          text-align: center;
+          position: unset;
           div {
             font-weight: bold;
             font-size: 2rem;
@@ -168,10 +160,10 @@
       gap: 4rem;
       .white--zone {
         position: unset;
+        border-radius: 0.5rem;
         width: 50%;
         height: unset;
         padding: 2rem 5rem;
-        align-items: center;
         .sentence {
           color: var(--main-color);
           margin-bottom: 0.5rem;
@@ -224,42 +216,6 @@
         .legend {
           font-size: 0.9rem;
           width: 6rem;
-        }
-      }
-    }
-  }
-  .accueil {
-    display: none;
-  }
-  .accueil {
-    position: unset;
-    .blue--zone {
-      display: none;
-    }
-    .white--zone {
-      z-index: 1001;
-    }
-    &__body {
-      margin-top: 2rem;
-      .first {
-        width: 40%;
-      }
-      .first,
-      .second {
-        display: flex;
-        flex-direction: column;
-      }
-      &__boxes {
-        .boite {
-          width: 10rem !important;
-          height: 10rem !important;
-        }
-      }
-      &__pie {
-        height: unset;
-        justify-content: center;
-        .recharts-wrapper {
-          height: unset;
         }
       }
     }

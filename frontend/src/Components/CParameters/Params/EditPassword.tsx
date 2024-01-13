@@ -50,7 +50,7 @@ const EditPassword = () => {
 
   return (
     <form className="param__form" onSubmit={handleSubmit(editPassword)}>
-      <div className="param__form__field">
+      <div className="param__form__field form-field">
         <h4>Précédent mot de passe</h4>
         <Controller
           name="oldPassword"
@@ -72,7 +72,7 @@ const EditPassword = () => {
         />
         {errors.oldPassword && <small className="p-error">L'ancien mot de passe est obligatoire</small>}
       </div>
-      <div className="param__form__field">
+      <div className="param__form__field form-field">
         <h4>Nouveau mot de passe</h4>
         <Controller
           name="password"

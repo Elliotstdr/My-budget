@@ -82,7 +82,7 @@ const ModalLogin = (props: Props) => {
       width={"20rem"}
     >
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="login__form__field">
+        <div className="login__form__field form-field">
           <h4>Adresse email</h4>
           <div className="box">
             <MdMailOutline></MdMailOutline>
@@ -95,7 +95,7 @@ const ModalLogin = (props: Props) => {
           </div>
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
-        <div className="login__form__field">
+        <div className="login__form__field form-field">
           <h4>Mot de passe</h4>
           <Controller
             name="password"

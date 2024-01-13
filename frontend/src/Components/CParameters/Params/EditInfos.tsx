@@ -58,7 +58,7 @@ const EditInfos = () => {
 
   return (
     <form className="param__form editinfos" onSubmit={handleSubmit(editInfos)}>
-      <div className="param__form__field">
+      <div className="param__form__field form-field">
         <h4>Nom</h4>
         <div className="box">
           <MdPersonOutline></MdPersonOutline>
@@ -70,7 +70,7 @@ const EditInfos = () => {
         </div>
         {errors.username && <small className="p-error">Le nom est obligatoire</small>}
       </div>
-      <div className="param__form__field">
+      <div className="param__form__field form-field">
         <h4>Adresse email</h4>
         <div className="box">
           <MdMailOutline></MdMailOutline>

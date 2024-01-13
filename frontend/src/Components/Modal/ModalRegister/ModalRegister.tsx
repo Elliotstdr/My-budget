@@ -98,7 +98,7 @@ const ModalLogin = (props: Props) => {
       width={"30rem"}
     >
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="login__form__field">
+        <div className="login__form__field form-field">
           <h4>Nom</h4>
           <div className="box">
             <MdPersonOutline></MdPersonOutline>
@@ -110,7 +110,7 @@ const ModalLogin = (props: Props) => {
           </div>
           {errors.username && <small className="p-error">Le nom est obligatoire</small>}
         </div>
-        <div className="login__form__field">
+        <div className="login__form__field form-field">
           <h4>Adresse email</h4>
           <div className="box">
             <MdMailOutline></MdMailOutline>
@@ -123,7 +123,7 @@ const ModalLogin = (props: Props) => {
           </div>
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
-        <div className="login__form__field">
+        <div className="login__form__field form-field">
           <h4>Mot de passe</h4>
           <Controller
             name="password"
@@ -155,7 +155,7 @@ const ModalLogin = (props: Props) => {
           />
           {errors.password && <small className="p-error">{errors.password.message}</small>}
         </div>
-        <div className="login__form__field">
+        <div className="login__form__field form-field">
           <h4>Confirmer le mot de passe</h4>
           <Controller
             name="confirmpassword"

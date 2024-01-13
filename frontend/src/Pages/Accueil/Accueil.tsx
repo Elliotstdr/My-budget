@@ -68,7 +68,7 @@ const Accueil = () => {
             <FaUserCog></FaUserCog>
           </div>
         </div>
-        <div className="white--zone">
+        <div className="white--zone white-block">
           <span className="main">{`${dashboard.newExpense}€`}</span>
           <span className="sub">dépensés ce mois ci !</span>
         </div>

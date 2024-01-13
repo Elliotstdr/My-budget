@@ -61,14 +61,14 @@ const AccueilDesktop = () => {
         >
           <div className="accueil__desktop__bandeau__encart">
             <img className="logo" src={image} alt="" />
-            <div className="block">
+            <div className="block white-block">
               <div>Bonjour Elliot,</div>
               <span>Heureux de te revoir !</span>
             </div>
           </div>
         </div>
         <div className="accueil__desktop__body">
-          <div className="white--zone">
+          <div className="white--zone white-block">
             <div className="sentence">Fais le point sur tes dépenses du mois </div>
             <span className="main">{`${dashboard.newExpense}€`}</span>
             <span className="sub">dépensés ce mois ci !</span>
