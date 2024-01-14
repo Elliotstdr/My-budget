@@ -12,6 +12,7 @@ import { errorToast } from "../../../Services/functions";
 import { useSelector } from "react-redux";
 import DebtCard from "./DebtCard/DebtCard";
 import { useScreenSize } from "../../../Services/useScreenSize";
+import { RadioButton } from 'primereact/radiobutton';
 
 type Values = {
   target: string
@@ -27,6 +28,7 @@ const Debt = () => {
   const [date, setDate] = useState<Date | null>(null)
   const [visibleForm, setVisibleForm] = useState(false)
   const [debts, setDebts] = useState<Debt[]>([])
+  const [way, setWay] = useState<'in' | 'out'>('out')
   const windowSize = useScreenSize()
 
   useEffect(() => {
@@ -57,6 +59,9 @@ const Debt = () => {
     const data = getValues()
     data.dueDate = date
 
+    if (way === 'out' && data.value) data.value = -Math.abs(data.value)
+    if (way === 'in' && data.value) data.value = Math.abs(data.value)
+
     const newDebt = await fetchPost("/debt", data)
     if (newDebt.error) {
       errorToast(newDebt)
@@ -81,6 +86,24 @@ const Debt = () => {
           className={`debt__form editinfos ${visibleForm ? 'visible' : 'hidden'}`}
           onSubmit={handleSubmit(createDebt)}
         >
+          <div className="debt__form__field radios">
+            <div className="radio">
+              <RadioButton
+                value="out"
+                onChange={(e) => setWay(e.value)}
+                checked={way === 'out'}
+              />
+              <div>Je dois</div>
+            </div>
+            <div className="radio">
+              <RadioButton
+                value="in"
+                onChange={(e) => setWay(e.value)}
+                checked={way === 'in'}
+              />
+              <div>On me doit</div>
+            </div>
+          </div>
           <div className="debt__form__field">
             <label>Qui ?<i className="star">*</i></label>
             <InputText
@@ -103,9 +126,9 @@ const Debt = () => {
             <label>Combien ?<i className="star">*</i></label>
             <InputText
               {...register("value", { required: true })}
-              placeholder="20€"
+              placeholder="20"
               className="param__form__field-value"
-              keyfilter="num"
+              keyfilter="pnum"
             />
             {errors.value && <small className="p-error">Le montant est obligatoire</small>}
           </div>
