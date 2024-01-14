@@ -9,8 +9,8 @@ import { Divider } from "primereact/divider";
 import Operation from "../../Operation/Operation";
 import { InputSwitch } from 'primereact/inputswitch';
 import { Nullable } from "primereact/ts-helpers";
-import double from '../../../assets/double.png'
-import simple from '../../../assets/simple.png'
+import double from '../../../assets/Cross.jpg'
+import simple from '../../../assets/Simple.jpg'
 import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
@@ -102,19 +102,19 @@ const ImportCSV = () => {
               />
 
               {checked ? (
-                <ul>Le contenu du fichier doit respecter un certain format :
-                  <li>Le fichier doit être au format .csv ou .xlsx</li>
-                  <li>Mettre en ligne la date de l'opération au format jj/mm/aaaa</li>
+                <ul>
+                  <li>Le fichier doit être au format <b>.csv</b> ou <b>.xlsx</b></li>
+                  <li>Mettre en ligne la date de l'opération au format <b>jj/mm/aaaa</b></li>
                   <li>Mettre en colonne le type de l'opération</li>
-                  <li>Mettre à l'intérieur du tableau les valeurs</li>
+                  <li>Mettre à l'intérieur du tableau les valeurs (négatif pour les dépenses)</li>
                 </ul>
               ) : (
-                <ul>Le contenu du fichier doit respecter un certain format :
-                  <li>Le fichier doit être au format .csv ou .xlsx</li>
+                <ul>
+                  <li>Le fichier doit être au format <b>.csv</b> ou <b>.xlsx</b></li>
                   <li>La case A1 doit contenir le mot "date", la case A2 le mot "nom" et la case A3 le mot "valeur"</li>
-                  <li>La première colonne contient la date de l'opération au format jj/mm/aaaa</li>
+                  <li>La première colonne contient la date de l'opération au format <b>jj/mm/aaaa</b></li>
                   <li>La deuxième colonne contient la description de l'opération</li>
-                  <li>La dernière colonne contient le montant</li>
+                  <li>La dernière colonne contient le montant (négatif pour les dépenses)</li>
                 </ul>
               )}
             </div>
