@@ -33,9 +33,9 @@ const Tools = () => {
           width="9rem"
           height="9rem"
         ></Box>
-        <Salary isComponent></Salary>
-        <Divider></Divider>
         <Loan isComponent></Loan>
+        <Divider></Divider>
+        <Salary isComponent></Salary>
       </div>
       <NavBar></NavBar>
     </>
