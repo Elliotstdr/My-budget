@@ -6,17 +6,10 @@
     background: white !important;
     color: var(--main-color) !important;
     padding-bottom: 0rem !important;
-    &-icon {
-      display: none !important;
-    }
   }
   .p-dialog-title {
     font-size: 28px !important;
     font-weight: bold !important;
-  }
-
-  .p-dialog-content {
-    padding: 0 1.5rem 2rem 1.5rem !important;
   }
 
   p {

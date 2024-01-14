@@ -5,9 +5,13 @@ import Bouton from "../../Utils/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
 import Import1 from "../../assets/Import1.png"
 import Import2 from "../../assets/Import2.png"
+import { useState } from "react";
+import Modal from "../../Components/Modal/Modal";
+import CreateType from "../../Components/CImport/CreateType/CreateType";
 
 const ImportDesktop = () => {
   const navigate = useNavigate()
+  const [visibleTypes, setVisibleTypes] = useState(false)
 
   return (
     <div className="import__desktop page desktop">
@@ -44,7 +48,7 @@ const ImportDesktop = () => {
           <span>Leo quorum me quod necem scrutabatur Gallus Gallus</span>
           <Bouton
             btnTexte="Gérer les types d'opérations"
-            btnAction={() => navigate("/import/type")}
+            btnAction={() => setVisibleTypes(true)}
             color="pink"
             style={{ fontSize: "1.1rem" }}
           ></Bouton>
@@ -52,6 +56,15 @@ const ImportDesktop = () => {
         <div className="import__desktop__bottom__right" style={{ backgroundImage: `url(${Import2})` }}>
         </div>
       </div>
+      {visibleTypes && <Modal
+        visible={visibleTypes}
+        setVisible={setVisibleTypes}
+        className="modal-types"
+        header="Mes types"
+        closable
+      >
+        <CreateType></CreateType>
+      </Modal>}
     </div >
   );
 };

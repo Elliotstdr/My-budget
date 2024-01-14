@@ -12,6 +12,7 @@ type Props = {
   footer?: any,
   children: any,
   blockScroll?: boolean
+  closable?: boolean
 }
 
 const Modal = (props: Props) => {
@@ -32,6 +33,7 @@ const Modal = (props: Props) => {
       footer={props.footer && <RenderFooter footer={props.footer} />}
       className={props.className}
       blockScroll={props.blockScroll}
+      closable={props.closable}
     >
       {props.children}
     </Dialog>
@@ -40,6 +42,7 @@ const Modal = (props: Props) => {
 
 Modal.defaultProps = {
   className: "modal",
+  closable: false
 };
 
 export default Modal;

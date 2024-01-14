@@ -37,6 +37,23 @@
   }
 }
 
+.modal-types {
+  .header,
+  .navbar,
+  .returnbutton {
+    display: none;
+  }
+  .p-dialog-header-icon svg {
+    color: var(--main-color) !important;
+  }
+  .p-dialog-content {
+    padding: 2rem !important;
+    .createtype {
+      padding: 0 !important;
+    }
+  }
+}
+
 @media (min-width: 1000px) {
   .import {
     display: none;
@@ -51,7 +68,7 @@
       width: 100%;
       display: flex;
       align-items: center;
-      height: 400px;
+      height: 375px;
       &__right {
         display: flex;
         flex-direction: column;
@@ -89,6 +106,7 @@
             margin-bottom: 1rem;
           }
           span {
+            font-weight: normal;
             font-size: 0.9rem;
           }
         }
@@ -100,8 +118,7 @@
       border-radius: 1rem;
       display: flex;
       align-items: center;
-      height: 300px;
-      height: calc(100vh - 7rem - 400px - 6rem);
+      height: calc(100vh - 7rem - 375px - 6rem);
       background-color: white;
       &__left {
         display: flex;
