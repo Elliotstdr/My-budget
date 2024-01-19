@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import { UPDATE_DASHBOARD } from "../../Store/Reducers/dashboardReducer";
 import Header from "../../Components/Header/Header";
-import Accueil1 from "../../assets/Accueil3.jpg"
+import Accueil1 from "../../assets/Accueil1.jpg"
 import Accueil2 from "../../assets/Accueil2.png"
 import Bouton from "../../Utils/Bouton/Bouton";
 
@@ -57,7 +57,7 @@ const AccueilDesktop = () => {
       <div className="accueil__desktop page">
         <div
           className="accueil__desktop__bandeau"
-          style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${Accueil1})` }}
+          style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(${Accueil1})` }}
         >
           <div className="accueil__desktop__bandeau__encart">
             <img className="logo" src={image} alt="" />

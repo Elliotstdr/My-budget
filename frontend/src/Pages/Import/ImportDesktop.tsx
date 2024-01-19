@@ -3,7 +3,7 @@ import { CiImport } from "react-icons/ci";
 import { TbHandClick } from "react-icons/tb";
 import Bouton from "../../Utils/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
-import Import1 from "../../assets/Import1.png"
+import Import1 from "../../assets/Import4.jpg"
 import Import2 from "../../assets/Import2.png"
 import { useState } from "react";
 import Modal from "../../Components/Modal/Modal";
@@ -16,7 +16,7 @@ const ImportDesktop = () => {
   return (
     <div className="import__desktop page desktop">
       <div className="import__desktop__top">
-        <div className="import__desktop__top__left" style={{ backgroundImage: `url(${Import1})` }}>
+        <div className="import__desktop__top__left" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url(${Import1})` }}>
           <div className="white-zone white-block">
             <div>Importer</div>
             <span>Ajoute des opérations pour suivre l’évolution des tes dépenses</span>
@@ -29,14 +29,14 @@ const ImportDesktop = () => {
               text="Import fichier"
               icon={<CiImport></CiImport>}
               action={() => navigate("/import/csv")}
-              width="20rem"
+              width="25rem"
               height="6rem"
             ></Box>
             <Box
               text="Saisie manuelle"
               icon={<TbHandClick></TbHandClick>}
               action={() => navigate("/import/manual")}
-              width="20rem"
+              width="25rem"
               height="6rem"
             ></Box>
           </div>
