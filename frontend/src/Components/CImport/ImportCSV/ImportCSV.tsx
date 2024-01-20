@@ -7,23 +7,26 @@ import { errorToast } from "../../../Services/functions";
 import OperationsImported from "../../OperationsImported/OperationsImported";
 import { Divider } from "primereact/divider";
 import Operation from "../../Operation/Operation";
-import { InputSwitch } from 'primereact/inputswitch';
-import { Nullable } from "primereact/ts-helpers";
 import double from '../../../assets/Cross.jpg'
 import simple from '../../../assets/Simple.jpg'
 import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
 import NavBar from "../../NavBar/NavBar";
+import { SelectButton } from "primereact/selectbutton";
 
 const ImportCSV = () => {
+  const items = [
+    { name: 'Simple', value: 1 },
+    { name: 'Croisé', value: 2 }
+  ];
   const navigate = useNavigate()
   const typesData = useFetchGet<Type[]>("/type")
   const auth = useSelector((state: RootState) => state.auth);
   const [successImport, setSuccessImport] = useState(false)
   const [importedData, setImportedData] = useState<ImportedOperation[]>([])
   const [validatedData, setValidatedData] = useState<Operation[]>([])
-  const [checked, setChecked] = useState<Nullable<boolean>>(false)
+  const [selectValue, setSelectValue] = useState<1 | 2>(1)
 
   const uploadHandler = async ({ files }: FileUploadFilesEvent) => {
     if (!auth.userConnected) return
@@ -32,7 +35,7 @@ const ImportCSV = () => {
     const formData = new FormData();
     formData.append('file', file);
 
-    const url = checked
+    const url = selectValue === 1
       ? `/file/treat/double/for_user/${auth.userConnected._id}`
       : `/file/treat/for_user/${auth.userConnected._id}`
     const res = await fetchPost(url, formData)
@@ -91,17 +94,22 @@ const ImportCSV = () => {
             <div className='importCSV__information'>
 
               <div className="importCSV__information__switch">
-                <InputSwitch checked={!!checked} onChange={(e) => setChecked(e.value)} />
-                <span>{checked ? "Tableau Croisé" : "Tableau Simple"}</span>
+                <SelectButton
+                  value={selectValue}
+                  onChange={(e) => e.value && setSelectValue(e.value)}
+                  optionLabel="name"
+                  options={items}
+                  style={{ margin: "1rem 0" }}
+                />
               </div>
 
               <img
                 className="importCSV__information__image"
-                src={checked ? double : simple}
+                src={selectValue === 1 ? double : simple}
                 alt="exemple tableau"
               />
 
-              {checked ? (
+              {selectValue === 1 ? (
                 <ul>
                   <li>Le fichier doit être au format <b>.csv</b> ou <b>.xlsx</b></li>
                   <li>Mettre en ligne la date de l'opération au format <b>jj/mm/aaaa</b></li>

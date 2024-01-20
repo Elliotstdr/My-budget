@@ -24,6 +24,9 @@
       }
     }
   }
+  .p-selectbutton .p-button {
+    padding: 0.75rem 1rem;
+  }
   .p-fileupload {
     width: fit-content;
     &-buttonbar {
@@ -31,11 +34,11 @@
     }
     &-choose {
       margin: 0 !important;
-      background: var(--second-color);
-      border-color: var(--second-color);
+      background: var(--third-color);
+      border-color: var(--third-color);
       &:hover {
-        background: var(--second-color) !important;
-        border-color: var(--second-color) !important;
+        background: var(--third-color) !important;
+        border-color: var(--third-color) !important;
       }
     }
     &-content {
