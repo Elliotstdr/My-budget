@@ -1,5 +1,4 @@
 import "../../../Pages/Parameters/Parameters.scss";
-import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Bouton from "../../../Utils/Bouton/Bouton";
 import { useSelector } from "react-redux";
@@ -8,15 +7,10 @@ import { fetchPost } from "../../../Services/api";
 import { Password } from "primereact/password";
 import { MdLockOutline } from "react-icons/md";
 
-type Values = {
-  password: string,
-  oldPassword: string
-}
 const EditPassword = () => {
   const auth = useSelector((state: RootState) => state.auth);
-  const [isModifying, setIsModifying] = useState(false);
 
-  const defaultValues: Values = {
+  const defaultValues = {
     password: "",
     oldPassword: "",
   };
@@ -24,21 +18,18 @@ const EditPassword = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     getValues,
   } = useForm({ defaultValues });
 
   const editPassword = async () => {
     if (!auth.userConnected) return;
-    setIsModifying(true);
     const values = getValues();
 
     if (!values.password || !values.oldPassword) return
 
     const response = await fetchPost(`/user/${auth.userConnected._id}/edit_password`, values)
-
-    setIsModifying(false);
     if (response.error || !response.data) {
       errorToast(response);
       return;
@@ -96,8 +87,8 @@ const EditPassword = () => {
         />
       </div>
       <Bouton
-        disable={isModifying}
-        btnTexte={isModifying ? "Waiting" : "Modifier"}
+        disable={isSubmitting}
+        btnTexte={isSubmitting ? "En cours..." : "Modifier"}
       ></Bouton>
     </form>
   );

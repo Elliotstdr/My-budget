@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { InputText } from "primereact/inputtext";
 import Modal from "../Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
 import "./ModalLogin.scss";
 import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
 import Bouton from "../../../Utils/Bouton/Bouton";
 import { errorToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
@@ -19,48 +18,36 @@ type Props = {
   header: string
 }
 
-type Values = {
-  email: string
-  password: string,
-}
-
 const ModalLogin = (props: Props) => {
   const dispatch = useDispatch();
   const updateAuth = (value: Partial<AuthState>) => {
     dispatch({ type: UPDATE_AUTH, value });
   };
-  const [isloging, setIsLoging] = useState(false);
 
-  const defaultValues: Values = {
+  const defaultValues = {
     email: "",
     password: "",
   };
 
-  useEffect(() => {
-    !props.visible && setIsLoging(false);
-  }, [props.visible]);
   // variables du formulaire
   const {
     control,
     getValues,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({ defaultValues });
 
   const onSubmit = async () => {
-    setIsLoging(true);
     const data = getValues();
 
     const response = await fetchPost(`/auth/login`, data);
     if (response.error || !response.data?.token) {
-      setIsLoging(false);
       errorToast("L'authentification a échoué");
       return;
     }
 
     const user = await fetchGet(`/user/${response.data.userId}`, response.data.token);
-    setIsLoging(false);
     if (user.error) {
       errorToast("L'authentification a échoué");
       return;
@@ -127,7 +114,7 @@ const ModalLogin = (props: Props) => {
           Mot de passe oublié ?
         </div> */}
         <div className="login__form__button">
-          <Bouton disable={isloging}>{isloging ? "Waiting..." : "Se connecter"}</Bouton>
+          <Bouton disable={isSubmitting}>{isSubmitting ? "En cours..." : "Se connecter"}</Bouton>
         </div>
         <div className="login__form__cancel" onClick={() => props.setVisible(false)}>Annuler</div>
       </form>

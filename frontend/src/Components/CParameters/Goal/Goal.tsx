@@ -5,14 +5,14 @@ import { useState } from "react";
 import { Calendar } from "primereact/calendar";
 import { InputSwitch } from "primereact/inputswitch";
 import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
+import { UPDATE_USER_CONNECTED } from "../../../Store/Reducers/authReducer";
 import { fetchPut } from "../../../Services/api";
 
 const Goal = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
+  const updateUserConnected = (value: Partial<User>) => {
+    dispatch({ type: UPDATE_USER_CONNECTED, value });
   };
   const [date, setDate] = useState<Date[] | null>(auth.userConnected?.goalPeriod?.length === 2
     ? [new Date(auth.userConnected.goalPeriod[0]), new Date(auth.userConnected.goalPeriod[1])]
@@ -23,12 +23,10 @@ const Goal = () => {
   const editAllowStatus = async () => {
     if (!auth.userConnected) return
 
-    const payload = {
-      allowGoal: !auth.userConnected.allowGoal
-    }
+    const payload = { allowGoal: !auth.userConnected.allowGoal }
 
     const newUser = await fetchPut(`/user/${auth.userConnected._id}`, payload)
-    if (newUser.data) updateAuth({ userConnected: { ...auth.userConnected, allowGoal: payload.allowGoal } })
+    if (newUser.data) updateUserConnected(payload)
   }
 
   const editGoal = async () => {
@@ -40,14 +38,14 @@ const Goal = () => {
     }
 
     const newUser = await fetchPut(`/user/${auth.userConnected._id}`, { goal: goal })
-    if (newUser.data) updateAuth({ userConnected: { ...auth.userConnected, goal: goal } })
+    if (newUser.data) updateUserConnected({ goal: goal })
   }
 
   const editGoalPeriod = async (dates: Date[] | null) => {
     if (!auth.userConnected || (dates && dates.length !== 2)) return
 
     const newUser = await fetchPut(`/user/${auth.userConnected._id}`, { goalPeriod: dates })
-    if (newUser.data) updateAuth({ userConnected: { ...auth.userConnected, goalPeriod: dates || undefined } })
+    if (newUser.data) updateUserConnected({ goalPeriod: dates || undefined })
   }
 
   return (

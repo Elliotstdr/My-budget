@@ -16,7 +16,7 @@ import Header from "../../Header/Header";
 import NavBar from "../../NavBar/NavBar";
 import SlideIn from "../../../Utils/SlideIn/SlideIn";
 import OperationsImported from "../../OperationsImported/OperationsImported";
-import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
+import { UPDATE_USER_CONNECTED } from "../../../Store/Reducers/authReducer";
 import { InputSwitch } from "primereact/inputswitch";
 import Bouton from "../../../Utils/Bouton/Bouton";
 import { useScreenSize } from "../../../Services/useScreenSize";
@@ -31,8 +31,8 @@ const ImportManuel = () => {
   const navigate = useNavigate()
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
+  const updateUserConnected = (value: Partial<User>) => {
+    dispatch({ type: UPDATE_USER_CONNECTED, value });
   };
   const typesData = useFetchGet<Type[]>("/type")
   const [ddType, setDdType] = useState<Type | null>(null)
@@ -142,13 +142,10 @@ const ImportManuel = () => {
   const editAllowStatus = async () => {
     if (!auth.userConnected) return
 
-    const payloadUser = {
-      ...auth.userConnected,
-      allowPropositions: !auth.userConnected.allowPropositions
-    }
+    const payloadUser = { allowPropositions: !auth.userConnected.allowPropositions }
 
     const newUser = await fetchPut(`/user/${auth.userConnected._id}`, payloadUser)
-    if (newUser.data) updateAuth({ userConnected: payloadUser })
+    if (newUser.data) updateUserConnected(payloadUser)
   }
   return (
     <>

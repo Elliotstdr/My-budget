@@ -7,6 +7,7 @@ const INITIAL_STATE: AuthState = {
 };
 
 export const UPDATE_AUTH = "UPDATE_AUTH";
+export const UPDATE_USER_CONNECTED = 'UPDATE_USER_CONNECTED';
 
 const authReducer = (state = INITIAL_STATE, action: any): AuthState => {
   switch (action.type) {
@@ -15,6 +16,15 @@ const authReducer = (state = INITIAL_STATE, action: any): AuthState => {
         ...state,
         ...action.value,
       };
+    }
+    case UPDATE_USER_CONNECTED: {
+      return {
+        ...state,
+        userConnected: {
+          ...state.userConnected,
+          ...action.value
+        }
+      }
     }
     default:
       return state;

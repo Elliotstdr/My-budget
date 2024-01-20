@@ -1,28 +1,21 @@
 import "../../../Pages/Parameters/Parameters.scss";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import Bouton from "../../../Utils/Bouton/Bouton";
 import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast } from "../../../Services/functions";
-import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
+import { UPDATE_USER_CONNECTED } from "../../../Store/Reducers/authReducer";
 import { fetchPut } from "../../../Services/api";
 import { MdMailOutline, MdPersonOutline } from "react-icons/md";
 
-type Values = {
-  email: string,
-  username: string,
-}
 const EditInfos = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
+  const updateUserConnected = (value: Partial<User>) => {
+    dispatch({ type: UPDATE_USER_CONNECTED, value });
   };
 
-  const [isModifying, setIsModifying] = useState(false);
-
-  const defaultValues: Values = {
+  const defaultValues = {
     username: auth.userConnected?.username || "",
     email: auth.userConnected?.email || "",
   };
@@ -30,19 +23,16 @@ const EditInfos = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     getValues,
   } = useForm({ defaultValues });
 
   const editInfos = async () => {
     if (!auth.userConnected) return;
-    setIsModifying(true);
     const values = getValues();
 
     const response = await fetchPut(`/user/${auth.userConnected._id}`, values)
-
-    setIsModifying(false);
     if (response.error || !response.data) {
       errorToast(response);
       return;
@@ -51,9 +41,7 @@ const EditInfos = () => {
     reset({ username: values.username, email: values.email })
     successToast("Votre profil a bien été mis à jour");
 
-    updateAuth({
-      userConnected: { ...auth.userConnected, email: values.email, username: values.username }
-    });
+    updateUserConnected({ email: values.email, username: values.username });
   };
 
   return (
@@ -84,8 +72,8 @@ const EditInfos = () => {
         {errors.email && <small className="p-error">L'email est obligatoire</small>}
       </div>
       <Bouton
-        disable={isModifying}
-        btnTexte={isModifying ? "Waiting" : "Modifier"}
+        disable={isSubmitting}
+        btnTexte={isSubmitting ? "En cours..." : "Modifier"}
       ></Bouton>
     </form>
   );
