@@ -1,0 +1,44 @@
+.importmanuel {
+  color: var(--main-color);
+  .p-calendar {
+    margin-bottom: 2rem;
+  }
+  &__list {
+    width: 95%;
+  }
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2rem;
+    .p-inputswitch {
+      transform: scale(0.8);
+    }
+    &__right {
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+    }
+  }
+}
+
+.sidebar-propositions .operationsimported__date {
+  display: none;
+}
+.sidebar-propositions {
+  background-color: rgb(249, 249, 249) !important;
+}
+
+@media (min-width: 900px) {
+  .importmanuel {
+    padding: 3rem !important;
+    .p-calendar {
+      margin-bottom: 2rem;
+      width: 400px;
+    }
+    &__top {
+      max-width: 1000px;
+    }
+  }
+}

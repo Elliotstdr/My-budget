@@ -1,0 +1,52 @@
+.debt__form {
+  display: flex;
+  flex-direction: column;
+  transition: max-height 0.5s ease-in-out;
+  overflow: hidden;
+  &.visible {
+    max-height: 100rem;
+  }
+  &.hidden {
+    max-height: 0rem;
+  }
+  &__field {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin: 0.5rem 0 0.25rem 0.25rem;
+      font-weight: 500;
+      .star {
+        color: #e03232;
+        font-size: 0.8rem;
+      }
+    }
+    .p-inputtext {
+      padding: 0.5rem 0.75rem;
+    }
+    &.radios {
+      flex-direction: row;
+      gap: 0.75rem;
+      margin: 1.5rem 0 0.5rem 0.25rem;
+      .radio {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        .p-highlight {
+          border-color: var(--main-color);
+          background: var(--main-color);
+        }
+      }
+    }
+  }
+  .bouton {
+    max-width: 10rem;
+    padding: 0.5rem 1.5rem;
+    align-self: center;
+  }
+}
+
+@media (min-width: 900px) {
+  .debt__form.hidden {
+    max-height: 100rem;
+  }
+}

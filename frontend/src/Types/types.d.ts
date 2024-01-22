@@ -77,3 +77,15 @@ type Legends = {
   hover: string | null;
   [key: string]: key extends 'hover' ? string | null : boolean;
 };
+
+type Decile = {
+  percile: number,
+  value: number,
+  mine?: number
+}
+
+type LoanElement = {
+  temps: number,
+  value: number,
+  cost: number
+}

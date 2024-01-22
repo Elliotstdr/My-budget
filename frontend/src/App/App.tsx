@@ -11,12 +11,12 @@ import Parameters from '../Pages/Parameters/Parameters';
 import { Toast } from "primereact/toast";
 import { useEffect, useRef } from 'react';
 import { UPDATE_AUTH } from '../Store/Reducers/authReducer';
-import ImportManuel from '../Components/CImport/ImportManuel/ImportManuel';
-import ImportCSV from '../Components/CImport/ImportCSV/ImportCSV';
-import CreateType from '../Components/CImport/CreateType/CreateType';
+import ImportManuel from '../Pages/Import/SubPages/ImportManuel';
+import ImportCSV from '../Pages/Import/SubPages/ImportCSV';
+import CreateType from '../Pages/Import/SubPages/CreateType';
 import { checkActivity, checkToken, timer } from '../Services/refreshToken';
-import Salary from '../Components/CTools/Salary/Salary';
-import Loan from '../Components/CTools/Loan/Loan';
+import Salary from '../Pages/Tools/SubPages/Salary';
+import Loan from '../Pages/Tools/SubPages/Loan';
 
 function App() {
   const auth = useSelector((state: RootState) => state.auth);

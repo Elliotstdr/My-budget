@@ -4,23 +4,14 @@ import NavBar from "../../Components/NavBar/NavBar";
 import "./History.scss";
 import { Calendar } from 'primereact/calendar';
 import { useFetchGet } from "../../Services/api";
-import { literalMonthAndYear } from "../../Services/functions";
-import { Divider } from "primereact/divider";
-import { groupByMonth } from "../../Services/statistics";
 import { useNavigate } from "react-router-dom";
-import Import3 from "../../assets/Import3.jpg"
-import { IoExtensionPuzzle } from "react-icons/io5";
-import { FaExclamation, FaHouseUser, FaRegMoneyBillAlt } from "react-icons/fa";
-import { GiKnifeFork } from "react-icons/gi";
-import { FaScaleBalanced, FaGear } from "react-icons/fa6";
-import { MdOutlinePersonAddAlt } from "react-icons/md";
 import { useScreenSize } from "../../Services/useScreenSize";
-import Bouton from "../../Utils/Bouton/Bouton";
+import RedirectionCardDesktop from "../../Components/CHistory/RedirectionCardDesktop/RedirectionCardDesktop";
+import HistoryCardContainer from "../../Components/CHistory/HistoryCardContainer/HistoryCardContainer";
 
 const History = () => {
   const navigate = useNavigate()
   const operationsData = useFetchGet<Operation[]>("/operation")
-  const typesData = useFetchGet<Type[]>("/type")
   const [date, setDate] = useState<Date | null | undefined>(null)
   const [operations, setOperations] = useState<Operation[]>([])
   const windowSize = useScreenSize()
@@ -43,26 +34,6 @@ const History = () => {
     setOperations(tempOperations)
   }
 
-  const getIcon = (typeLabel: string) => {
-    switch (typeLabel) {
-      case "Frais fixe":
-        return <div style={{ backgroundColor: "#148F77" }} className="icon"><IoExtensionPuzzle></IoExtensionPuzzle></div>
-      case "Exceptionnel":
-        return <div style={{ backgroundColor: "#1F618D" }} className="icon"><FaExclamation></FaExclamation></div>
-      case "Loyer":
-        return <div style={{ backgroundColor: "#D35400" }} className="icon"><FaHouseUser></FaHouseUser></div>
-      case "Salaire":
-        return <div style={{ backgroundColor: "#D4AC0D" }} className="icon"><FaRegMoneyBillAlt></FaRegMoneyBillAlt></div>
-      case "Nourriture":
-        return <div style={{ backgroundColor: "#633974" }} className="icon"><GiKnifeFork></GiKnifeFork></div>
-      case "Impots":
-        return <div style={{ backgroundColor: "#BA4A00" }} className="icon"><FaScaleBalanced></FaScaleBalanced></div>
-      case "Autres":
-        return <div style={{ backgroundColor: "#3498DB" }} className="icon"><FaGear></FaGear></div>
-      default:
-        return <div style={{ backgroundColor: "#17A589" }} className="icon"><MdOutlinePersonAddAlt></MdOutlinePersonAddAlt></div>
-    }
-  }
   return (
     <>
       <Header title="Historique"></Header>
@@ -88,44 +59,10 @@ const History = () => {
             showButtonBar
             inline={windowSize.width >= 900}
           />
-          <div
-            className="history__calendar__desktop"
-            style={{ backgroundImage: `url(${Import3})`, display: "none" }}
-          >
-            <div className="history__calendar__desktop__child">
-              <span className="title">Importer de nouvelles opérations !</span>
-              <Bouton
-                btnTexte="Mes opérations"
-                btnAction={() => navigate("/import")}
-                color="pink"
-                style={{ fontSize: "1.1rem" }}
-              ></Bouton>
-            </div>
-          </div>
+          <RedirectionCardDesktop></RedirectionCardDesktop>
         </div>
-        {operations?.length > 0 ?
-          <div className="history__list">
-            {groupByMonth(operations).map((groupOperation, key) =>
-              <div key={key}>
-                <div className="divider" style={{ display: "flex", alignItems: "center" }}>
-                  <span style={{ margin: "0 0.5rem" }}>
-                    {literalMonthAndYear(new Date(groupOperation[0].datePeriod))}
-                  </span>
-                  <Divider style={{ width: "50%" }}></Divider>
-                </div>
-                {typesData.data && groupOperation.map((x, key) =>
-                  <div className="history__list__item" key={key}>
-                    {getIcon(x.type.label)}
-                    <div style={{ width: "6rem" }}>{x.label}</div>
-                    <div style={{ width: "4rem", color: x.value > 0 ? "#339c0e" : "#e03232" }}>
-                      {x.value > 0 ? "+" + x.value : x.value}€
-                    </div>
-                    <div>{x.type.label}</div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+        {operations?.length > 0
+          ? <HistoryCardContainer operations={operations}></HistoryCardContainer>
           : operationsData.loaded && <span className="empty">
             Ton historique est vide... pour le moment ! <br />
             L'ajout des dépenses c'est par <i onClick={() => navigate("/import")}>ici</i> !

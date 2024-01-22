@@ -3,31 +3,6 @@
   .p-calendar {
     margin: 0.5rem 0;
   }
-  &__list {
-    width: 100%;
-    margin-top: 0.5rem;
-    padding: 0 0.5rem;
-    &__item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem;
-      color: black;
-      background-color: #f0efef;
-      border-radius: 3px;
-      margin: 0.5rem;
-      .icon {
-        border-radius: 50%;
-        color: white;
-        width: 2rem;
-        height: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 0.5rem;
-      }
-    }
-  }
   .empty {
     color: var(--main-color);
     padding: 0 1rem;
@@ -46,15 +21,6 @@
   .history {
     margin: 2rem 0;
     font-size: 1rem !important;
-    &__list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 1rem;
-      &__item {
-        padding: 0.5rem 1rem;
-      }
-    }
   }
 }
 
@@ -63,15 +29,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    &__list {
-      height: calc(100vh - 12rem);
-      overflow-y: scroll;
-      overflow-x: hidden;
-      width: fit-content;
-      padding: 0 2rem;
-      margin-top: 0;
-      width: 45%;
-    }
     &__calendar {
       padding: 0 2rem;
       flex-grow: 1;
@@ -80,35 +37,6 @@
       .p-calendar {
         width: 100%;
         max-width: 600px;
-      }
-      &__desktop {
-        display: flex !important;
-        box-shadow: 1px 3px 6px 1px #00000040;
-        border-radius: 1rem;
-        height: 300px;
-        width: 100%;
-        max-width: 600px;
-        margin-top: 1rem;
-        position: relative;
-        background-size: cover;
-        &__child {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background-color: white;
-          display: flex;
-          flex-direction: column;
-          text-align: center;
-          gap: 1rem;
-          padding: 1rem 3rem;
-          width: 350px;
-          border-radius: 1rem;
-          .title {
-            font-weight: bold;
-            font-size: 1.25rem;
-          }
-        }
       }
     }
     .empty {

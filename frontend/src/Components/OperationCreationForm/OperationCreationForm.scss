@@ -1,0 +1,68 @@
+.importmanuel__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__input {
+    display: flex;
+    gap: 2%;
+    max-width: 95%;
+    .field {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      &.input {
+        width: 40%;
+      }
+      &.dropdown {
+        width: 36%;
+      }
+      &.value {
+        width: 20%;
+      }
+      .p-dropdown,
+      .p-inputtext {
+        height: 50px;
+      }
+    }
+  }
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    .bouton {
+      font-size: 0.9rem;
+      align-items: center;
+      padding: 0.25rem 0.5rem;
+      svg {
+        margin-right: 0.25rem;
+      }
+    }
+    .revenus {
+      background-color: #339c0ecc;
+      border-color: #339c0e1a;
+      &:hover {
+        border-color: #339c0ecc;
+        color: #339c0ecc;
+      }
+    }
+    .depenses {
+      background-color: #e03232cc;
+      border-color: #e032321a;
+      &:hover {
+        border-color: #e03232cc;
+        color: #e03232cc;
+      }
+    }
+  }
+  &__button {
+    cursor: pointer;
+    margin-top: 1rem;
+    background: none;
+    border: none;
+    svg {
+      font-size: 1.5rem;
+      color: var(--main-color);
+    }
+  }
+}

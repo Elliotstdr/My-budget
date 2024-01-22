@@ -2,15 +2,10 @@ import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
 import "./Parameters.scss";
 import { useEffect, useState } from "react";
-import { Divider } from "primereact/divider";
-import EditInfos from "../../Components/CParameters/Params/EditInfos";
-import EditPassword from "../../Components/CParameters/Params/EditPassword";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { UPDATE_AUTH } from "../../Store/Reducers/authReducer";
 import { SelectButton } from "primereact/selectbutton";
 import Debt from "../../Components/CParameters/Debt/Debt";
 import Goal from "../../Components/CParameters/Goal/Goal";
+import Params from "../../Components/CParameters/PersonalInformations/PersonalInformations";
 
 const Parameters = () => {
   const items = [
@@ -20,11 +15,6 @@ const Parameters = () => {
   ];
 
   const [value, setValue] = useState<1 | 2 | 3>(1);
-  const navigate = useNavigate()
-  const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
-  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,23 +30,7 @@ const Parameters = () => {
           optionLabel="name"
           options={items}
         />
-        {value === 1 && <>
-          <div
-            className="parameters__logout"
-            onClick={() => {
-              updateAuth({
-                isConnected: false,
-                token: null,
-                userConnected: null,
-                newLogTime: null,
-              })
-              navigate("/")
-            }}>Se déconnecter
-          </div>
-          <EditInfos></EditInfos>
-          <Divider></Divider>
-          <EditPassword></EditPassword>
-        </>}
+        {value === 1 && <Params></Params>}
         {value === 2 && <Debt></Debt>}
         {value === 3 && <Goal></Goal>}
       </div>

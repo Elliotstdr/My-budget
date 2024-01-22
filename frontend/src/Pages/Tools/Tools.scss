@@ -14,68 +14,27 @@
   .boite span {
     font-size: 1.1rem;
   }
-  .loan,
-  .salary,
-  .p-divider {
-    display: none;
-  }
 }
 
 @media (min-width: 700px) {
   .tools {
     margin-top: 2rem;
-    &__top,
-    .boite {
-      display: none;
-    }
-    .loan {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-left: 2rem;
-      padding-right: 2rem;
-      &__top {
-        width: 40rem;
-        &__result {
-          max-width: 30rem;
-        }
-      }
-    }
-    .salary {
-      width: 100%;
-      display: flex;
-      margin: 0 auto;
-      align-items: center;
-      .bouton {
-        max-width: 30rem;
-      }
-    }
-    .salary > div {
-      width: 60%;
-    }
-    .p-divider {
-      display: flex;
-    }
     .p-slider {
       max-width: 40rem;
     }
-    .salary,
-    .loan {
-      &__title {
-        width: fit-content;
-        position: relative;
-        align-self: flex-start;
-        &:after {
-          content: "";
-          height: 4px;
-          width: 50%;
-          background: var(--third-color);
-          position: absolute;
-          border-radius: 10px;
-          left: 0;
-          bottom: 0;
-        }
+    h1 {
+      width: fit-content;
+      position: relative;
+      align-self: flex-start;
+      &:after {
+        content: "";
+        height: 4px;
+        width: 50%;
+        background: var(--third-color);
+        position: absolute;
+        border-radius: 10px;
+        left: 0;
+        bottom: 0;
       }
     }
   }
