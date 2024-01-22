@@ -111,6 +111,9 @@
 @media (min-width: 900px) {
   .accueil {
     display: none;
+    &__body__noexpense {
+      width: 50%;
+    }
   }
   .header-accueil {
     display: flex !important;
