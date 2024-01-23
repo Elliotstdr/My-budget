@@ -1,4 +1,3 @@
-import "./RedirectionCardDesktop.scss";
 import Import3 from "../../../assets/Import3.jpg"
 import Bouton from "../../UI/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +7,11 @@ const RedirectionCardDesktop = () => {
 
   return (
     <div
-      className="history__calendar__desktop"
-      style={{ backgroundImage: `url(${Import3})`, display: "none" }}
+      className="hidden md:flex shadow-lg rounded-2xl h-72 w-full max-w-[600px] mt-4 relative bg-cover"
+      style={{ backgroundImage: `url(${Import3})` }}
     >
-      <div className="history__calendar__desktop__child">
-        <span className="title">Importer de nouvelles opérations !</span>
+      <div className="absolute-center bg-white flex flex-col text-center gap-4 py-4 px-12 rounded-2xl w-80">
+        <span className="font-bold text-xl">Importer de nouvelles opérations !</span>
         <Bouton
           btnTexte="Mes opérations"
           btnAction={() => navigate("/import")}

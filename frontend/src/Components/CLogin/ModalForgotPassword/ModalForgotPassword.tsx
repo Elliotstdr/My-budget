@@ -3,7 +3,6 @@ import { InputText } from "primereact/inputtext";
 import Modal from "../../UI/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
-import "./ModalForgotPassword.scss";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import Bouton from "../../UI/Bouton/Bouton";
@@ -117,16 +116,15 @@ const ModalForgotPassword = (props: Props) => {
       className={"modal modal-login"}
       width={"20rem"}
     >
-      <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {isSendingMail ? (
           <>
-            <div className="login__form__field">
+            <div className="form-field">
               <h4>Adresse email</h4>
               <InputText
                 type="email"
                 {...register("email")}
                 placeholder="Adresse email"
-                className="login__form__field-email"
               />
             </div>
             <h5>
@@ -139,7 +137,7 @@ const ModalForgotPassword = (props: Props) => {
           </>
         ) : (
           <>
-            <div className="login__form__field">
+            <div className="form-field">
               <h4>Clé de réinitialisation :</h4>
               <Controller
                 name="resetKey"
@@ -150,12 +148,11 @@ const ModalForgotPassword = (props: Props) => {
                     feedback={false}
                     autoComplete="new-password"
                     placeholder="Clé de réinitialisation"
-                    className="login__form__field-resetKey"
                   />
                 )}
               />
             </div>
-            <div className="login__form__field">
+            <div className="form-field">
               <h4>Nouveau mot de passe</h4>
               <Controller
                 name="newPassword"
@@ -165,20 +162,22 @@ const ModalForgotPassword = (props: Props) => {
                     {...field}
                     autoComplete="new-password"
                     placeholder="mot de passe"
-                    className={"login__form__field-newPassword"}
                   />
                 )}
               />
             </div>
             <div
-              className="send_new_mail"
+              className="cursor-pointer underline text-right text-sm p-2"
               onClick={() => oldValues && sendMail(oldValues)}
             >
               Renvoyer le mail
             </div>
             {error && <small className="p-error">{error}</small>}
-            <div className="login__form__button">
-              <Bouton disable={isloging}>{isloging ? "Waiting..." : "Changer de mot de passe"}</Bouton>
+            <div className="mt-8 flex justify-center">
+              <Bouton
+                className="w-full"
+                disable={isloging}
+              >{isloging ? "Waiting..." : "Changer de mot de passe"}</Bouton>
             </div>
           </>
         )}

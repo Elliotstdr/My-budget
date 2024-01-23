@@ -2,7 +2,6 @@ import { Calendar } from 'primereact/calendar';
 import { useFetchGet } from "../../../Services/api";
 import { useScreenSize } from "../../../Services/useScreenSize";
 import { SetStateAction, useState } from "react";
-import './HistoryCalendar.scss'
 
 type Props = {
   setOperations: React.Dispatch<SetStateAction<Operation[]>>
@@ -46,6 +45,7 @@ const HistoryCalendar = (props: Props) => {
       showIcon={windowSize.width < 900}
       showButtonBar
       inline={windowSize.width >= 900}
+      className='my-2 md:w-full md:max-w-[600px]'
     />
   );
 };

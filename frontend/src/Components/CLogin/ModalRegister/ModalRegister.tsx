@@ -3,7 +3,6 @@ import { InputText } from "primereact/inputtext";
 import Modal from "../../UI/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
-import "./ModalRegister.scss";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import Bouton from "../../UI/Bouton/Bouton";
@@ -11,6 +10,7 @@ import { errorToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchGet, fetchPost } from "../../../Services/api";
 import { MdMailOutline, MdLockOutline, MdPersonOutline } from "react-icons/md";
+import { useScreenSize } from "../../../Services/useScreenSize";
 
 type Props = {
   visible: boolean,
@@ -19,6 +19,7 @@ type Props = {
 }
 
 const ModalLogin = (props: Props) => {
+  const windowSize = useScreenSize()
   const dispatch = useDispatch();
   const updateAuth = (value: Partial<AuthState>) => {
     dispatch({ type: UPDATE_AUTH, value });
@@ -79,22 +80,21 @@ const ModalLogin = (props: Props) => {
       visible={props.visible}
       setVisible={props.setVisible}
       className={"modal modal-login"}
-      width={"30rem"}
+      width={windowSize.width > 768 ? "30rem" : '90%'}
     >
-      <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="login__form__field form-field">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="form-field">
           <h4>Nom</h4>
           <div className="box">
             <MdPersonOutline></MdPersonOutline>
             <InputText
               {...register("username", { required: true })}
               placeholder="Nom"
-              className="login__form__field-username"
             />
           </div>
           {errors.username && <small className="p-error">Le nom est obligatoire</small>}
         </div>
-        <div className="login__form__field form-field">
+        <div className="form-field">
           <h4>Adresse email</h4>
           <div className="box">
             <MdMailOutline></MdMailOutline>
@@ -102,12 +102,11 @@ const ModalLogin = (props: Props) => {
               type="email"
               {...register("email", { required: true })}
               placeholder="Adresse email"
-              className="login__form__field-email"
             />
           </div>
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
-        <div className="login__form__field form-field">
+        <div className="form-field">
           <h4>Mot de passe</h4>
           <Controller
             name="password"
@@ -125,7 +124,6 @@ const ModalLogin = (props: Props) => {
                 <Password
                   {...field}
                   placeholder="Mot de passe"
-                  className="login__form__field-password"
                   onChange={(e) => {
                     field.onChange(e.target.value);
                     setIsEqualPassword(
@@ -139,7 +137,7 @@ const ModalLogin = (props: Props) => {
           />
           {errors.password && <small className="p-error">{errors.password.message}</small>}
         </div>
-        <div className="login__form__field form-field">
+        <div className="form-field">
           <h4>Confirmer le mot de passe</h4>
           <Controller
             name="confirmpassword"
@@ -175,10 +173,16 @@ const ModalLogin = (props: Props) => {
           />
           {errors.confirmpassword && <small className="p-error">{errors.confirmpassword.message}</small>}
         </div>
-        <div className="login__form__button">
-          <Bouton disable={isSubmitting}>{isSubmitting ? "En cours..." : "Créer un compte"}</Bouton>
+        <div className="mt-8 flex justify-center">
+          <Bouton
+            disable={isSubmitting}
+            className="w-full"
+          >{isSubmitting ? "En cours..." : "Créer un compte"}</Bouton>
         </div>
-        <div className="login__form__cancel" onClick={() => props.setVisible(false)}>Annuler</div>
+        <div
+          className="third-color text-xl font-bold text-center mt-4 cursor-pointer"
+          onClick={() => props.setVisible(false)}
+        >Annuler</div>
       </form>
     </Modal>
   );

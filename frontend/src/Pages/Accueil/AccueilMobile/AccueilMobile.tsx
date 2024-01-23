@@ -1,4 +1,3 @@
-import "./AccueilMobile.scss";
 import image from "../../../assets/tirelire-blue.png";
 import { FaUserCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -13,30 +12,30 @@ const AccueilMobile = () => {
   const dashboard = useSelector((state: RootState) => state.dashboard);
 
   return (
-    <div className="accueil page">
-      <div className="blue--zone">
-        <div className="blue--zone__left">
-          <img src={image} alt="background home" />
-          <div className="blue--zone__left__text">
-            <span className="main">{`Bonjour ${auth.userConnected?.username || ''}`}</span>
-            <span className="sub">Heureux de te revoir !</span>
+    <div className="page overflow-hidden relative">
+      <div className="w-full rounded-b-[10%] min-h-32 flex items-center justify-between px-6 main-bg">
+        <div className="flex gap-4 mb-4 items-center">
+          <img className="w-14" src={image} alt="background home" />
+          <div className="flex flex-col font-bold">
+            <span className="text-2xl">{`Bonjour ${auth.userConnected?.username || ''}`}</span>
+            <span className="text-base">Heureux de te revoir !</span>
           </div>
         </div>
         <div
-          className="blue--zone__right"
+          className="h-6 mb-4"
           onClick={() => navigate("/parameters")}
         >
-          <FaUserCog></FaUserCog>
+          <FaUserCog style={{ cursor: 'pointer', fontSize: "1.5rem" }}></FaUserCog>
         </div>
       </div>
-      <div className="white--zone white-block">
-        <span className="main">{`${dashboard.newExpense}€`}</span>
-        <span className="sub">dépensés ce mois ci !</span>
+      <div className="white-block w-80 top-24 shadow-lg absolute h-32">
+        <span className="text-3xl">{`${dashboard.newExpense}€`}</span>
+        <span className="text-xl">dépensés ce mois ci !</span>
       </div>
-      <div className="accueil__body">
+      <div className="accueil__body flex flex-col px-6 w-full main-color mt-28">
         <div className="first">
-          <div className="title">Accès rapide</div>
-          <div className="accueil__body__boxes">
+          <div className="title my-2 text-base font-[500]">Accès rapide</div>
+          <div className="text-white flex justify-center gap-4 mb-4">
             <Box
               text="Salaire brut/net"
               icon={<RiMoneyEuroCircleLine></RiMoneyEuroCircleLine>}

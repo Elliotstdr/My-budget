@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
-import "./History.scss";
 import { useFetchGet } from "../../Services/api";
 import RedirectionCardDesktop from "../../Components/CHistory/RedirectionCardDesktop/RedirectionCardDesktop";
 import HistoryCardContainer from "../../Components/CHistory/HistoryCardContainer/HistoryCardContainer";
@@ -20,8 +19,8 @@ const History = () => {
   return (
     <>
       <Header title="Historique"></Header>
-      <div className="history page">
-        <div className="history__calendar">
+      <div className="page main-color md:flex-row md:justify-center md:items-start md:my-8 md:text-base">
+        <div className="md:px-8 md:flex-grow md:max-w-[768px] md:w-1/2">
           <HistoryCalendar setOperations={setOperations}></HistoryCalendar>
           <RedirectionCardDesktop></RedirectionCardDesktop>
         </div>

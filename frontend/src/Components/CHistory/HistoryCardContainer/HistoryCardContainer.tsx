@@ -1,4 +1,3 @@
-import "./HistoryCardContainer.scss";
 import { literalMonthAndYear } from "../../../Services/functions";
 import { Divider } from "primereact/divider";
 import { groupByMonth } from "../../../Services/statistics";
@@ -13,7 +12,10 @@ const HistoryCardContainer = (props: Props) => {
   const typesData = useFetchGet<Type[]>("/type")
 
   return (
-    <div className="history__list">
+    <div className="
+      history__list w-full mt-2 px-2 
+      min-[500px]:flex min-[500px]:flex-col min-[500px]:items-center min-[500px]:mt-4
+      md:overflow-y-scroll md:overflow-x-hidden md:px-8 md:mt-0 md:w-[45%] h-[calc(100vh-12rem)]">
       {groupByMonth(props.operations).map((groupOperation, key) =>
         <div key={key}>
           <div className="divider" style={{ display: "flex", alignItems: "center" }}>

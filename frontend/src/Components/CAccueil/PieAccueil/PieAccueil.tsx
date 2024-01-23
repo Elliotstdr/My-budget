@@ -1,7 +1,6 @@
 import { Cell, LabelList, Pie, PieChart } from "recharts";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import './PieAccueil.scss'
 
 const PieAccueil = () => {
   const navigate = useNavigate()
@@ -9,9 +8,11 @@ const PieAccueil = () => {
 
   return (
     <div className="pieAccueil">
-      <div className="title">Ta plus grosse dépense du mois :</div>
+      <div className="my-2 font-[500] text-base main-color md:text-xl md:font-bold">
+        Ta plus grosse dépense du mois :
+      </div>
       {dashboard.data ?
-        <div className="accueil__body__pie">
+        <div className="flex items-center h-40 md:w-1/2 min-[420px]:h-52 min-[500px]:h-64">
           <PieChart width={300} height={300}>
             <Pie
               dataKey="value"
@@ -33,13 +34,13 @@ const PieAccueil = () => {
               }
             </Pie>
           </PieChart>
-          {dashboard.data && <div className="legend" style={{ maxWidth: "40%" }}>
+          {dashboard.data && <div className="md:text-sm md:w-24" style={{ maxWidth: "40%" }}>
             {`Tu as dépensé ${dashboard.maxExpensePercentage}% de ton budget dans le poste de dépense "${dashboard.data[0].name}"`}
           </div>}
         </div>
-        : <div className="accueil__body__noexpense">
+        : <div className="h-44 flex flex-col justify-center text-center text-base md:w-1/2">
           Tu n'as pas encore saisi de dépenses ce mois ci !
-          <span onClick={() => navigate("/import")}>C'est parti ?</span>
+          <span className="cursor-pointer underline third-color" onClick={() => navigate("/import")}>C'est parti ?</span>
         </div>
       }
     </div>

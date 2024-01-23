@@ -1,3 +1,30 @@
+.main-color {
+  color: var(--main-color);
+}
+.second-color {
+  color: var(--second-color);
+}
+.third-color {
+  color: var(--third-color);
+}
+.main-bg {
+  background-color: var(--main-color);
+}
+.second-bg {
+  background-color: var(--second-color);
+}
+.third-bg {
+  background-color: var(--third-color);
+}
+.history-bg {
+  background-color: #f0efef;
+}
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .page {
   display: flex;
   flex-direction: column;
@@ -39,7 +66,6 @@
 
 .white-block {
   border-radius: 1rem;
-  position: absolute;
   color: var(--main-color);
   display: flex;
   flex-direction: column;

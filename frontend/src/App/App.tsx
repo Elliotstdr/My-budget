@@ -58,7 +58,9 @@ function App() {
   }, [auth.isConnected])
 
   return (
-    <div className={`app ${auth.isConnected}`} id='app' onClick={() => checkActivity()}>
+    <div
+      className={`${auth.isConnected ? 'pb-14 overflow-scroll' : 'h-screen overflow-hidden'} w-screen md:flex md:flex-col-reverse md:pb-0`}
+      id='app' onClick={() => checkActivity()}>
       <BrowserRouter>
         <Toast ref={toast}></Toast>
         <Routes>

@@ -6,6 +6,7 @@ import { store } from "./Store/store";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
+import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Bouton from "../../Components/UI/Bouton/Bouton";
-import "./Login.scss";
 import ModalLogin from "../../Components/CLogin/ModalLogin/ModalLogin";
 import ModalRegister from "../../Components/CLogin/ModalRegister/ModalRegister";
 import image from "../../assets/tirelire-high.png";
@@ -12,24 +11,28 @@ const Login = () => {
   const [visibleModalForgot, setVisibleModalForgot] = useState(false);
 
   return (
-    <div className="login">
-      <img src={image} alt="background home" />
-      <span className="login__title">Mes comptes</span>
-      <span className="login__description">
+    <div className="w-full h-full flex items-center justify-center flex-col main-bg text-white text-center">
+      <img className="w-52" src={image} alt="background home" />
+      <span className="font-bold text-4xl mt-4">Mes comptes</span>
+      <span className="text-base mb-4">
         Mon application personnelle pour gérer mes comptes en toute simplicité
       </span>
-      <div className="login__box">
+      <div className="flex items-center flex-col p-12 w-full">
         <Bouton
           btnTexte={"Se connecter"}
           btnAction={() => setVisibleModalLogin(true)}
+          className="my-2 w-full max-w-80"
+          style={{ border: 'none' }}
         ></Bouton>
         <Bouton
           btnTexte={"Créer un compte"}
           btnAction={() => setVisibleModalRegister(true)}
           color="pink"
+          className="my-2 w-full max-w-80"
+          style={{ border: 'none' }}
         ></Bouton>
       </div>
-      <span className="login__sign">By Elliot Saint-André</span>
+      <span className="text-sm">By Elliot Saint-André</span>
       {visibleModalLogin && (
         <ModalLogin
           visible={visibleModalLogin}
