@@ -62,10 +62,11 @@ const SalaryGraph = (props: Props) => {
             {[...deciles, props.myDecile]
               .sort((a, b) => a.value - b.value)
               .filter((x) => x.value !== 0)
-              .map((entry) => (
+              .map((entry, key) => (
                 <Cell
                   fill={entry.mine ? "rgb(20, 143, 119)" : "var(--main-color)"}
                   fillOpacity={entry.mine ? 1 : 0.6}
+                  key={key}
                 />
               ))}
           </Bar>

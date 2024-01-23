@@ -1,6 +1,6 @@
 import "./RedirectionCardDesktop.scss";
 import Import3 from "../../../assets/Import3.jpg"
-import Bouton from "../../../Utils/Bouton/Bouton";
+import Bouton from "../../UI/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
 
 const RedirectionCardDesktop = () => {

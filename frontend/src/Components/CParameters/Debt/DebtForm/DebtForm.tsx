@@ -1,7 +1,7 @@
 import "./DebtForm.scss";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
-import Bouton from "../../../../Utils/Bouton/Bouton";
+import Bouton from "../../../UI/Bouton/Bouton";
 import { RadioButton } from 'primereact/radiobutton';
 import { useForm } from "react-hook-form";
 import { useState } from "react";

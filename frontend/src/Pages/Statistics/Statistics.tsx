@@ -6,7 +6,7 @@ import { useFetchGet } from "../../Services/api";
 import { calculateData, getSynthesisData, toAbsolute } from "../../Services/statistics";
 import { orderByDate } from "../../Services/functions";
 import { SelectButton } from 'primereact/selectbutton';
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../../Components/UI/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
 import DetailedStats from "../../Components/CStatistics/DetailedStats";
 import SynthesisStats from "../../Components/CStatistics/SynthesisStats";

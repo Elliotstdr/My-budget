@@ -2,7 +2,7 @@ import "./OperationCreationForm.scss";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../UI/Bouton/Bouton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { fetchPost } from "../../Services/api";

@@ -2,17 +2,15 @@ import "./AccueilMobile.scss";
 import image from "../../../assets/tirelire-blue.png";
 import { FaUserCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Box from "../../../Utils/Box/Box";
+import Box from "../../../Components/UI/Box/Box";
 import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
-import PieAccueil from "../../../Components/CAccueil/PieAccueil";
+import PieAccueil from "../../../Components/CAccueil/PieAccueil/PieAccueil";
+import { useSelector } from "react-redux";
 
-type Props = {
-  username: string | null,
-  newExpense: number
-}
-
-const AccueilMobile = (props: Props) => {
+const AccueilMobile = () => {
   const navigate = useNavigate()
+  const auth = useSelector((state: RootState) => state.auth);
+  const dashboard = useSelector((state: RootState) => state.dashboard);
 
   return (
     <div className="accueil page">
@@ -20,7 +18,7 @@ const AccueilMobile = (props: Props) => {
         <div className="blue--zone__left">
           <img src={image} alt="background home" />
           <div className="blue--zone__left__text">
-            <span className="main">{`Bonjour ${props.username || ''}`}</span>
+            <span className="main">{`Bonjour ${auth.userConnected?.username || ''}`}</span>
             <span className="sub">Heureux de te revoir !</span>
           </div>
         </div>
@@ -32,7 +30,7 @@ const AccueilMobile = (props: Props) => {
         </div>
       </div>
       <div className="white--zone white-block">
-        <span className="main">{`${props.newExpense}€`}</span>
+        <span className="main">{`${dashboard.newExpense}€`}</span>
         <span className="sub">dépensés ce mois ci !</span>
       </div>
       <div className="accueil__body">

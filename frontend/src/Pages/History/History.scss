@@ -1,27 +1,5 @@
 .history {
   color: var(--main-color);
-  .p-calendar {
-    margin: 0.5rem 0;
-  }
-  .empty {
-    color: var(--main-color);
-    padding: 0 1rem;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    i {
-      text-decoration: underline;
-      cursor: pointer;
-      color: var(--third-color);
-    }
-  }
-}
-
-@media (min-width: 500px) {
-  .history {
-    margin: 2rem 0;
-    font-size: 1rem !important;
-  }
 }
 
 @media (min-width: 900px) {
@@ -29,20 +7,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
+    margin: 2rem 0;
+    font-size: 1rem !important;
     &__calendar {
       padding: 0 2rem;
       flex-grow: 1;
       max-width: 900px;
       width: 50%;
-      .p-calendar {
-        width: 100%;
-        max-width: 600px;
-      }
-    }
-    .empty {
-      position: unset;
-      transform: unset;
-      align-self: center;
     }
   }
 }

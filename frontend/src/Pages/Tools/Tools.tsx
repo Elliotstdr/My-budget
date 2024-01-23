@@ -1,6 +1,6 @@
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
-import Box from "../../Utils/Box/Box";
+import Box from "../../Components/UI/Box/Box";
 import "./Tools.scss";
 import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";

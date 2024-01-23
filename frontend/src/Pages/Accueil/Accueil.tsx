@@ -1,5 +1,5 @@
 import NavBar from "../../Components/NavBar/NavBar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { rangeTiretDate } from "../../Services/functions";
 import { fetchPost } from "../../Services/api";
 import { useEffect } from "react";
@@ -11,8 +11,6 @@ import Header from "../../Components/Header/Header";
 
 const Accueil = () => {
   const windowSize = useScreenSize()
-  const auth = useSelector((state: RootState) => state.auth);
-  const dashboard = useSelector((state: RootState) => state.dashboard);
   const dispatch = useDispatch();
   const updateDashboard = (value: Partial<DashboardState>) => {
     dispatch({ type: UPDATE_DASHBOARD, value });
@@ -48,14 +46,8 @@ const Accueil = () => {
     <>
       {windowSize.width >= 900 && <Header title="Accueil" className="header-accueil"></Header>}
       {windowSize.width < 900
-        ? <AccueilMobile
-          username={auth.userConnected?.username || null}
-          newExpense={dashboard.newExpense}
-        ></AccueilMobile>
-        : <AccueilDesktop
-          username={auth.userConnected?.username || null}
-          newExpense={dashboard.newExpense}
-        ></AccueilDesktop>
+        ? <AccueilMobile></AccueilMobile>
+        : <AccueilDesktop></AccueilDesktop>
       }
       <NavBar></NavBar>
     </>

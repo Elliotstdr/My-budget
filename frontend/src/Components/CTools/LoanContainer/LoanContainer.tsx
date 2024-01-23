@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./LoanContainer.scss";
 import { Slider } from 'primereact/slider';
 import { calculateLoan, loanStartData } from "../../../Services/tools";
-import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
+import ReturnButton from "../../UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import LoanGraph from "./LoanGraph/LoanGraph";
 

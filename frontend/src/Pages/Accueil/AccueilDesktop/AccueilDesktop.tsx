@@ -1,21 +1,19 @@
 import './AccueilDesktop.scss'
 import image from "../../../assets/tirelire-blue.png";
 import { useNavigate } from "react-router-dom";
-import Box from "../../../Utils/Box/Box";
+import Box from "../../../Components/UI/Box/Box";
 import { CiImport } from "react-icons/ci";
 import { TbHandClick } from "react-icons/tb";
 import Accueil1 from "../../../assets/Accueil1.jpg"
 import Accueil2 from "../../../assets/Accueil2.png"
-import Bouton from "../../../Utils/Bouton/Bouton";
-import PieAccueil from "../../../Components/CAccueil/PieAccueil";
+import Bouton from "../../../Components/UI/Bouton/Bouton";
+import PieAccueil from "../../../Components/CAccueil/PieAccueil/PieAccueil";
+import { useSelector } from 'react-redux';
 
-type Props = {
-  username: string | null,
-  newExpense: number
-}
-
-const AccueilDesktop = (props: Props) => {
+const AccueilDesktop = () => {
   const navigate = useNavigate()
+  const auth = useSelector((state: RootState) => state.auth);
+  const dashboard = useSelector((state: RootState) => state.dashboard);
 
   return (
     <div className="accueil__desktop page">
@@ -26,7 +24,7 @@ const AccueilDesktop = (props: Props) => {
         <div className="accueil__desktop__bandeau__encart">
           <img className="logo" src={image} alt="" />
           <div className="block white-block">
-            <div>{`Bonjour ${props.username},`}</div>
+            <div>{`Bonjour ${auth.userConnected?.username},`}</div>
             <span>Heureux de te revoir !</span>
           </div>
         </div>
@@ -34,7 +32,7 @@ const AccueilDesktop = (props: Props) => {
       <div className="accueil__desktop__body">
         <div className="white--zone white-block">
           <div className="sentence">Fais le point sur tes dépenses du mois </div>
-          <span className="main">{`${props.newExpense}€`}</span>
+          <span className="main">{`${dashboard.newExpense}€`}</span>
           <span className="sub">dépensés ce mois ci !</span>
           <Bouton
             btnTexte="Accéder aux statistiques"

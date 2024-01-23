@@ -1,12 +1,12 @@
 import React from "react";
 import { InputText } from "primereact/inputtext";
-import Modal from "../Modal";
+import Modal from "../../UI/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
 import "./ModalRegister.scss";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import Bouton from "../../../Utils/Bouton/Bouton";
+import Bouton from "../../UI/Bouton/Bouton";
 import { errorToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchGet, fetchPost } from "../../../Services/api";

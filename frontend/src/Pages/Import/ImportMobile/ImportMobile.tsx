@@ -1,8 +1,8 @@
-import Box from "../../../Utils/Box/Box";
+import Box from "../../../Components/UI/Box/Box";
 import "./ImportMobile.scss";
 import { CiImport } from "react-icons/ci";
 import { TbHandClick } from "react-icons/tb";
-import Bouton from "../../../Utils/Bouton/Bouton";
+import Bouton from "../../../Components/UI/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
 import image from "../../../assets/tirelire-blue.png";
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../../Components/UI/Bouton/Bouton";
 import "./Login.scss";
-import ModalLogin from "../../Components/Modal/ModalLogin/ModalLogin";
-import ModalRegister from "../../Components/Modal/ModalRegister/ModalRegister";
+import ModalLogin from "../../Components/CLogin/ModalLogin/ModalLogin";
+import ModalRegister from "../../Components/CLogin/ModalRegister/ModalRegister";
 import image from "../../assets/tirelire-high.png";
-import ModalForgotPassword from "../../Components/Modal/ModalForgotPassword/ModalForgotPassword";
+import ModalForgotPassword from "../../Components/CLogin/ModalForgotPassword/ModalForgotPassword";
 
 const Login = () => {
   const [visibleModalLogin, setVisibleModalLogin] = useState(false);

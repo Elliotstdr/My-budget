@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
-import Bouton from "../../../../Utils/Bouton/Bouton";
+import Bouton from "../../../UI/Bouton/Bouton";
 import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast } from "../../../../Services/functions";
 import { UPDATE_USER_CONNECTED } from "../../../../Store/Reducers/authReducer";

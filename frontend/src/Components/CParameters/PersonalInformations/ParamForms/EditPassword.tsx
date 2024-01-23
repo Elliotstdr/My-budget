@@ -1,5 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
-import Bouton from "../../../../Utils/Bouton/Bouton";
+import Bouton from "../../../UI/Bouton/Bouton";
 import { useSelector } from "react-redux";
 import { errorToast, successToast } from "../../../../Services/functions";
 import { fetchPost } from "../../../../Services/api";

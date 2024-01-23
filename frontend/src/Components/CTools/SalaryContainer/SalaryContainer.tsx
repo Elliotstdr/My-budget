@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./SalaryContainer.scss";
-import Bouton from "../../../Utils/Bouton/Bouton";
+import Bouton from "../../UI/Bouton/Bouton";
 import { Checkbox } from 'primereact/checkbox';
 import { Slider } from "primereact/slider";
-import ReturnButton from "../../../Utils/ReturnButton/ReturnButton";
+import ReturnButton from "../../UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import { decilesStartData } from "../../../Services/tools";
 import SalaryGraph from "./SalaryGraph/SalaryGraph";
