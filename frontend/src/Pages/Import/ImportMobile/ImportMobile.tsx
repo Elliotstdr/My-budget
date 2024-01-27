@@ -4,7 +4,7 @@ import { CiImport } from "react-icons/ci";
 import { TbHandClick } from "react-icons/tb";
 import Bouton from "../../../Components/UI/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
-import image from "../../../assets/tirelire-blue.png";
+import image from "src/assets/tirelire-blue.png";
 
 const ImportMobile = () => {
   const navigate = useNavigate()

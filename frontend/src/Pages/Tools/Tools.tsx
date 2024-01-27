@@ -4,10 +4,10 @@ import Box from "../../Components/UI/Box/Box";
 import "./Tools.scss";
 import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import image from "../../assets/tirelire-blue.png";
+import image from "src/assets/tirelire-blue.png";
 import { Divider } from "primereact/divider";
-import LoanContainer from "../../Components/CTools/LoanContainer/LoanContainer";
-import SalaryContainer from "../../Components/CTools/SalaryContainer/SalaryContainer";
+import LoanContainer from "../Tools_Loan/LoanContainer";
+import SalaryContainer from "../Tools_Salary/SalaryContainer";
 import { useScreenSize } from "../../Services/useScreenSize";
 
 const Tools = () => {

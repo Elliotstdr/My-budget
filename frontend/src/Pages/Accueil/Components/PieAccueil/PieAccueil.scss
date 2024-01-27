@@ -1,0 +1,47 @@
+.accueil__body {
+  &__pie {
+    display: flex;
+    align-items: center;
+    height: 160px;
+  }
+  &__noexpense {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 1rem;
+    span {
+      cursor: pointer;
+      text-decoration: underline;
+      color: var(--third-color);
+    }
+  }
+}
+
+.accueil__desktop {
+  .accueil__body {
+    &__pie {
+      width: 50%;
+      .legend {
+        font-size: 0.9rem;
+        width: 6rem;
+      }
+    }
+    &__noexpense {
+      width: 50%;
+    }
+  }
+}
+
+@media (min-width: 420px) {
+  .accueil__body__pie {
+    height: 200px;
+  }
+}
+
+@media (min-width: 500px) {
+  .accueil__body__pie {
+    height: 250px;
+  }
+}

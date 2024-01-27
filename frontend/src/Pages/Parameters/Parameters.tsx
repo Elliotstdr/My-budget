@@ -3,9 +3,9 @@ import NavBar from "../../Components/NavBar/NavBar";
 import "./Parameters.scss";
 import { useEffect, useState } from "react";
 import { SelectButton } from "primereact/selectbutton";
-import Debt from "../../Components/CParameters/Debt/Debt";
-import Goal from "../../Components/CParameters/Goal/Goal";
-import Params from "../../Components/CParameters/PersonalInformations/PersonalInformations";
+import Debt from "./Components/Debt/Debt";
+import Goal from "./Components/Goal/Goal";
+import Params from "./Components/PersonalInformations/PersonalInformations";
 
 const Parameters = () => {
   const items = [

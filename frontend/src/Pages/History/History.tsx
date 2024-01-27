@@ -3,10 +3,10 @@ import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
 import "./History.scss";
 import { useFetchGet } from "../../Services/api";
-import RedirectionCardDesktop from "../../Components/CHistory/RedirectionCardDesktop/RedirectionCardDesktop";
-import HistoryCardContainer from "../../Components/CHistory/HistoryCardContainer/HistoryCardContainer";
-import HistoryCalendar from "../../Components/CHistory/HistoryCalendar/HistoryCalendar";
-import NoHistoryDisplay from "../../Components/CHistory/NoHistoryDisplay/NoHistoryDisplay";
+import RedirectionCardDesktop from "./Components/RedirectionCardDesktop/RedirectionCardDesktop";
+import HistoryCardContainer from "./Components/HistoryCardContainer/HistoryCardContainer";
+import HistoryCalendar from "./Components/HistoryCalendar/HistoryCalendar";
+import NoHistoryDisplay from "./Components/NoHistoryDisplay/NoHistoryDisplay";
 
 const History = () => {
   const operationsData = useFetchGet<Operation[]>("/operation")

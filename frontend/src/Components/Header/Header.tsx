@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./Header.scss";
 import { FaUserCog } from "react-icons/fa";
-import image from "../../assets/tirelire-blue.png";
+import image from "src/assets/tirelire-blue.png";
 
 type Props = {
   title: string,

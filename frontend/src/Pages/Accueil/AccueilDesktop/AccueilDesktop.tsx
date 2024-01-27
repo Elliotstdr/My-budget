@@ -1,13 +1,13 @@
 import './AccueilDesktop.scss'
-import image from "../../../assets/tirelire-blue.png";
+import image from "src/assets/tirelire-blue.png";
 import { useNavigate } from "react-router-dom";
 import Box from "../../../Components/UI/Box/Box";
 import { CiImport } from "react-icons/ci";
 import { TbHandClick } from "react-icons/tb";
-import Accueil1 from "../../../assets/Accueil1.jpg"
-import Accueil2 from "../../../assets/Accueil2.png"
+import Accueil1 from "src/assets/Accueil1.jpg"
+import Accueil2 from "src/assets/Accueil2.png"
 import Bouton from "../../../Components/UI/Bouton/Bouton";
-import PieAccueil from "../../../Components/CAccueil/PieAccueil/PieAccueil";
+import PieAccueil from "../Components/PieAccueil/PieAccueil";
 import { useSelector } from 'react-redux';
 
 const AccueilDesktop = () => {

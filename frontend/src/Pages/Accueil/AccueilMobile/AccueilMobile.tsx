@@ -1,10 +1,10 @@
 import "./AccueilMobile.scss";
-import image from "../../../assets/tirelire-blue.png";
+import image from "src/assets/tirelire-blue.png";
 import { FaUserCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Box from "../../../Components/UI/Box/Box";
 import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
-import PieAccueil from "../../../Components/CAccueil/PieAccueil/PieAccueil";
+import PieAccueil from "../Components/PieAccueil/PieAccueil";
 import { useSelector } from "react-redux";
 
 const AccueilMobile = () => {

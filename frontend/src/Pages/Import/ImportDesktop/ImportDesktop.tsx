@@ -4,11 +4,11 @@ import { CiImport } from "react-icons/ci";
 import { TbHandClick } from "react-icons/tb";
 import Bouton from "../../../Components/UI/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
-import Import1 from "../../../assets/Import4.jpg"
-import Import2 from "../../../assets/Import2.png"
+import Import1 from "src/assets/Import4.jpg"
+import Import2 from "src/assets/Import2.png"
 import { useState } from "react";
 import Modal from "../../../Components/UI/Modal/Modal";
-import CreateTypeContainer from '../../../Components/CImport/CreateTypeContainer/CreateTypeContainer';
+import CreateTypeContainer from '../../Import_Types/CreateTypeContainer';
 
 const ImportDesktop = () => {
   const navigate = useNavigate()

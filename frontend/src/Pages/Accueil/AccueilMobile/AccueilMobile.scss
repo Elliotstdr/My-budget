@@ -70,18 +70,5 @@
       font-size: 1rem;
       font-weight: 500;
     }
-    &__noexpense {
-      height: 180px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      font-size: 1rem;
-      span {
-        cursor: pointer;
-        text-decoration: underline;
-        color: var(--third-color);
-      }
-    }
   }
 }
