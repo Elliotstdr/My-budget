@@ -72,6 +72,7 @@
     border-radius: 1rem;
     display: flex;
     align-items: center;
+    min-height: 250px;
     height: calc(100vh - 7rem - 375px - 6rem);
     background-color: white;
     &__left {

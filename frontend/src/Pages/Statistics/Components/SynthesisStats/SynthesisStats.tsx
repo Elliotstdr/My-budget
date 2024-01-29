@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux';
 import {
   Line, Bar,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Rectangle
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Rectangle,
+  Label,
+  ReferenceLine
 } from 'recharts';
 import { useScreenSize } from '../../../../Services/useScreenSize';
-import GoalLine from './GoalLine';
 import { useEffect, useState } from 'react';
 import { getSynthesisData } from '../../../../Services/statistics';
 
@@ -26,8 +27,8 @@ const SynthesisStats = (props: Props) => {
 
   // Tooltip custom
   const CustomTooltip = ({ payload }: any) => {
-    return payload.map((x: any) =>
-      <div className="custom__tooltip" style={{ flexDirection: "row" }}>
+    return payload.map((x: any, key: any) =>
+      <div className="custom__tooltip" style={{ flexDirection: "row" }} key={key}>
         <span className="name" style={{ marginRight: "0.25rem" }}>{x.name} :</span>
         <span className="value" style={{ color: x.color }}>
           {Number.isInteger(x.value) ? Math.round(x.value) : x.value.toFixed(1)}€
@@ -99,15 +100,26 @@ const SynthesisStats = (props: Props) => {
             name="Solde"
           />
           {auth.userConnected?.allowGoal && auth.userConnected.goal &&
-            (auth.userConnected.goalPeriod
-              ? <GoalLine
-                y={getMonthGoal()}
-                labelValue={`Objectif mensuel (${getMonthGoal().toFixed(0)}€)`}
-              ></GoalLine>
-              : <GoalLine
-                y={auth.userConnected.goal}
-                labelValue={`Objectif (${Number(auth.userConnected.goal).toFixed(0)}€)`}
-              ></GoalLine>)}
+            <ReferenceLine
+              y={auth.userConnected.goalPeriod
+                ? getMonthGoal()
+                : auth.userConnected.goal
+              }
+              strokeWidth={2}
+              stroke="var(--main-color)"
+            >
+              <Label
+                value={auth.userConnected.goalPeriod
+                  ? `Objectif mensuel (${getMonthGoal().toFixed(0)}€)`
+                  : `Objectif (${Number(auth.userConnected.goal).toFixed(0)}€)`
+                }
+                position={"insideBottomLeft"}
+                width={16}
+                fill='var(--main-color)'
+                fontSize={"0.7rem"}
+                fontWeight={500}
+              ></Label>
+            </ReferenceLine>}
         </ComposedChart>
       </ResponsiveContainer >
     </>

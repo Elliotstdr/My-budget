@@ -19,6 +19,7 @@ const DetailedStats = (props: Props) => {
   const [pieData, setPieData] = useState<PieDataItem[] | undefined>(undefined)
   const [absolute, setAbsolute] = useState(true)
   const [resetLegends, setResetLegends] = useState(false)
+  const [pieSynthesis, setPieSynthesis] = useState<PieDataItem[] | undefined>(undefined)
 
   // Change la valeur en fonction de si on est en valeur absolue ou relative
   useEffect(() => {
@@ -43,6 +44,25 @@ const DetailedStats = (props: Props) => {
       }
     }
     tempPieData.sort((a, b) => b.value - a.value)
+
+    let totalPositive = 0
+    let totalNegative = 0
+    tempPieData.forEach((x) => {
+      if (x.value > 0) totalPositive += x.value
+      else totalNegative += Math.abs(x.value)
+    })
+
+    setPieSynthesis([
+      {
+        name: 'revenus',
+        value: totalPositive
+      },
+      {
+        name: 'dépenses',
+        value: totalNegative
+      }
+    ])
+
     tempPieData.forEach((x) => x.value = Math.abs(x.value))
     setValue(3)
     setPieData(tempPieData)
@@ -60,6 +80,7 @@ const DetailedStats = (props: Props) => {
       <span className="titre second">Graphique détaillé</span>
       <DetailedGraph
         pieData={pieData}
+        pieSynthesis={pieSynthesis}
         finalData={detailedData}
         value={value}
         resetLegends={resetLegends}

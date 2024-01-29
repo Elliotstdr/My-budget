@@ -8,6 +8,7 @@ import { useScreenSize } from "../../../../Services/useScreenSize";
 interface Props {
   finalData: CalculatedGroupOP[] | undefined
   pieData: PieDataItem[] | undefined
+  pieSynthesis: PieDataItem[] | undefined
   value: number
   resetLegends: boolean
   setResetLegends: React.Dispatch<React.SetStateAction<boolean>>
@@ -103,14 +104,25 @@ const DetailedGraph = (props: Props) => {
     <ResponsiveContainer width="100%" height={windowSize.width > 900 ? 500 : 300} style={{ margin: "0.5rem 0" }}>
       {props.value === 3 ?
         <PieChart width={500} height={windowSize.width > 900 ? 500 : 300}>
+          {props.pieSynthesis && <Pie
+            data={props.pieSynthesis}
+            dataKey="value"
+            outerRadius={windowSize.width > 900 ? 80 : 50}
+          >
+            <LabelList
+              dataKey="name"
+              style={{ fontSize: "10px" }}
+              textAnchor="bottom"
+            />
+            <Cell key={props.pieSynthesis[0].name} fill={'#a7a5a5'} className="revDepLabel" />
+            <Cell key={props.pieSynthesis[1].name} fill={'#a7a5a5'} className="revDepLabel" />
+          </Pie>}
           <Pie
             dataKey="value"
             isAnimationActive={false}
             data={props.pieData}
-            cx="50%"
-            cy="50%"
-            outerRadius={120}
-            fill="#8884d8"
+            innerRadius={windowSize.width > 900 ? 100 : 60}
+            outerRadius={windowSize.width > 900 ? 200 : 120}
             label={(e) => {
               return e.name
             }}
@@ -124,12 +136,11 @@ const DetailedGraph = (props: Props) => {
               <Cell key={entry.value} fill={colorArray[index]} />
             ))}
           </Pie>
-          <Tooltip />
         </PieChart>
         : props.value === 2 ?
           <LineChart
             width={500}
-            height={300}
+            height={windowSize.width > 900 ? 500 : 300}
             data={props.finalData}
             margin={{
               top: 5,
@@ -171,7 +182,7 @@ const DetailedGraph = (props: Props) => {
           </LineChart>
           : <BarChart
             width={500}
-            height={300}
+            height={windowSize.width > 900 ? 500 : 300}
             data={props.finalData}
             margin={{
               top: 5,

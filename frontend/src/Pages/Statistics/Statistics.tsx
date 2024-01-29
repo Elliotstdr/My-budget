@@ -45,7 +45,7 @@ const Statistics = () => {
             <Divider></Divider>
             <DetailedStats data={data}></DetailedStats>
           </>
-          : <span className="empty">
+          : operationsData.loaded && data && <span className="empty">
             N'ayant pas encore de dépenses renseignées, je n'ai pas de statistiques à afficher ! <br />
             Je t'invite à rentrer tes prémières dépenses <i onClick={() => navigate("/import")}>ici</i> !
           </span>
