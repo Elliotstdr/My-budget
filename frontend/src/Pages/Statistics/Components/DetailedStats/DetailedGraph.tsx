@@ -131,6 +131,7 @@ const DetailedGraph = (props: Props) => {
               dataKey="value"
               style={{ fontSize: "10px" }}
               textAnchor="bottom"
+              formatter={(e: number) => { return e.toFixed(1) }}
             />
             {props.pieData?.map((entry, index) => (
               <Cell key={entry.value} fill={colorArray[index]} />
