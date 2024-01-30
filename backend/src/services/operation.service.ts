@@ -76,5 +76,5 @@ export const expenseByType = (data: DOperation[]) => {
       value: sum,
     })
   })
-  return output.sort((a,b) => b.value - a.value);
+  return output.sort((a,b) => a.value - b.value);
 };
