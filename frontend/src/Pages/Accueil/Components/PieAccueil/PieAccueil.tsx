@@ -28,7 +28,7 @@ const PieAccueil = () => {
               {dashboard.data &&
                 <>
                   <Cell key={dashboard.data[0].value} fill="var(--third-color)" />
-                  <Cell key={dashboard.data[1].value} fill="var(--second-color)" />
+                  {dashboard.data[1] && <Cell key={dashboard.data[1].value} fill="var(--second-color)" />}
                 </>
               }
             </Pie>

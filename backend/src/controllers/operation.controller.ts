@@ -126,32 +126,42 @@ export const findRedondantOperations = async (req: Request, res: Response) => {
 }
 
 export const dashboard = async (req: Request, res: Response) => {
-  let operations = await findRangeDateOperations(req.body)
+  const operations = await findRangeDateOperations(req.body)
   if(!operations) return res.status(401).json(noOperationERROR)
 
   let newExpense = 0
 
   // On enlève toutes les opérations positives, on ne veut que les dépenses
-  operations = operations.filter((x: DOperation) => x.value < 0)
-  if (operations.length === 0) return res.status(401).json(noOperationERROR)
+  let operationsByType = expenseByType(operations as DOperation[])
+  if (!operationsByType) return res.status(401).json(noOperationERROR)
+
+  operationsByType = operationsByType.filter((x: ExpenseTypeSum) => x.value < 0)
+  if (operationsByType.length === 0) return res.status(401).json(noOperationERROR)
 
   // La somme de toutes les dépenses est set
-  operations.forEach((x: DOperation) => newExpense += x.value)
-
-  const groupedOperations = expenseByType(operations)
-  if (!groupedOperations || groupedOperations.length < 2) return res.status(401).json(noOperationERROR)
+  operationsByType.forEach((x: ExpenseTypeSum) => newExpense += x.value)
 
   // On récupère la plus grosse dépense
-  const maxExpense = groupedOperations[0]
+  const maxExpense = operationsByType[0]
+  maxExpense.value = Math.abs(maxExpense.value)
+
+  if(operationsByType.length === 1) {
+    return res.status(200).json({
+      newExpense: Math.round(Math.abs(newExpense)),
+      maxExpensePercentage: 100,
+      data: [maxExpense]
+    })
+  }
   // Additione toutes les autres dépenses
   let otherValue = 0
-  groupedOperations.shift()
-  groupedOperations.forEach((x) => otherValue += x.value)
+  operationsByType.shift()
+  operationsByType.forEach((x) => otherValue += x.value)
+  otherValue = Math.abs(otherValue)
 
   const maxExpensePercentage = Math.round((maxExpense.value / (otherValue + maxExpense.value)) * 100)
   
   res.status(200).json({
-    newExpense: Math.abs(newExpense),
+    newExpense: Math.round(Math.abs(newExpense)),
     maxExpensePercentage: maxExpensePercentage,
     data: [maxExpense, { name: "Autre", value: otherValue }]
   })

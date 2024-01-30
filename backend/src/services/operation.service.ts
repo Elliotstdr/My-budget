@@ -50,7 +50,7 @@ export const findRangeDateOperations = async (payload: any) => {
 /**
  * A partir d'un array d'opérations construit un array d'array d'opérations triés par type
  * @param data 
- * @returns 
+ * @returns ExpenseTypeSum[] | undefined
  */
 export const expenseByType = (data: DOperation[]) => {
   const result: Record<string, DOperation[]> = {};
@@ -73,7 +73,7 @@ export const expenseByType = (data: DOperation[]) => {
     operationArray.forEach((x) => sum += x.value)
     output.push({
       name: operationArray[0].type.label,
-      value: Math.abs(sum),
+      value: sum,
     })
   })
   return output.sort((a,b) => b.value - a.value);
