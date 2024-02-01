@@ -31,7 +31,7 @@ const BarGraph = (props: Props) => {
 
   return (
     <BarChart
-      width={windowSize.width}
+      width={windowSize.width - 96}
       height={windowSize.width > 900 ? 500 : 300}
       data={props.finalData}
       margin={{

@@ -11,7 +11,7 @@ const PieGraph = (props: Props) => {
   const windowSize = useScreenSize()
 
   return (
-    <PieChart width={windowSize.width} height={windowSize.width > 900 ? 500 : 300}>
+    <PieChart width={windowSize.width - 96} height={windowSize.width > 900 ? 500 : 300}>
       {props.pieSynthesis && <Pie
         data={props.pieSynthesis}
         dataKey="value"
