@@ -1,8 +1,15 @@
-import DetailedGraph from "./DetailedGraph"
 import { SelectButton } from 'primereact/selectbutton';
 import Bouton from "../../../../Components/UI/Bouton/Bouton";
 import { useEffect, useState } from "react";
 import { toAbsolute } from "../../../../Services/statistics";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_STATS } from "../../../../Store/Reducers/statsReducer";
+import { activeAllLegends, checkIfStillShowAll, initializeLegends } from "../../../../Services/legends";
+import { useScreenSize } from "../../../../Services/useScreenSize";
+import { ResponsiveContainer } from "recharts";
+import PieGraph from "./PieGraph";
+import LineGraph from "./LineGraph";
+import BarGraph from "./BarGraph";
 
 type Props = {
   data: CalculatedGroupOP[] | undefined
@@ -14,29 +21,45 @@ const DetailedStats = (props: Props) => {
     { name: 'Camembert', value: 3 }
   ];
 
+  const windowSize = useScreenSize()
+  const stats = useSelector((state: RootState) => state.stats);
+  const dispatch = useDispatch();
+  const updateStats = (value: Partial<StatsState>) => {
+    dispatch({ type: UPDATE_STATS, value });
+  };
+
   const [detailedData, setDetailedData] = useState<CalculatedGroupOP[] | undefined>(undefined)
-  const [value, setValue] = useState<1 | 2 | 3>(1);
   const [pieData, setPieData] = useState<PieDataItem[] | undefined>(undefined)
-  const [absolute, setAbsolute] = useState(true)
-  const [resetLegends, setResetLegends] = useState(false)
   const [pieSynthesis, setPieSynthesis] = useState<PieDataItem[] | undefined>(undefined)
 
   // Change la valeur en fonction de si on est en valeur absolue ou relative
   useEffect(() => {
     if (!props.data) return
-    setDetailedData(absolute ? toAbsolute(props.data) : props.data)
+    setDetailedData(stats.absolute ? toAbsolute(props.data) : props.data)
     // eslint-disable-next-line
-  }, [props.data, absolute])
+  }, [props.data, stats.absolute])
+
+  // Si une légende est désactivée le booleen showAllLegends passe à false
+  useEffect(() => {
+    checkIfStillShowAll()
+    // eslint-disable-next-line
+  }, [stats.legends])
+
+  // Initialisation des légendes pour pouvoir les activer / décastiver
+  useEffect(() => {
+    if (!detailedData) return
+    initializeLegends(detailedData)
+    // eslint-disable-next-line
+  }, [detailedData])
 
   // Si la data a une taille 1 = Un seul mois sélectionné on ajout le pie
   useEffect(() => {
-    if (pieData && props.data?.length !== 1) {
-      setValue(1)
-    }
-    if (!props.data || props.data.length !== 1) {
+    if (!props.data || props.data?.length !== 1) {
+      updateStats({ detailSelectValue: 1 })
       setPieData(undefined)
       return
     }
+
     const tempPieData: PieDataItem[] = []
     for (const [cle, valeur] of Object.entries(props.data[0])) {
       if (cle !== "date" && cle !== "Total") {
@@ -53,18 +76,12 @@ const DetailedStats = (props: Props) => {
     })
 
     setPieSynthesis([
-      {
-        name: 'revenus',
-        value: totalPositive
-      },
-      {
-        name: 'dépenses',
-        value: totalNegative
-      }
+      { name: 'revenus', value: totalPositive },
+      { name: 'dépenses', value: totalNegative }
     ])
 
     tempPieData.forEach((x) => x.value = Math.abs(x.value))
-    setValue(3)
+    updateStats({ detailSelectValue: 3 })
     setPieData(tempPieData)
     // eslint-disable-next-line
   }, [props.data])
@@ -72,28 +89,28 @@ const DetailedStats = (props: Props) => {
   return (
     <div className="detailedStats__container">
       <SelectButton
-        value={value}
-        onChange={(e) => setValue(e.value)}
+        value={stats.detailSelectValue}
+        onChange={(e) => updateStats({ detailSelectValue: e.value })}
         optionLabel="name"
         options={pieData ? items : items.filter((x) => x.value !== 3)}
       />
       <span className="titre second">Graphique détaillé</span>
-      <DetailedGraph
-        pieData={pieData}
-        pieSynthesis={pieSynthesis}
-        finalData={detailedData}
-        value={value}
-        resetLegends={resetLegends}
-        setResetLegends={setResetLegends}
-      ></DetailedGraph>
+      <ResponsiveContainer width="100%" height={windowSize.width > 900 ? 500 : 300} style={{ margin: "0.5rem 0" }}>
+        {stats.detailSelectValue === 3
+          ? <PieGraph pieSynthesis={pieSynthesis} pieData={pieData}></PieGraph>
+          : stats.detailSelectValue === 2
+            ? <LineGraph finalData={detailedData}></LineGraph>
+            : <BarGraph finalData={detailedData}></BarGraph>
+        }
+      </ResponsiveContainer>
       <div className="statistics__buttons">
         <Bouton
           btnTexte="Activer tout"
-          btnAction={() => setResetLegends(true)}
+          btnAction={() => activeAllLegends()}
         ></Bouton>
         <Bouton
-          btnTexte={absolute ? "Valeur relative" : "Valeur absolue"}
-          btnAction={() => setAbsolute(!absolute)}
+          btnTexte={stats.absolute ? "Valeur relative" : "Valeur absolue"}
+          btnAction={() => updateStats({ absolute: !stats.absolute })}
         ></Bouton>
       </div>
     </div>

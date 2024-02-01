@@ -35,10 +35,10 @@ const Statistics = () => {
     <>
       <Header title="Statistiques"></Header>
       <div className="statistics page">
-        <StatsCalendar
+        {operationsData.loaded && <StatsCalendar
           operationsData={operationsData.data}
           updateData={(items: Operation[]) => updateData(items)}
-        ></StatsCalendar>
+        ></StatsCalendar>}
         {operationsData.loaded && operationsData.data!.length > 0 && data && data.length > 0 ?
           <>
             <SynthesisStats data={data}></SynthesisStats>

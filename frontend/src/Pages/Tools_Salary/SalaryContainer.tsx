@@ -7,6 +7,8 @@ import ReturnButton from "../../Components/UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import { decilesStartData } from "../../Services/tools";
 import SalaryGraph from "./Components/SalaryGraph";
+import { UPDATE_SALARY } from "../../Store/Reducers/salaryReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
   isDesktop?: boolean
@@ -14,8 +16,11 @@ interface Props {
 
 const SalaryContainer = (props: Props) => {
   const navigate = useNavigate()
-  const [salaireBrut, setSalaireBrut] = useState<number>(2000);
-  const [estCadre, setEstCadre] = useState<boolean>(false);
+  const salary = useSelector((state: RootState) => state.salary);
+  const dispatch = useDispatch();
+  const updateSalary = (value: Partial<SalaryState>) => {
+    dispatch({ type: UPDATE_SALARY, value });
+  };
   const [salaireNetAvantImpot, setSalaireNetAvantImpot] = useState<number>(0);
   const [salaireNetApresImpot, setSalaireNetApresImpot] = useState<number>(0);
   const [tauxImpot, setTauxImpot] = useState(0)
@@ -29,17 +34,17 @@ const SalaryContainer = (props: Props) => {
   const deciles: Decile[] = decilesStartData
 
   const calculerSalaireNet = () => {
-    const tauxCotisations = estCadre ? 0.235 : 0.22
+    const tauxCotisations = salary.estCadre ? 0.235 : 0.22
     const tranche1 = 10777
     const tranche2 = 27478
     const tranche3 = 78570
 
-    if (typeof salaireBrut !== 'number') {
+    if (typeof salary.salaireBrut !== 'number') {
       return;
     }
 
-    const cotisationsSociales = tauxCotisations * salaireBrut;
-    const salaireNetAvantImpot = salaireBrut - cotisationsSociales;
+    const cotisationsSociales = tauxCotisations * salary.salaireBrut;
+    const salaireNetAvantImpot = salary.salaireBrut - cotisationsSociales;
     const annuelImposable = salaireNetAvantImpot * 12
     let impot = 0
 
@@ -80,10 +85,10 @@ const SalaryContainer = (props: Props) => {
         : <ReturnButton action={() => navigate("/tools")}></ReturnButton>
       }
       <div>
-        <div style={{ marginBottom: "0.75rem" }}>{`Salaire Brut Mensuel : ${salaireBrut}`}</div>
+        <div style={{ marginBottom: "0.75rem" }}>{`Salaire Brut Mensuel : ${salary.salaireBrut}`}</div>
         <Slider
-          value={salaireBrut}
-          onChange={(e) => setSalaireBrut(e.value as number)}
+          value={salary.salaireBrut}
+          onChange={(e) => updateSalary({ salaireBrut: e.value as number })}
           min={100}
           max={7000}
           step={10}
@@ -92,8 +97,8 @@ const SalaryContainer = (props: Props) => {
       <label>
         <Checkbox
           type="checkbox"
-          checked={estCadre}
-          onChange={() => setEstCadre(!estCadre)}
+          checked={salary.estCadre}
+          onChange={() => updateSalary({ estCadre: !salary.estCadre })}
         />
         {" "}Cadre
       </label>
