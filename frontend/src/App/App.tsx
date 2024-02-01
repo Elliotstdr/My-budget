@@ -25,7 +25,7 @@ function App() {
     dispatch({ type: UPDATE_AUTH, value });
   };
   const toast = useRef(null);
-  const interval = useRef<any>(0);
+  const interval = useRef<number>(0);
 
   useEffect(() => {
     if (auth.isConnected) {
