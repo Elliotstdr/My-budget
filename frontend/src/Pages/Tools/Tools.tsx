@@ -6,9 +6,9 @@ import { RiMoneyEuroCircleLine, RiBankFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import image from "src/assets/tirelire-blue.png";
 import { Divider } from "primereact/divider";
-import LoanContainer from "../Tools_Loan/LoanContainer";
-import SalaryContainer from "../Tools_Salary/SalaryContainer";
+import Salary from "../Tools_Salary/Salary";
 import { useScreenSize } from "../../Services/useScreenSize";
+import Loan from "../Tools_Loan/Loan";
 
 const Tools = () => {
   const navigate = useNavigate()
@@ -40,9 +40,9 @@ const Tools = () => {
             ></Box>
           </>
           : <>
-            <LoanContainer isDesktop></LoanContainer>
+            <Loan isDesktop></Loan>
             <Divider></Divider>
-            <SalaryContainer isDesktop></SalaryContainer>
+            <Salary isDesktop></Salary>
           </>
         }
       </div>

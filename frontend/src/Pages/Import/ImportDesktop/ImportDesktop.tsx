@@ -8,7 +8,7 @@ import Import1 from "src/assets/Import4.jpg"
 import Import2 from "src/assets/Import2.png"
 import { useState } from "react";
 import Modal from "../../../Components/UI/Modal/Modal";
-import CreateTypeContainer from '../../Import_Types/CreateTypeContainer';
+import CreateType from '../../Import_Types/CreateType';
 
 const ImportDesktop = () => {
   const navigate = useNavigate()
@@ -65,7 +65,7 @@ const ImportDesktop = () => {
           header="Mes types"
           closable
         >
-          <CreateTypeContainer></CreateTypeContainer>
+          <CreateType isDesktop></CreateType>
         </Modal>}
     </div >
   );
