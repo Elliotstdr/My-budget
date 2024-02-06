@@ -1,12 +1,12 @@
-FROM node
+FROM node:latest
 
-WORKDIR /app
+WORKDIR /usr/src/app/backend
 
-COPY package.json .
+COPY ./package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY ./src ./src
 
 EXPOSE 5001
 

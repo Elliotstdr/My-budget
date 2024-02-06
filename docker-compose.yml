@@ -1,36 +1,42 @@
-version: "3.8"
+version: '3.8'
 services:
+  # backend:
+  #   build: ./backend
+  #   ports:
+  #     - '5001:5001'
+  #   volumes:
+  #     - ./backend:/usr/src/app/backend
+  #   depends_on:
+  #     - mongodb
+  #   environment:
+  #     - NODE_ENV=production
+  #   restart: always
+
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./frontend:/usr/src/app/frontend
+  #   restart: always
+  #   depends_on:
+  #     - backend
+
   mongodb:
     image: "mongo"
     volumes:
-      - data:/data/db
+      - mongo-data:/data/db
     ports:
       - "27017:27017"
+    restart: always
   mongo-express:
     image: mongo-express:latest
     ports:
       - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
-  backend:
-    build: ./backend
-    ports:
-      - "5001:5001"
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     depends_on:
       - mongodb
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend/src:/app/src
-    stdin_open: true
-    tty: true
-    depends_on:
-      - backend
 
 volumes:
-  data:
+  mongo-data:
