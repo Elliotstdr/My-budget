@@ -1,4 +1,4 @@
-import { UPDATE_STATS } from "../Store/Reducers/statsReducer"
+import { updateStats } from "../Store/Actions/statsActions"
 import { store } from "../Store/store"
 
 export const colorArray = [
@@ -9,13 +9,6 @@ export const colorArray = [
   "#1F618D", "#196F3D", "#D68910", // Blue Sapphire, Forest Green, Dark Orange
   "#922B21", "#5B2C6F", "#C27C0E"  // Sangria, Byzantine, Metallic Gold
 ]
-
-const updateStats = (value: Partial<StatsState>) => {
-  return {
-    type: UPDATE_STATS,
-    value
-  }
-}
 
 export const isClear = (key: string) => {
 const stats = store.getState().stats
@@ -29,10 +22,10 @@ export const activeAllLegends = () => {
   
   Object.keys(item).forEach(key => { item[key] = false });
   item.hover = null
-  store.dispatch(updateStats({ 
+  updateStats({ 
     showAllLegends: true,
     legends: item as Legends 
-  }))
+  })
   // eslint-disable-next-line
 }
 
@@ -41,7 +34,7 @@ export const checkIfStillShowAll = () => {
   const stats = store.getState().stats
   const legendKeys = Object.entries({ ...stats.legends })
   if (legendKeys.some((x) => x[0] !== 'hover' && x[1])) {
-    store.dispatch(updateStats({ showAllLegends: false }))
+    updateStats({ showAllLegends: false })
   }
   // eslint-disable-next-line
 }
@@ -64,7 +57,7 @@ export const initializeLegends = (finalData: CalculatedGroupOP[]) => {
       }
     });
 
-    store.dispatch(updateStats({ legends: initialLegends }))
+    updateStats({ legends: initialLegends })
   }
   // eslint-disable-next-line
 }
@@ -73,9 +66,9 @@ export const handleLegendMouseEnter = (e: any) => {
   const stats = store.getState().stats
   if (!stats.legends) return
   if (!stats.legends[e.dataKey]) {
-    store.dispatch(updateStats({
+    updateStats({
       legends: { ...stats.legends, hover: e.dataKey }
-    }));
+    });
   }
 };
 
@@ -83,20 +76,20 @@ export const handleLegendMouseEnter = (e: any) => {
 export const handleLegendMouseLeave = () => {
   const stats = store.getState().stats
   if (!stats.legends) return
-  store.dispatch(updateStats({
+  updateStats({
     legends: { ...stats.legends, hover: null }
-  }));
+  });
 };
 
 // Ajoute ou retire une légende à celles visibles dans le graph
 export const selectBar = (e: any) => {
   const stats = store.getState().stats
   if (!stats.legends) return
-  store.dispatch(updateStats({
+  updateStats({
     legends: {
       ...stats.legends,
       [e.dataKey]: !stats.legends[e.dataKey],
       hover: null
     }
-  }));
+  });
 };

@@ -1,8 +1,8 @@
 import { fetchPost } from "../../../../Services/api";
 import { Calendar } from "primereact/calendar";
-import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_STATS } from "../../../../Store/Reducers/statsReducer";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { updateStats } from "../../../../Store/Actions/statsActions";
 
 interface Props {
   operationsData: Operation[] | null,
@@ -11,10 +11,6 @@ interface Props {
 
 const StatsCalendar = (props: Props) => {
   const stats = useSelector((state: RootState) => state.stats);
-  const dispatch = useDispatch();
-  const updateStats = (value: Partial<StatsState>) => {
-    dispatch({ type: UPDATE_STATS, value });
-  };
 
   const filterByDate = async (rangeDate: Date[]) => {
     if (!rangeDate || !rangeDate[0] || !rangeDate[1]) return

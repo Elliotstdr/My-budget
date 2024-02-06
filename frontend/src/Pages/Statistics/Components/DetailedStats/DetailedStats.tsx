@@ -2,14 +2,14 @@ import { SelectButton } from 'primereact/selectbutton';
 import Bouton from "../../../../Components/UI/Bouton/Bouton";
 import { useEffect, useState } from "react";
 import { toAbsolute } from "../../../../Services/statistics";
-import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_STATS } from "../../../../Store/Reducers/statsReducer";
+import { useSelector } from "react-redux";
 import { activeAllLegends, checkIfStillShowAll, initializeLegends } from "../../../../Services/legends";
 import { useScreenSize } from "../../../../Services/useScreenSize";
 import { ResponsiveContainer } from "recharts";
 import PieGraph from "./PieGraph";
 import LineGraph from "./LineGraph";
 import BarGraph from "./BarGraph";
+import { updateStats } from '../../../../Store/Actions/statsActions';
 
 type Props = {
   data: CalculatedGroupOP[] | undefined
@@ -23,10 +23,6 @@ const DetailedStats = (props: Props) => {
 
   const windowSize = useScreenSize()
   const stats = useSelector((state: RootState) => state.stats);
-  const dispatch = useDispatch();
-  const updateStats = (value: Partial<StatsState>) => {
-    dispatch({ type: UPDATE_STATS, value });
-  };
 
   const [detailedData, setDetailedData] = useState<CalculatedGroupOP[] | undefined>(undefined)
   const [pieData, setPieData] = useState<PieDataItem[] | undefined>(undefined)

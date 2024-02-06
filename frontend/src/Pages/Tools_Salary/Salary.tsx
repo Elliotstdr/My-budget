@@ -7,10 +7,10 @@ import ReturnButton from "../../Components/UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import { decilesStartData } from "../../Services/tools";
 import SalaryGraph from "./Components/SalaryGraph";
-import { UPDATE_SALARY } from "../../Store/Reducers/salaryReducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
+import { updateSalary } from "../../Store/Actions/salaryActions";
 
 interface Props {
   isDesktop?: boolean
@@ -19,10 +19,6 @@ interface Props {
 const SalaryContainer = (props: Props) => {
   const navigate = useNavigate()
   const salary = useSelector((state: RootState) => state.salary);
-  const dispatch = useDispatch();
-  const updateSalary = (value: Partial<SalaryState>) => {
-    dispatch({ type: UPDATE_SALARY, value });
-  };
   const [salaireNetAvantImpot, setSalaireNetAvantImpot] = useState<number>(0);
   const [salaireNetApresImpot, setSalaireNetApresImpot] = useState<number>(0);
   const [tauxImpot, setTauxImpot] = useState(0)

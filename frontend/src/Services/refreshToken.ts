@@ -1,16 +1,9 @@
-import { UPDATE_AUTH } from "../Store/Reducers/authReducer";
+import { updateAuth } from "../Store/Actions/authActions";
 import { store } from "../Store/store";
 import { fetchPost } from "./api";
 
 // Une minute
 export const timer = 60 * 1000;
-
-const updateAuth = (value: Partial<AuthState>) => {
-  return {
-    type: UPDATE_AUTH,
-    value
-  }
-}
 
 /**
  * Vérifie l'état du token
@@ -31,7 +24,7 @@ export const checkToken = async () => {
   } else if (payloadObject.exp * 1000 - new Date().getTime() < 5 * timer) {
     // Si le token expire dans moins de 5 minutes on le refresh
     const newToken = await fetchPost("/auth/refresh", {})
-    if (newToken.data) store.dispatch(updateAuth({ token: newToken.data }))
+    if (newToken.data) updateAuth({ token: newToken.data })
   }
 };
 
@@ -45,10 +38,10 @@ export const checkActivity = () => {
     // Si la dernière action de l'utilisateur était il y a plus d'une heure on logout
     if (time && new Date().getTime() - time > 60 * timer) logOut();
     // Sinon on met à jour l'heure de sa dernière action
-    else store.dispatch(updateAuth({ newLogTime: new Date().getTime() }));
+    else updateAuth({ newLogTime: new Date().getTime() });
   }
   else if (time) {
-    store.dispatch(updateAuth({ newLogTime: null }));
+    updateAuth({ newLogTime: null });
   }
 };
 
@@ -56,12 +49,12 @@ export const checkActivity = () => {
  * Fonction de logout
  */
 export const logOut = () => {
-  store.dispatch(updateAuth({
+  updateAuth({
     isConnected: false,
     newLogTime: null,
     token: null,
     userConnected: null,
-  }));
+  });
   // window.location.href = "/";
   // window.location.replace("/")
 };

@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import Modal from "../../../../Components/UI/Modal/Modal";
-import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
 import "./ModalForgotPassword.scss";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import Bouton from "../../../../Components/UI/Bouton/Bouton";
 import { errorToast, successToast } from "../../../../Services/functions";
-import { UPDATE_AUTH } from "../../../../Store/Reducers/authReducer";
 import { fetchPost } from "../../../../Services/api";
+import { updateAuth } from "../../../../Store/Actions/authActions";
 
 type Props = {
   visible: boolean,
@@ -24,10 +23,6 @@ type Values = {
 }
 
 const ModalForgotPassword = (props: Props) => {
-  const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
-  };
   const [error, setError] = useState("");
   const [isloging, setIsLoging] = useState(false);
   const [isSendingMail, setIsSendingMail] = useState(true);

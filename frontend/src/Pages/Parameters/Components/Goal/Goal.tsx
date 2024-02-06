@@ -3,17 +3,13 @@ import image from "src/assets/tirelire-blue.png";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { InputSwitch } from "primereact/inputswitch";
-import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_USER_CONNECTED } from "../../../../Store/Reducers/authReducer";
+import { useSelector } from "react-redux";
 import { fetchPut } from "../../../../Services/api";
 import GoalCalendar from "./GoalCalendar/GoalCalendar";
+import { updateUserConnected } from "../../../../Store/Actions/authActions";
 
 const Goal = () => {
   const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const updateUserConnected = (value: Partial<User>) => {
-    dispatch({ type: UPDATE_USER_CONNECTED, value });
-  };
   const [date, setDate] = useState<Date[] | null>(auth.userConnected?.goalPeriod?.length === 2
     ? [new Date(auth.userConnected.goalPeriod[0]), new Date(auth.userConnected.goalPeriod[1])]
     : null

@@ -3,27 +3,23 @@ import { useEffect, useState } from "react";
 import { fetchPost, fetchPut, useFetchGet } from "../../Services/api";
 import { Calendar } from 'primereact/calendar';
 import { Divider } from 'primereact/divider';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { errorToast, rangeTiretDate } from "../../Services/functions";
 import Operation from "../../Components/Operation/Operation";
 import ReturnButton from "../../Components/UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import SlideIn from "../../Components/UI/SlideIn/SlideIn";
 import OperationsImported from "../../Components/OperationsImported/OperationsImported";
-import { UPDATE_USER_CONNECTED } from "../../Store/Reducers/authReducer";
 import { InputSwitch } from "primereact/inputswitch";
 import { useScreenSize } from "../../Services/useScreenSize";
 import OperationCreationForm from "./Components/OperationCreationForm/OperationCreationForm";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
+import { updateUserConnected } from "../../Store/Actions/authActions";
 
 const ImportManuelContainer = () => {
   const navigate = useNavigate()
   const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const updateUserConnected = (value: Partial<User>) => {
-    dispatch({ type: UPDATE_USER_CONNECTED, value });
-  };
   const typesData = useFetchGet<Type[]>("/type")
   const [date, setDate] = useState<Date | null | undefined>(null)
   const [operations, setOperations] = useState<Operation[]>([])

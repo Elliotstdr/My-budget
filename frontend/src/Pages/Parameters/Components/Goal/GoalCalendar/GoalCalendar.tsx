@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchPut } from "../../../../../Services/api";
 import "./GoalCalendar.scss";
 import { Calendar } from "primereact/calendar";
-import { UPDATE_USER_CONNECTED } from "../../../../../Store/Reducers/authReducer";
+import { updateUserConnected } from "../../../../../Store/Actions/authActions";
 
 interface Props {
   date: Date[] | null,
@@ -11,10 +11,6 @@ interface Props {
 
 const GoalCalendar = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const updateUserConnected = (value: Partial<User>) => {
-    dispatch({ type: UPDATE_USER_CONNECTED, value });
-  };
 
   const editGoalPeriod = async (dates: Date[] | null) => {
     if (!auth.userConnected || (dates && dates.length !== 2)) return

@@ -1,11 +1,11 @@
-const INITIAL_STATE: SalaryState = {
+import { UPDATE_SALARY } from "../Actions/salaryActions";
+
+const initialState: SalaryState = {
   salaireBrut: 2000,
   estCadre: false
 };
 
-export const UPDATE_SALARY = "UPDATE_SALARY";
-
-const salaryReducer = (state = INITIAL_STATE, action: any): SalaryState => {
+const salaryReducer = (state = initialState, action: any): SalaryState => {
   switch (action.type) {
     case UPDATE_SALARY: {
       return {

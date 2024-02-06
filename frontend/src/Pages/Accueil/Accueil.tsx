@@ -1,20 +1,15 @@
 import NavBar from "../../Components/NavBar/NavBar";
-import { useDispatch } from "react-redux";
 import { rangeTiretDate } from "../../Services/functions";
 import { fetchPost } from "../../Services/api";
 import { useEffect } from "react";
-import { UPDATE_DASHBOARD } from "../../Store/Reducers/dashboardReducer";
 import AccueilDesktop from "./AccueilDesktop/AccueilDesktop";
 import { useScreenSize } from "../../Services/useScreenSize";
 import AccueilMobile from "./AccueilMobile/AccueilMobile";
 import Header from "../../Components/Header/Header";
+import { updateDashboard } from "../../Store/Actions/dashboardActions";
 
 const Accueil = () => {
   const windowSize = useScreenSize()
-  const dispatch = useDispatch();
-  const updateDashboard = (value: Partial<DashboardState>) => {
-    dispatch({ type: UPDATE_DASHBOARD, value });
-  };
 
   useEffect(() => {
     const getCurrentExpense = async () => {

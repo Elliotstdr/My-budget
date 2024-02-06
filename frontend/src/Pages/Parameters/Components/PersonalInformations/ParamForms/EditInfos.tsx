@@ -1,18 +1,14 @@
 import { useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import Bouton from "../../../../../Components/UI/Bouton/Bouton";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { errorToast, successToast } from "../../../../../Services/functions";
-import { UPDATE_USER_CONNECTED } from "../../../../../Store/Reducers/authReducer";
 import { fetchPut } from "../../../../../Services/api";
 import { MdMailOutline, MdPersonOutline } from "react-icons/md";
+import { updateUserConnected } from "../../../../../Store/Actions/authActions";
 
 const EditInfos = () => {
   const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const updateUserConnected = (value: Partial<User>) => {
-    dispatch({ type: UPDATE_USER_CONNECTED, value });
-  };
 
   const defaultValues = {
     username: auth.userConnected?.username || "",

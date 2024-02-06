@@ -5,10 +5,10 @@ import { calculateLoan, loanStartData } from "../../Services/tools";
 import ReturnButton from "../../Components/UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import LoanGraph from "./Components/LoanGraph";
-import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_LOAN } from "../../Store/Reducers/loanReducer";
+import { useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
+import { updateLoan } from "../../Store/Actions/loanActions";
 
 interface Props {
   isDesktop?: boolean
@@ -17,10 +17,6 @@ interface Props {
 const LoanContainer = (props: Props) => {
   const navigate = useNavigate()
   const loan = useSelector((state: RootState) => state.loan);
-  const dispatch = useDispatch();
-  const updateLoan = (value: Partial<LoanState>) => {
-    dispatch({ type: UPDATE_LOAN, value });
-  };
   const [data, setData] = useState<LoanElement[] | undefined>(undefined)
 
   useEffect(() => {

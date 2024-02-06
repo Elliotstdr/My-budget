@@ -1,4 +1,6 @@
-const INITIAL_STATE: AuthState = {
+import { UPDATE_AUTH, UPDATE_USER_CONNECTED } from "../Actions/authActions";
+
+const initialState: AuthState = {
   isConnected: false,
   token: null,
   userConnected: null,
@@ -6,10 +8,7 @@ const INITIAL_STATE: AuthState = {
   toast: null
 };
 
-export const UPDATE_AUTH = "UPDATE_AUTH";
-export const UPDATE_USER_CONNECTED = 'UPDATE_USER_CONNECTED';
-
-const authReducer = (state = INITIAL_STATE, action: any): AuthState => {
+const authReducer = (state = initialState, action: any): AuthState => {
   switch (action.type) {
     case UPDATE_AUTH: {
       return {

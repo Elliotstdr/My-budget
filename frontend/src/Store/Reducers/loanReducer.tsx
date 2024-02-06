@@ -1,4 +1,6 @@
-const INITIAL_STATE: LoanState = {
+import { UPDATE_LOAN } from "../Actions/loanActions";
+
+const initialState: LoanState = {
   capital: 100000,
   time: 15,
   interest: 5,
@@ -6,9 +8,7 @@ const INITIAL_STATE: LoanState = {
   fullCost: 0
 };
 
-export const UPDATE_LOAN = "UPDATE_LOAN";
-
-const loanReducer = (state = INITIAL_STATE, action: any): LoanState => {
+const loanReducer = (state = initialState, action: any): LoanState => {
   switch (action.type) {
     case UPDATE_LOAN: {
       return {

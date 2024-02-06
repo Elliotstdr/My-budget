@@ -1,4 +1,6 @@
-const INITIAL_STATE: StatsState = {
+import { UPDATE_STATS } from "../Actions/statsActions";
+
+const initialState: StatsState = {
   date: null,
   detailSelectValue: 1,
   absolute: true,
@@ -6,9 +8,7 @@ const INITIAL_STATE: StatsState = {
   legends: null
 };
 
-export const UPDATE_STATS = "UPDATE_STATS";
-
-const statsReducer = (state = INITIAL_STATE, action: any): StatsState => {
+const statsReducer = (state = initialState, action: any): StatsState => {
   switch (action.type) {
     case UPDATE_STATS: {
       return {

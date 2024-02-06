@@ -2,15 +2,10 @@ import { Divider } from "primereact/divider";
 import EditInfos from "./ParamForms/EditInfos";
 import EditPassword from "./ParamForms/EditPassword";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { UPDATE_AUTH } from "../../../../Store/Reducers/authReducer";
+import { updateAuth } from "../../../../Store/Actions/authActions";
 
 const PersonalInformations = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
-  };
 
   return (
     <div className='parametersInfos'>
