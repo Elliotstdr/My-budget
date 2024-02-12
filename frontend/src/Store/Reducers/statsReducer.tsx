@@ -1,4 +1,4 @@
-import { UPDATE_STATS } from "../Actions/statsActions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: StatsState = {
   date: null,
@@ -8,17 +8,19 @@ const initialState: StatsState = {
   legends: null
 };
 
-const statsReducer = (state = initialState, action: any): StatsState => {
-  switch (action.type) {
-    case UPDATE_STATS: {
+export const statsSlice = createSlice({
+  name: 'stats',
+  initialState,
+  reducers: {
+    updateStats: (state, action) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
     }
-    default:
-      return state;
   }
-};
+})
 
-export default statsReducer;
+export const { updateStats } = statsSlice.actions
+
+export default statsSlice.reducer;

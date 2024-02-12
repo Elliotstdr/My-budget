@@ -9,7 +9,8 @@ import Bouton from "../../../../Components/UI/Bouton/Bouton";
 import { errorToast } from "../../../../Services/functions";
 import { fetchGet, fetchPost } from "../../../../Services/api";
 import { MdMailOutline, MdLockOutline, MdPersonOutline } from "react-icons/md";
-import { updateAuth } from "../../../../Store/Actions/authActions";
+import { useDispatch } from "react-redux";
+import { updateAuth } from "../../../../Store/Reducers/authReducer";
 
 type Props = {
   visible: boolean,
@@ -18,6 +19,7 @@ type Props = {
 }
 
 const ModalLogin = (props: Props) => {
+  const dispatch = useDispatch()
   const [isEqualPassword, setIsEqualPassword] = useState(false);
 
   const defaultValues = {
@@ -60,12 +62,12 @@ const ModalLogin = (props: Props) => {
       errorToast("L'authentification a échoué");
       return;
     }
-    updateAuth({
+    dispatch(updateAuth({
       isConnected: true,
       userConnected: user.data,
       token: authentification.data.token,
       newLogTime: new Date().getTime(),
-    });
+    }));
   };
 
   return (

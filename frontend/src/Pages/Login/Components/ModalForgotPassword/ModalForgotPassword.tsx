@@ -8,7 +8,8 @@ import { useState } from "react";
 import Bouton from "../../../../Components/UI/Bouton/Bouton";
 import { errorToast, successToast } from "../../../../Services/functions";
 import { fetchPost } from "../../../../Services/api";
-import { updateAuth } from "../../../../Store/Actions/authActions";
+import { useDispatch } from "react-redux";
+import { updateAuth } from "../../../../Store/Reducers/authReducer";
 
 type Props = {
   visible: boolean,
@@ -23,6 +24,7 @@ type Values = {
 }
 
 const ModalForgotPassword = (props: Props) => {
+  const dispatch = useDispatch()
   const [error, setError] = useState("");
   const [isloging, setIsLoging] = useState(false);
   const [isSendingMail, setIsSendingMail] = useState(true);
@@ -96,12 +98,12 @@ const ModalForgotPassword = (props: Props) => {
     reset();
     setIsSendingMail(true);
     props.setVisible(false);
-    updateAuth({
+    dispatch(updateAuth({
       isConnected: true,
       token: response.data.token ?? null,
       userConnected: response.data.user ?? null,
       newLogTime: new Date().getTime(),
-    });
+    }));
   };
 
   return (

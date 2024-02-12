@@ -2,9 +2,11 @@ import { Divider } from "primereact/divider";
 import EditInfos from "./ParamForms/EditInfos";
 import EditPassword from "./ParamForms/EditPassword";
 import { useNavigate } from "react-router-dom";
-import { updateAuth } from "../../../../Store/Actions/authActions";
+import { useDispatch } from "react-redux";
+import { updateAuth } from "../../../../Store/Reducers/authReducer";
 
 const PersonalInformations = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   return (
@@ -12,12 +14,12 @@ const PersonalInformations = () => {
       <div
         className="parameters__logout"
         onClick={() => {
-          updateAuth({
+          dispatch(updateAuth({
             isConnected: false,
             token: null,
             userConnected: null,
             newLogTime: null,
-          })
+          }))
           navigate("/")
         }}>Se déconnecter
       </div>

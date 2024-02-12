@@ -2,14 +2,14 @@ import { SelectButton } from 'primereact/selectbutton';
 import Bouton from "../../../../Components/UI/Bouton/Bouton";
 import { useEffect, useState } from "react";
 import { toAbsolute } from "../../../../Services/statistics";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { activeAllLegends, checkIfStillShowAll, initializeLegends } from "../../../../Services/legends";
 import { useScreenSize } from "../../../../Services/useScreenSize";
 import { ResponsiveContainer } from "recharts";
 import PieGraph from "./PieGraph";
 import LineGraph from "./LineGraph";
 import BarGraph from "./BarGraph";
-import { updateStats } from '../../../../Store/Actions/statsActions';
+import { updateStats } from '../../../../Store/Reducers/statsReducer';
 
 type Props = {
   data: CalculatedGroupOP[] | undefined
@@ -21,6 +21,7 @@ const DetailedStats = (props: Props) => {
     { name: 'Camembert', value: 3 }
   ];
 
+  const dispatch = useDispatch()
   const windowSize = useScreenSize()
   const stats = useSelector((state: RootState) => state.stats);
 
@@ -51,7 +52,7 @@ const DetailedStats = (props: Props) => {
   // Si la data a une taille 1 = Un seul mois sélectionné on ajout le pie
   useEffect(() => {
     if (!props.data || props.data?.length !== 1) {
-      updateStats({ detailSelectValue: 1 })
+      dispatch(updateStats({ detailSelectValue: 1 }))
       setPieData(undefined)
       return
     }
@@ -77,7 +78,7 @@ const DetailedStats = (props: Props) => {
     ])
 
     tempPieData.forEach((x) => x.value = Math.abs(x.value))
-    updateStats({ detailSelectValue: 3 })
+    dispatch(updateStats({ detailSelectValue: 3 }))
     setPieData(tempPieData)
     // eslint-disable-next-line
   }, [props.data])
@@ -86,7 +87,7 @@ const DetailedStats = (props: Props) => {
     <div className="detailedStats__container">
       <SelectButton
         value={stats.detailSelectValue}
-        onChange={(e) => updateStats({ detailSelectValue: e.value })}
+        onChange={(e) => dispatch(updateStats({ detailSelectValue: e.value }))}
         optionLabel="name"
         options={pieData ? items : items.filter((x) => x.value !== 3)}
       />
@@ -106,7 +107,7 @@ const DetailedStats = (props: Props) => {
         ></Bouton>
         <Bouton
           btnTexte={stats.absolute ? "Valeur relative" : "Valeur absolue"}
-          btnAction={() => updateStats({ absolute: !stats.absolute })}
+          btnAction={() => dispatch(updateStats({ absolute: !stats.absolute }))}
         ></Bouton>
       </div>
     </div>

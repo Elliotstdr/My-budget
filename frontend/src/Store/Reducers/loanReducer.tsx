@@ -1,4 +1,4 @@
-import { UPDATE_LOAN } from "../Actions/loanActions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: LoanState = {
   capital: 100000,
@@ -8,17 +8,19 @@ const initialState: LoanState = {
   fullCost: 0
 };
 
-const loanReducer = (state = initialState, action: any): LoanState => {
-  switch (action.type) {
-    case UPDATE_LOAN: {
+export const loanSlice = createSlice({
+  name: 'loan',
+  initialState,
+  reducers: {
+    updateLoan: (state, action) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
     }
-    default:
-      return state;
   }
-};
+})
 
-export default loanReducer;
+export const { updateLoan } = loanSlice.actions
+
+export default loanSlice.reducer;

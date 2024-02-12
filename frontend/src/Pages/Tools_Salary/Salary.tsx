@@ -7,16 +7,17 @@ import ReturnButton from "../../Components/UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import { decilesStartData } from "../../Services/tools";
 import SalaryGraph from "./Components/SalaryGraph";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
-import { updateSalary } from "../../Store/Actions/salaryActions";
+import { updateSalary } from "../../Store/Reducers/salaryReducer";
 
 interface Props {
   isDesktop?: boolean
 }
 
 const SalaryContainer = (props: Props) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const salary = useSelector((state: RootState) => state.salary);
   const [salaireNetAvantImpot, setSalaireNetAvantImpot] = useState<number>(0);
@@ -88,7 +89,7 @@ const SalaryContainer = (props: Props) => {
           <div style={{ marginBottom: "0.75rem" }}>{`Salaire Brut Mensuel : ${salary.salaireBrut}`}</div>
           <Slider
             value={salary.salaireBrut}
-            onChange={(e) => updateSalary({ salaireBrut: e.value as number })}
+            onChange={(e) => dispatch(updateSalary({ salaireBrut: e.value as number }))}
             min={100}
             max={7000}
             step={10}
@@ -98,7 +99,7 @@ const SalaryContainer = (props: Props) => {
           <Checkbox
             type="checkbox"
             checked={salary.estCadre}
-            onChange={() => updateSalary({ estCadre: !salary.estCadre })}
+            onChange={() => dispatch(updateSalary({ estCadre: !salary.estCadre }))}
           />
           {" "}Cadre
         </label>

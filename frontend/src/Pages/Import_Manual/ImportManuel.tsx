@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchPost, fetchPut, useFetchGet } from "../../Services/api";
 import { Calendar } from 'primereact/calendar';
 import { Divider } from 'primereact/divider';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { errorToast, rangeTiretDate } from "../../Services/functions";
 import Operation from "../../Components/Operation/Operation";
 import ReturnButton from "../../Components/UI/ReturnButton/ReturnButton";
@@ -15,9 +15,10 @@ import { useScreenSize } from "../../Services/useScreenSize";
 import OperationCreationForm from "./Components/OperationCreationForm/OperationCreationForm";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
-import { updateUserConnected } from "../../Store/Actions/authActions";
+import { updateUserConnected } from "../../Store/Reducers/authReducer";
 
 const ImportManuelContainer = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const auth = useSelector((state: RootState) => state.auth);
   const typesData = useFetchGet<Type[]>("/type")
@@ -93,7 +94,7 @@ const ImportManuelContainer = () => {
     const payloadUser = { allowPropositions: !auth.userConnected.allowPropositions }
 
     const newUser = await fetchPut(`/user/${auth.userConnected._id}`, payloadUser)
-    if (newUser.data) updateUserConnected(payloadUser)
+    if (newUser.data) dispatch(updateUserConnected(payloadUser))
   }
   return (
     <>

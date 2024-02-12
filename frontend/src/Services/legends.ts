@@ -1,4 +1,4 @@
-import { updateStats } from "../Store/Actions/statsActions"
+import { updateStats } from "../Store/Reducers/statsReducer"
 import { store } from "../Store/store"
 
 export const colorArray = [
@@ -22,10 +22,10 @@ export const activeAllLegends = () => {
   
   Object.keys(item).forEach(key => { item[key] = false });
   item.hover = null
-  updateStats({ 
+  store.dispatch(updateStats({ 
     showAllLegends: true,
     legends: item as Legends 
-  })
+  }))
   // eslint-disable-next-line
 }
 
@@ -34,7 +34,7 @@ export const checkIfStillShowAll = () => {
   const stats = store.getState().stats
   const legendKeys = Object.entries({ ...stats.legends })
   if (legendKeys.some((x) => x[0] !== 'hover' && x[1])) {
-    updateStats({ showAllLegends: false })
+    store.dispatch(updateStats({ showAllLegends: false }))
   }
   // eslint-disable-next-line
 }
@@ -57,7 +57,7 @@ export const initializeLegends = (finalData: CalculatedGroupOP[]) => {
       }
     });
 
-    updateStats({ legends: initialLegends })
+    store.dispatch(updateStats({ legends: initialLegends }))
   }
   // eslint-disable-next-line
 }
@@ -66,9 +66,9 @@ export const handleLegendMouseEnter = (e: any) => {
   const stats = store.getState().stats
   if (!stats.legends) return
   if (!stats.legends[e.dataKey]) {
-    updateStats({
+    store.dispatch(updateStats({
       legends: { ...stats.legends, hover: e.dataKey }
-    });
+    }));
   }
 };
 
@@ -76,20 +76,20 @@ export const handleLegendMouseEnter = (e: any) => {
 export const handleLegendMouseLeave = () => {
   const stats = store.getState().stats
   if (!stats.legends) return
-  updateStats({
+  store.dispatch(updateStats({
     legends: { ...stats.legends, hover: null }
-  });
+  }));
 };
 
 // Ajoute ou retire une légende à celles visibles dans le graph
 export const selectBar = (e: any) => {
   const stats = store.getState().stats
   if (!stats.legends) return
-  updateStats({
+  store.dispatch(updateStats({
     legends: {
       ...stats.legends,
       [e.dataKey]: !stats.legends[e.dataKey],
       hover: null
     }
-  });
+  }));
 };

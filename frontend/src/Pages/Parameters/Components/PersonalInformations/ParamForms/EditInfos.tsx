@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import Bouton from "../../../../../Components/UI/Bouton/Bouton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast } from "../../../../../Services/functions";
 import { fetchPut } from "../../../../../Services/api";
 import { MdMailOutline, MdPersonOutline } from "react-icons/md";
-import { updateUserConnected } from "../../../../../Store/Actions/authActions";
+import { updateUserConnected } from "../../../../../Store/Reducers/authReducer";
 
 const EditInfos = () => {
+  const dispatch = useDispatch()
   const auth = useSelector((state: RootState) => state.auth);
 
   const defaultValues = {
@@ -36,7 +37,7 @@ const EditInfos = () => {
     reset({ username: values.username, email: values.email })
     successToast("Votre profil a bien été mis à jour");
 
-    updateUserConnected({ email: values.email, username: values.username });
+    dispatch(updateUserConnected({ email: values.email, username: values.username }));
   };
 
   return (

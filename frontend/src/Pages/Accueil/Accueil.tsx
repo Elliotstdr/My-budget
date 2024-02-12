@@ -6,9 +6,11 @@ import AccueilDesktop from "./AccueilDesktop/AccueilDesktop";
 import { useScreenSize } from "../../Services/useScreenSize";
 import AccueilMobile from "./AccueilMobile/AccueilMobile";
 import Header from "../../Components/Header/Header";
-import { updateDashboard } from "../../Store/Actions/dashboardActions";
+import { useDispatch } from "react-redux";
+import { updateDashboard } from "../../Store/Reducers/dashboardReducer";
 
 const Accueil = () => {
+  const dispatch = useDispatch()
   const windowSize = useScreenSize()
 
   useEffect(() => {
@@ -18,19 +20,19 @@ const Accueil = () => {
 
       const res = await fetchPost(`/operation/dashboard`, payload);
       if (res.error) {
-        updateDashboard({
+        dispatch(updateDashboard({
           newExpense: 0,
           data: null,
           maxExpensePercentage: 0
-        })
+        }))
         return
       }
 
-      updateDashboard({
+      dispatch(updateDashboard({
         newExpense: res.data.newExpense,
         data: res.data.data,
         maxExpensePercentage: res.data.maxExpensePercentage
-      })
+      }))
     }
 
     getCurrentExpense()

@@ -1,4 +1,4 @@
-import { UPDATE_DASHBOARD } from "../Actions/dashboardActions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: DashboardState = {
   newExpense: 0,
@@ -6,17 +6,19 @@ const initialState: DashboardState = {
   data: null
 };
 
-const dashboardReducer = (state = initialState, action: any): DashboardState => {
-  switch (action.type) {
-    case UPDATE_DASHBOARD: {
+export const dashboardSlice = createSlice({
+  name: 'dashboard',
+  initialState,
+  reducers: {
+    updateDashboard: (state, action) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
     }
-    default:
-      return state;
   }
-};
+})
 
-export default dashboardReducer;
+export const { updateDashboard } = dashboardSlice.actions
+
+export default dashboardSlice.reducer;

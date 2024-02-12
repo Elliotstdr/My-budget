@@ -3,12 +3,13 @@ import image from "src/assets/tirelire-blue.png";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { InputSwitch } from "primereact/inputswitch";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchPut } from "../../../../Services/api";
 import GoalCalendar from "./GoalCalendar/GoalCalendar";
-import { updateUserConnected } from "../../../../Store/Actions/authActions";
+import { updateUserConnected } from "../../../../Store/Reducers/authReducer";
 
 const Goal = () => {
+  const dispatch = useDispatch()
   const auth = useSelector((state: RootState) => state.auth);
   const [date, setDate] = useState<Date[] | null>(auth.userConnected?.goalPeriod?.length === 2
     ? [new Date(auth.userConnected.goalPeriod[0]), new Date(auth.userConnected.goalPeriod[1])]
@@ -22,7 +23,7 @@ const Goal = () => {
     const payload = { allowGoal: !auth.userConnected.allowGoal }
 
     const newUser = await fetchPut(`/user/${auth.userConnected._id}`, payload)
-    if (newUser.data) updateUserConnected(payload)
+    if (newUser.data) dispatch(updateUserConnected(payload))
   }
 
   const editGoal = async () => {
@@ -34,7 +35,7 @@ const Goal = () => {
     }
 
     const newUser = await fetchPut(`/user/${auth.userConnected._id}`, { goal: goal })
-    if (newUser.data) updateUserConnected({ goal: goal })
+    if (newUser.data) dispatch(updateUserConnected({ goal: goal }))
   }
 
   return (

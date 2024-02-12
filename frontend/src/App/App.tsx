@@ -1,7 +1,7 @@
 import './App.scss'
 import Accueil from '../Pages/Accueil/Accueil'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Import from '../Pages/Import/Import';
 import Statistics from '../Pages/Statistics/Statistics';
 import Tools from '../Pages/Tools/Tools';
@@ -16,9 +16,10 @@ import CreateType from '../Pages/Import_Types/CreateType';
 import { checkActivity, checkToken, timer } from '../Services/refreshToken';
 import Salary from '../Pages/Tools_Salary/Salary';
 import Loan from '../Pages/Tools_Loan/Loan';
-import { updateAuth } from '../Store/Actions/authActions';
+import { updateAuth } from '../Store/Reducers/authReducer';
 
 function App() {
+  const dispatch = useDispatch()
   const auth = useSelector((state: RootState) => state.auth);
   const toast = useRef(null);
   const interval = useRef<number>(0);
@@ -45,7 +46,7 @@ function App() {
     if (!auth.isConnected && window.location.pathname !== "/") window.location.replace("/")
     checkActivity();
     if (auth.isConnected) checkToken()
-    updateAuth({ toast: toast });
+    dispatch(updateAuth({ toast: toast.current }));
     // eslint-disable-next-line
   }, []);
 

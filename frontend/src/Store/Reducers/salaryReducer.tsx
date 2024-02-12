@@ -1,21 +1,23 @@
-import { UPDATE_SALARY } from "../Actions/salaryActions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: SalaryState = {
   salaireBrut: 2000,
   estCadre: false
 };
 
-const salaryReducer = (state = initialState, action: any): SalaryState => {
-  switch (action.type) {
-    case UPDATE_SALARY: {
+export const salarySlice = createSlice({
+  name: 'salary',
+  initialState,
+  reducers: {
+    updateSalary: (state, action) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
     }
-    default:
-      return state;
   }
-};
+})
 
-export default salaryReducer;
+export const { updateSalary } = salarySlice.actions
+
+export default salarySlice.reducer;

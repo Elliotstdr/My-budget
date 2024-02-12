@@ -1,4 +1,4 @@
-import { UPDATE_AUTH, UPDATE_USER_CONNECTED } from "../Actions/authActions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: AuthState = {
   isConnected: false,
@@ -8,26 +8,28 @@ const initialState: AuthState = {
   toast: null
 };
 
-const authReducer = (state = initialState, action: any): AuthState => {
-  switch (action.type) {
-    case UPDATE_AUTH: {
+export const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    updateAuth: (state, action) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
-    }
-    case UPDATE_USER_CONNECTED: {
+    },
+    updateUserConnected: (state, action) => {
       return {
         ...state,
         userConnected: {
           ...state.userConnected,
-          ...action.value
+          ...action.payload
         }
       }
     }
-    default:
-      return state;
   }
-};
+})
 
-export default authReducer;
+export const { updateAuth, updateUserConnected } = authSlice.actions
+
+export default authSlice.reducer;

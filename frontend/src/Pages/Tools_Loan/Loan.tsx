@@ -5,26 +5,27 @@ import { calculateLoan, loanStartData } from "../../Services/tools";
 import ReturnButton from "../../Components/UI/ReturnButton/ReturnButton";
 import { useNavigate } from "react-router-dom";
 import LoanGraph from "./Components/LoanGraph";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
 import NavBar from "../../Components/NavBar/NavBar";
-import { updateLoan } from "../../Store/Actions/loanActions";
+import { updateLoan } from "../../Store/Reducers/loanReducer";
 
 interface Props {
   isDesktop?: boolean
 }
 
 const LoanContainer = (props: Props) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const loan = useSelector((state: RootState) => state.loan);
   const [data, setData] = useState<LoanElement[] | undefined>(undefined)
 
   useEffect(() => {
     const calculatedLoan = calculateLoan(loan.capital, loan.time, loan.interest)
-    updateLoan({
+    dispatch(updateLoan({
       monthCost: calculatedLoan[0],
       fullCost: calculatedLoan[1]
-    })
+    }))
 
     const startData = loanStartData(loan.capital, loan.interest)
 
@@ -51,7 +52,7 @@ const LoanContainer = (props: Props) => {
           </div>
           <Slider
             value={loan.capital}
-            onChange={(e) => updateLoan({ capital: e.value as number })}
+            onChange={(e) => dispatch(updateLoan({ capital: e.value as number }))}
             min={5000}
             max={1000000}
             step={5000}
@@ -62,7 +63,7 @@ const LoanContainer = (props: Props) => {
           </div>
           <Slider
             value={loan.time}
-            onChange={(e) => updateLoan({ time: e.value as number })}
+            onChange={(e) => dispatch(updateLoan({ time: e.value as number }))}
             min={1}
             max={25}
             step={1}
@@ -73,7 +74,7 @@ const LoanContainer = (props: Props) => {
           </div>
           <Slider
             value={loan.interest}
-            onChange={(e) => updateLoan({ interest: e.value as number })}
+            onChange={(e) => dispatch(updateLoan({ interest: e.value as number }))}
             min={0}
             max={10}
             step={0.02}

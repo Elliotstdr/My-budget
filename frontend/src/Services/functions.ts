@@ -2,7 +2,7 @@ import { store } from "../Store/store";
 
 export const successToast = (message: string, summary: string = "Succès") => {
   const reduxStore = store.getState();
-  reduxStore.auth.toast.current.show({
+  reduxStore.auth.toast.show({
     severity: "success",
     summary: `${summary} : `,
     detail: message,
@@ -20,7 +20,7 @@ export const errorToast = (message: string | FetchResponse, summary: string = "E
       : "Une erreur est survenue"
   }
   const reduxStore = store.getState();
-  reduxStore.auth.toast.current.show({
+  reduxStore.auth.toast.show({
     severity: "error",
     summary: `${summary} : `,
     detail: finalMessage,
