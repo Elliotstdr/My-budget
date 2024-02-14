@@ -38,10 +38,10 @@ export const checkActivity = () => {
     // Si la dernière action de l'utilisateur était il y a plus d'une heure on logout
     if (time && new Date().getTime() - time > 60 * timer) logOut();
     // Sinon on met à jour l'heure de sa dernière action
-    else updateAuth({ newLogTime: new Date().getTime() });
+    else store.dispatch(updateAuth({ newLogTime: new Date().getTime() }));
   }
   else if (time) {
-    updateAuth({ newLogTime: null });
+    store.dispatch(updateAuth({ newLogTime: null }));
   }
 };
 
@@ -49,12 +49,12 @@ export const checkActivity = () => {
  * Fonction de logout
  */
 export const logOut = () => {
-  updateAuth({
+  store.dispatch(updateAuth({
     isConnected: false,
     newLogTime: null,
     token: null,
     userConnected: null,
-  });
+  }));
   // window.location.href = "/";
   // window.location.replace("/")
 };
